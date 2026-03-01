@@ -148,282 +148,360 @@
             <div class="projects-grid">
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>🐍 Search & Rescue Snake Robot</h3>
+                    <h3 class="project-title">🐍 Search & Rescue Snake Robot</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <!-- Simply replace the 'src' link with the name of your file (e.g. 'images/snake-robot.png') -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>Search & Rescue Snake Robot</h4>
+
+                    <div class="project-content-text">
                         <p>A highly maneuverable snake robot designed to go underground to search for human bodies
                             during disasters.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">Robotics</span>
                             <span class="tag">Embedded C</span>
                             <span class="tag">Hardware</span>
                         </div>
-                        <div class="project-details">
-                            <h3>Search & Rescue Snake Robot</h3>
-                            <p>A highly maneuverable snake robot designed to go underground to search for human bodies
-                                during disasters. It utilizes embedded C programming and complex mechanical linkages to
-                                mimic serpentine movement, making it uniquely capable of traversing uneven and
-                                challenging terrain.</p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>Search & Rescue Snake Robot</h3>
+                        <p>A highly maneuverable snake robot designed to go underground to search for human bodies
+                            during disasters. It utilizes embedded C programming and complex mechanical linkages to
+                            mimic serpentine movement, making it uniquely capable of traversing uneven and challenging
+                            terrain.</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <!-- Replace the '#' in href="#" with your post/video link! -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>🤖 SLAM Obstacle Avoiding Robot</h3>
+                    <h3 class="project-title">🤖 SLAM Obstacle Avoiding Robot</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>SLAM Obstacle Avoiding Robot</h4>
+
+                    <div class="project-content-text">
                         <p>A smart, autonomous LiDAR robot built under ₹2000, capable of Simultaneous Localization and
                             Mapping.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">SLAM</span>
                             <span class="tag">Sensors</span>
                             <span class="tag">Budget Build</span>
                         </div>
-                        <div class="project-details">
-                            <h3>SLAM Obstacle Avoiding Robot</h3>
-                            <p>During my vacation I wanted to learn and gain experience in practical project
-                                implementation, so I built a DIY LiDAR-based SLAM and obstacle-avoiding robot as a hobby
-                                project. This took more time than my two-month vacation as I was doing everything alone,
-                                debugging and fixing constant problems—all under a ₹2000 budget.</p>
-                            <h4>Hardware Structure</h4>
-                            <ul>
-                                <li><strong>Bottom layer:</strong> DC motors, motor driver, rechargeable batteries, buck
-                                    converter</li>
-                                <li><strong>Middle layer:</strong> ESP32 microcontroller</li>
-                                <li><strong>Top layer:</strong> IMU, servo motor with a VL53L0X LiDAR mounted inside a
-                                    lightweight bottle cap (a cheap, strong DIY enclosure)</li>
-                            </ul>
-                            <h4>Features & Operations</h4>
-                            <ul>
-                                <li>Scans the surroundings using a rotating LiDAR and sends readings to a Flask-based
-                                    website.</li>
-                                <li>The website processes the data through my laptop and displays a live map.</li>
-                                <li>Robot moves a fixed distance, rescans, and sends updates wirelessly.</li>
-                                <li>If an obstacle is detected, it rescans and precisely turns toward the direction with
-                                    more free space.</li>
-                                <li>Full control (start/stop/reset/stop generating map/clear points) available through
-                                    the web interface.</li>
-                            </ul>
-                            <h4>Limitations Managed</h4>
-                            <ul>
-                                <li>Needs 1 minute of IMU calibration for accuracy at the beginning.</li>
-                                <li>ESP32 gets overloaded if it runs too long.</li>
-                                <li>Queue buildup: Robot sends data faster than the web processing speed, which I
-                                    managed by slowing down the robot and optimizing data flow.</li>
-                            </ul>
-                            <h4>Skills Gained</h4>
-                            <p>Sensor fusion, Real-time data processing, Flask-based IoT communication, Embedded
-                                programming on ESP32, Mapping algorithms, Low-cost hardware design.</p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>SLAM Obstacle Avoiding Robot</h3>
+                        <p>During my vacation I wanted to learn and gain experience in practical project implementation,
+                            so I built a DIY LiDAR-based SLAM and obstacle-avoiding robot as a hobby project. This took
+                            more time than my two-month vacation as I was doing everything alone, debugging and fixing
+                            constant problems—all under a ₹2000 budget.</p>
+                        <h4>Hardware Structure</h4>
+                        <ul>
+                            <li><strong>Bottom layer:</strong> DC motors, motor driver, rechargeable batteries, buck
+                                converter</li>
+                            <li><strong>Middle layer:</strong> ESP32 microcontroller</li>
+                            <li><strong>Top layer:</strong> IMU, servo motor with a VL53L0X LiDAR mounted inside a
+                                lightweight bottle cap (a cheap, strong DIY enclosure)</li>
+                        </ul>
+                        <h4>Features & Operations</h4>
+                        <ul>
+                            <li>Scans the surroundings using a rotating LiDAR and sends readings to a Flask-based
+                                website.</li>
+                            <li>The website processes the data through my laptop and displays a live map.</li>
+                            <li>Robot moves a fixed distance, rescans, and sends updates wirelessly.</li>
+                            <li>If an obstacle is detected, it rescans and precisely turns toward the direction with
+                                more free space.</li>
+                            <li>Full control (start/stop/reset/stop generating map/clear points) available through the
+                                web interface.</li>
+                        </ul>
+                        <h4>Limitations Managed</h4>
+                        <ul>
+                            <li>Needs 1 minute of IMU calibration for accuracy at the beginning.</li>
+                            <li>ESP32 gets overloaded if it runs too long.</li>
+                            <li>Queue buildup: Robot sends data faster than the web processing speed, which I managed by
+                                slowing down the robot and optimizing data flow.</li>
+                        </ul>
+                        <h4>Skills Gained</h4>
+                        <p>Sensor fusion, Real-time data processing, Flask-based IoT communication, Embedded programming
+                            on ESP32, Mapping algorithms, Low-cost hardware design.</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>🔊 E-Waste Bluetooth Speaker</h3>
+                    <h3 class="project-title">🔊 E-Waste Bluetooth Speaker</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>Bluetooth Speaker (E-Waste)</h4>
+
+                    <div class="project-content-text">
                         <p>A fully functional Bluetooth speaker built entirely from scratch utilizing recycled e-waste
                             components.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">Recycling</span>
                             <span class="tag">Audio</span>
                             <span class="tag">Soldering</span>
                         </div>
-                        <div class="project-details">
-                            <h3>Bluetooth Speaker (E-Waste)</h3>
-                            <p>A fully functional Bluetooth speaker built entirely from scratch utilizing recycled
-                                e-waste components. It emphasizes sustainable engineering and environmental
-                                consciousness by repurposing discarded electronics into a high-quality audio aesthetic.
-                            </p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>Bluetooth Speaker (E-Waste)</h3>
+                        <p>A fully functional Bluetooth speaker built entirely from scratch utilizing recycled e-waste
+                            components. It emphasizes sustainable engineering and environmental consciousness by
+                            repurposing discarded electronics into a high-quality audio aesthetic.</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>⚡ Analog Obstacle Avoider</h3>
+                    <h3 class="project-title">⚡ Analog Obstacle Avoider</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>Analog Obstacle Avoiding Robot</h4>
+
+                    <div class="project-content-text">
                         <p>A purely analog robot utilizing LM358 Op-Amps for logical decision making instead of
                             microcontrollers.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">Analog</span>
                             <span class="tag">Op-Amps</span>
                             <span class="tag">Circuitry</span>
                         </div>
-                        <div class="project-details">
-                            <h3>Analog Obstacle Avoiding Robot</h3>
-                            <p>As part of my S4 Analog Circuits-2 course, I designed and built a collision-avoiding
-                                robot. The entire circuit design, logic, and assembly were done by me from scratch
-                                without the use of microcontrollers.</p>
-                            <h4>Hardware & Control</h4>
-                            <p>The robot uses two gear motors and a freewheel for movement, controlled by LM358 (op-amp
-                                as comparator), an L293D motor driver, a 555 timer IC, and three pairs of IR LEDs and
-                                receivers for obstacle detection.</p>
-                            <p>To avoid jerks caused by motor current fluctuations, power is separated: a 7805 regulator
-                                powers the control section from a 9V supply, while the motors are driven by an 18650
-                                battery through the L293D driver. The motor speed can be adjusted precisely using the
-                                555 timer.</p>
-                            <h4>Binary Logic Design</h4>
-                            <p>For obstacle detection, I developed a simple but powerful binary logic using the three IR
-                                sensor pairs (1 = object detected, 0 = no object, X = either).<br>
-                                <em>MSB: Front sensor | Middle bit: Left sensor | LSB: Right sensor</em>
-                            </p>
-                            <ul>
-                                <li><strong>100</strong> - Robot stops</li>
-                                <li><strong>X10</strong> - Robot turns strictly right until clear</li>
-                                <li><strong>X01</strong> - Robot turns strictly left until clear</li>
-                            </ul>
-                            <h4>Development Journey</h4>
-                            <p>The final design came after intensive brainstorming and testing. I tried three different
-                                op-amps before finding that the LM358 worked best as a comparator here. For motor
-                                control, I experimented with MOSFETs and transistors, but they caused heating and wasted
-                                power, prompting a switch to the L293D. Because the system is fully analog, the response
-                                is actually faster and more accurate compared to traditional microcontroller setups!</p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>Analog Obstacle Avoiding Robot</h3>
+                        <p>As part of my S4 Analog Circuits-2 course, I designed and built a collision-avoiding robot.
+                            The entire circuit design, logic, and assembly were done by me from scratch without the use
+                            of microcontrollers.</p>
+                        <h4>Hardware & Control</h4>
+                        <p>The robot uses two gear motors and a freewheel for movement, controlled by LM358 (op-amp as
+                            comparator), an L293D motor driver, a 555 timer IC, and three pairs of IR LEDs and receivers
+                            for obstacle detection.</p>
+                        <p>To avoid jerks caused by motor current fluctuations, power is separated: a 7805 regulator
+                            powers the control section from a 9V supply, while the motors are driven by an 18650 battery
+                            through the L293D driver. The motor speed can be adjusted precisely using the 555 timer.</p>
+                        <h4>Binary Logic Design</h4>
+                        <p>For obstacle detection, I developed a simple but powerful binary logic using the three IR
+                            sensor pairs (1 = object detected, 0 = no object, X = either).<br>
+                            <em>MSB: Front sensor | Middle bit: Left sensor | LSB: Right sensor</em>
+                        </p>
+                        <ul>
+                            <li><strong>100</strong> - Robot stops</li>
+                            <li><strong>X10</strong> - Robot turns strictly right until clear</li>
+                            <li><strong>X01</strong> - Robot turns strictly left until clear</li>
+                        </ul>
+                        <h4>Development Journey</h4>
+                        <p>The final design came after intensive brainstorming and testing. I tried three different
+                            op-amps before finding that the LM358 worked best as a comparator here. For motor control, I
+                            experimented with MOSFETs and transistors, but they caused heating and wasted power,
+                            prompting a switch to the L293D. Because the system is fully analog, the response is
+                            actually faster and more accurate compared to traditional microcontroller setups!</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>📡 Custom IR Transceiver</h3>
+                    <h3 class="project-title">📡 Custom IR Transceiver</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>Self-Made IR Transmitter & Receiver</h4>
+
+                    <div class="project-content-text">
                         <p>A custom designed and built infrared transmission system using astable multivibrators for
                             wireless communication.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">Wireless Protocol</span>
                             <span class="tag">Optoelectronics</span>
                         </div>
-                        <div class="project-details">
-                            <h3>Custom IR Transmitter & Receiver</h3>
-                            <p>As a team, we built a fully functional infrared communication system from scratch without
-                                relying on pre-built transceiver modules.</p>
-                            <h4>The Transmitter</h4>
-                            <ul>
-                                <li>Built an astable multivibrator utilizing two 2N2222 transistors to generate
-                                    high-frequency square wave signals.</li>
-                                <li>One output connects to a visible LED to indicate the current frequency visually,
-                                    while the other connects to an IR LED via a voltage divider to provide it with
-                                    balanced power.</li>
-                                <li>Used a DPDT switch to toggle between two distinct frequencies dynamically using 30kΩ
-                                    and 100kΩ resistors.</li>
-                            </ul>
-                            <h4>The Receiver</h4>
-                            <ul>
-                                <li>Utilized a BS0038 IR receiver connected to a 2N2222 transistor and an LED to detect
-                                    and amplify the incoming infrared signal.</li>
-                            </ul>
-                            <h4>Outcomes</h4>
-                            <p>Throughout this process, we deeply learned the intricate design and behavior of an
-                                astable multivibrator for signal generation, and enhanced our practical circuit design
-                                skills through iterative problem-solving.</p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>Custom IR Transmitter & Receiver</h3>
+                        <p>As a team, we built a fully functional infrared communication system from scratch without
+                            relying on pre-built transceiver modules.</p>
+                        <h4>The Transmitter</h4>
+                        <ul>
+                            <li>Built an astable multivibrator utilizing two 2N2222 transistors to generate
+                                high-frequency square wave signals.</li>
+                            <li>One output connects to a visible LED to indicate the current frequency visually, while
+                                the other connects to an IR LED via a voltage divider to provide it with balanced power.
+                            </li>
+                            <li>Used a DPDT switch to toggle between two distinct frequencies dynamically using 30kΩ and
+                                100kΩ resistors.</li>
+                        </ul>
+                        <h4>The Receiver</h4>
+                        <ul>
+                            <li>Utilized a BS0038 IR receiver connected to a 2N2222 transistor and an LED to detect and
+                                amplify the incoming infrared signal.</li>
+                        </ul>
+                        <h4>Outcomes</h4>
+                        <p>Throughout this process, we deeply learned the intricate design and behavior of an astable
+                            multivibrator for signal generation, and enhanced our practical circuit design skills
+                            through iterative problem-solving.</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>⏱️ Analog Stopwatch</h3>
+                    <h3 class="project-title">⏱️ Analog Stopwatch</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>Analog Stopwatch</h4>
+
+                    <div class="project-content-text">
                         <p>An intricate electronic stopwatch engineered completely from the ground up using fundamental
                             analog components.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">Timing Circuits</span>
                             <span class="tag">Analog Design</span>
                         </div>
-                        <div class="project-details">
-                            <h3>Analog Stopwatch</h3>
-                            <p>An intricate electronic stopwatch engineered completely from the ground up using
-                                fundamental analog components. It serves as an exploration into high-precision timing
-                                circuits, logic gates, and counter manipulation without relying on any modern
-                                programmable microcontroller units.</p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>Analog Stopwatch</h3>
+                        <p>An intricate electronic stopwatch engineered completely from the ground up using fundamental
+                            analog components. It serves as an exploration into high-precision timing circuits, logic
+                            gates, and counter manipulation without relying on any modern programmable microcontroller
+                            units.</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>🛠️ DIY Driller</h3>
+                    <h3 class="project-title">🛠️ DIY Driller</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>DIY Custom Driller</h4>
+
+                    <div class="project-content-text">
                         <p>A sturdy, self-made drilling machine crafted specifically for personal electronics
                             prototyping and PCB making.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">DIY Tool</span>
                             <span class="tag">Mechanical</span>
                             <span class="tag">Upcycling</span>
                         </div>
-                        <div class="project-details">
-                            <h3>Custom DIY Driller</h3>
-                            <p>Back in May 2021, as part of my electronics hobby, I realized I didn’t have a PCB driller
-                                on hand, so I decided to make one myself using an RS-775 DC motor (24V). I repurposed
-                                some extra leftover PVC pipe from the construction of my home for the casing. This
-                                project allowed me to channel my creativity and refine my practical skills.</p>
-                            <h4>System Design</h4>
-                            <ul>
-                                <li><strong>Power Source:</strong> 24V 2.5A adapter.</li>
-                                <li><strong>Switching Mechanism:</strong> Equipped with a main power switch, a DPDT
-                                    switch to toggle between speed-controlled operation (via voltage regulation) and max
-                                    power, and a second DPDT switch to selectively reverse rotation
-                                    (clockwise/anti-clockwise).</li>
-                                <li><strong>Speed Controller:</strong> Built using a 2SC5200 transistor and a 10k
-                                    potentiometer for precision control.</li>
-                                <li><strong>Compact Enclosure:</strong> The circuit was specifically built to fit neatly
-                                    within the PVC pipe handle, ensuring every component has sufficient space to
-                                    function safely without crowding.</li>
-                            </ul>
-                            <p>What started as a solution to a simple need turned into a fun and rewarding exercise in
-                                electrical layout, with the added bonus of repurposing materials directly from home
-                                construction.</p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>Custom DIY Driller</h3>
+                        <p>Back in May 2021, as part of my electronics hobby, I realized I didn’t have a PCB driller on
+                            hand, so I decided to make one myself using an RS-775 DC motor (24V). I repurposed some
+                            extra leftover PVC pipe from the construction of my home for the casing. This project
+                            allowed me to channel my creativity and refine my practical skills.</p>
+                        <h4>System Design</h4>
+                        <ul>
+                            <li><strong>Power Source:</strong> 24V 2.5A adapter.</li>
+                            <li><strong>Switching Mechanism:</strong> Equipped with a main power switch, a DPDT switch
+                                to toggle between speed-controlled operation (via voltage regulation) and max power, and
+                                a second DPDT switch to selectively reverse rotation (clockwise/anti-clockwise).</li>
+                            <li><strong>Speed Controller:</strong> Built using a 2SC5200 transistor and a 10k
+                                potentiometer for precision control.</li>
+                            <li><strong>Compact Enclosure:</strong> The circuit was specifically built to fit neatly
+                                within the PVC pipe handle, ensuring every component has sufficient space to function
+                                safely without crowding.</li>
+                        </ul>
+                        <p>What started as a solution to a simple need turned into a fun and rewarding exercise in
+                            electrical layout, with the added bonus of repurposing materials directly from home
+                            construction.</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
                 <div class="project-card glass-card">
-                    <div class="project-overlay">
-                        <h3>💡 Smart Electric Meter</h3>
+                    <h3 class="project-title">💡 Smart Electric Meter</h3>
+
+                    <!-- 🖼️ ADD YOUR PHOTO HERE -->
+                    <div class="project-image-container">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image">
                     </div>
-                    <div class="project-content">
-                        <h4>Smart Electric Meter</h4>
+
+                    <div class="project-content-text">
                         <p>An innovative smart meter prototype built in 12th grade that won 3rd prize in the District
                             Science Exhibition.</p>
-                        <span class="read-more-btn">Read full details <i class="fa-solid fa-arrow-right"></i></span>
                         <div class="project-tags">
                             <span class="tag">Innovation</span>
                             <span class="tag">Award Winning</span>
                         </div>
-                        <div class="project-details">
-                            <h3>Smart Electric Meter</h3>
-                            <p>During my 12th grade, I conceptualized and developed a fully working prototype of a
-                                "Smart Electric Meter" to represent my school at a highly competitive science
-                                exhibition.</p>
-                            <p>This project was aimed at solving real-world power monitoring issues by making electric
-                                consumption tracking more accessible, transparent, and intelligent.</p>
-                            <h4>Achievement</h4>
-                            <p>The project received significant attention from judges and was officially awarded the
-                                <strong>3rd Prize in the District Science Exhibition</strong>. This accomplishment was a
-                                major milestone that cemented my passion for electronics engineering and innovative
-                                practical design early on.</p>
-                        </div>
+                        <span class="read-more-btn">Click for more details <i
+                                class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details">
+                        <h3>Smart Electric Meter</h3>
+                        <p>During my 12th grade, I conceptualized and developed a fully working prototype of a "Smart
+                            Electric Meter" to represent my school at a highly competitive science exhibition.</p>
+                        <p>This project was aimed at solving real-world power monitoring issues by making electric
+                            consumption tracking more accessible, transparent, and intelligent.</p>
+                        <h4>Achievement</h4>
+                        <p>The project received significant attention from judges and was officially awarded the
+                            <strong>3rd Prize in the District Science Exhibition</strong>. This accomplishment was a
+                            major milestone that cemented my passion for electronics engineering and innovative
+                            practical design early on.</p>
+
+                        <!-- 🔗 ADD YOUR LINKEDIN LINK HERE -->
+                        <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
+                            style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
                 </div>
 
