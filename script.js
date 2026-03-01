@@ -9,6 +9,20 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Interactive Chip Background tracking
+const interactiveBg = document.querySelector('.interactive-bg');
+document.addEventListener('mousemove', (e) => {
+    if (interactiveBg) {
+        // Calculate the mouse position as a percentage of the window size
+        const x = (e.clientX / window.innerWidth) * 100;
+        const y = (e.clientY / window.innerHeight) * 100;
+
+        // Update the CSS variables directly on the element
+        interactiveBg.style.setProperty('--mouse-x', `${x}%`);
+        interactiveBg.style.setProperty('--mouse-y', `${y}%`);
+    }
+});
+
 // Scroll Reveal Animation (Intersection Observer)
 const revealElements = document.querySelectorAll('.reveal');
 
@@ -17,7 +31,7 @@ const revealOptions = {
     rootMargin: "0px 0px -50px 0px"
 };
 
-const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+const revealOnScroll = new IntersectionObserver(function (entries, observer) {
     entries.forEach(entry => {
         if (!entry.isIntersecting) {
             return;
