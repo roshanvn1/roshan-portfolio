@@ -23,15 +23,6 @@ const revealOnScroll = new IntersectionObserver(function(entries, observer) {
             return;
         } else {
             entry.target.classList.add('active');
-            
-            // If the element contains skills, animate the progressive bars
-            if (entry.target.querySelector('.skill-bar .fill')) {
-                const bars = entry.target.querySelectorAll('.skill-bar .fill');
-                bars.forEach(bar => {
-                    bar.style.transform = 'scaleX(1)';
-                });
-            }
-
             observer.unobserve(entry.target);
         }
     });
@@ -41,15 +32,46 @@ revealElements.forEach(el => {
     revealOnScroll.observe(el);
 });
 
-// Animate bars that might be visible on load without reaching a new scroll target
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        const visibleSection = document.querySelector('.skills.active');
-        if(visibleSection) {
-            const bars = visibleSection.querySelectorAll('.skill-bar .fill');
-            bars.forEach(bar => {
-                bar.style.transform = 'scaleX(1)';
-            });
-        }
-    }, 500);
+// Modal System Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Inject Modal HTML into the DOM
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    modalOverlay.innerHTML = `
+        <div class="modal-content-box window-glass">
+            <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body"></div>
+        </div>
+    `;
+    document.body.appendChild(modalOverlay);
+
+    const modalClose = modalOverlay.querySelector('.modal-close');
+    const modalBody = modalOverlay.querySelector('.modal-body');
+
+    // Add click listeners to project cards
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const detailsElement = card.querySelector('.project-details');
+            if (detailsElement) {
+                // Transfer hidden HTML to the modal exactly as formatted
+                modalBody.innerHTML = detailsElement.innerHTML;
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Stop background scrolling
+            }
+        });
+    });
+
+    // Close logic
+    const closeModal = () => {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto'; // Restore background scrolling
+    };
+
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
 });
