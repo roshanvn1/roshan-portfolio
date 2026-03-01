@@ -30,10 +30,11 @@
 
 html {
     scroll-behavior: smooth;
+    background-color: var(--clr-bg);
 }
 
 body {
-    background-color: var(--clr-bg);
+    background-color: transparent;
     color: var(--clr-text);
     font-family: var(--font-body);
     line-height: 1.6;
