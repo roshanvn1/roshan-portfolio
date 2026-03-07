@@ -172,14 +172,25 @@ function initLines() {
                 cx = isLeft ? chip.left : chip.right;
                 path.push({ x: cx, y: cy });
 
-                // Assign 50/50 Neon Blue or Gold color
-                const color = Math.random() > 0.5 ? '#00f0ff' : '#FFD700';
+                // Generate identical paths but add paired assignments
+                const pathCyan = JSON.parse(JSON.stringify(path));
+                const pathGold = JSON.parse(JSON.stringify(path));
+
+                // Add to lines array with specific offset tracking tags
+                lines.push({
+                    path: pathCyan,
+                    length: calculatePathLength(pathCyan),
+                    delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6,
+                    color: '#00f0ff',
+                    offset: -3 // Shift 3 pixels left/up
+                });
 
                 lines.push({
-                    path: path,
-                    length: calculatePathLength(path),
-                    delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6, // Delay based on scroll depth
-                    color: color
+                    path: pathGold,
+                    length: calculatePathLength(pathGold),
+                    delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6,
+                    color: '#FFD700',
+                    offset: 3 // Shift 3 pixels right/down
                 });
             }
         }
@@ -227,14 +238,13 @@ function draw() {
         ctx.strokeStyle = line.color;
         ctx.shadowColor = line.color;
 
-        ctx.beginPath();
-        ctx.moveTo(line.path[0].x, line.path[0].y);
-
         let targetLength = line.length * p;
         let currentLength = 0;
-
         let drawEndNode = false;
         let endNodePos = null;
+
+        ctx.beginPath();
+        let startedDrawing = false; // Flag to prevent offset plotting before the first move
 
         for (let i = 1; i < line.path.length; i++) {
             const p1 = line.path[i - 1];
@@ -244,27 +254,41 @@ function draw() {
             const dy = p2.y - p1.y;
             const segmentLength = Math.sqrt(dx * dx + dy * dy);
 
+            // Calculate Normal Vector for Perpendicular Offset
+            let offsetX = 0;
+            let offsetY = 0;
+            if (segmentLength > 0) {
+                // Normal vector [-dy, dx] normalized, multiplied by offset radius
+                offsetX = (-dy / segmentLength) * line.offset;
+                offsetY = (dx / segmentLength) * line.offset;
+            }
+
+            if (!startedDrawing) {
+                ctx.moveTo(p1.x + offsetX, p1.y + offsetY);
+                startedDrawing = true;
+            }
+
             if (currentLength + segmentLength <= targetLength) {
-                // Draw full segment
-                ctx.lineTo(p2.x, p2.y);
+                // Draw full segment with calculated orthogonal offset
+                ctx.lineTo(p2.x + offsetX, p2.y + offsetY);
                 currentLength += segmentLength;
 
                 // Track if we need to draw an end node
                 if (i === line.path.length - 1 && p >= 0.99) {
                     drawEndNode = true;
-                    endNodePos = { x: p2.x, y: p2.y };
+                    endNodePos = { x: p2.x + offsetX, y: p2.y + offsetY };
                 }
             } else {
                 // Interpolate partial segment
                 const ratio = (targetLength - currentLength) / segmentLength;
                 const intermediateX = p1.x + dx * ratio;
                 const intermediateY = p1.y + dy * ratio;
-                ctx.lineTo(intermediateX, intermediateY);
+                ctx.lineTo(intermediateX + offsetX, intermediateY + offsetY);
 
                 ctx.stroke(); // STROKE THE LINE FIRST TO AVOID THE BUG
 
                 // Draw leading glow/node at the current drawing head
-                drawNode(intermediateX, intermediateY, line.color);
+                drawNode(intermediateX + offsetX, intermediateY + offsetY, line.color);
                 break;
             }
         }
@@ -329,12 +353,27 @@ function generateHeroLines() {
             }
             path.push({ x: cx, y: cy });
         }
+
+        const pathCyan = JSON.parse(JSON.stringify(path));
+        const pathGold = JSON.parse(JSON.stringify(path));
+        const sharedDelay = Math.random() * 0.8;
+        const sharedSpeed = 0.003 + Math.random() * 0.004;
+
         heroLines.push({
-            path: path,
-            length: calculatePathLength(path),
-            delay: Math.random() * 0.8, // Faster stagger
-            speed: 0.003 + Math.random() * 0.004, // Increased speed greatly so it draws quickly initially
-            color: Math.random() > 0.5 ? '#00f0ff' : '#FFD700'
+            path: pathCyan,
+            length: calculatePathLength(pathCyan),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#00f0ff',
+            offset: -3
+        });
+        heroLines.push({
+            path: pathGold,
+            length: calculatePathLength(pathGold),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#FFD700',
+            offset: 3
         });
     }
 
@@ -359,12 +398,27 @@ function generateHeroLines() {
             }
             path.push({ x: cx, y: cy });
         }
+
+        const pathCyan = JSON.parse(JSON.stringify(path));
+        const pathGold = JSON.parse(JSON.stringify(path));
+        const sharedDelay = Math.random() * 0.8;
+        const sharedSpeed = 0.003 + Math.random() * 0.004;
+
         heroLines.push({
-            path: path,
-            length: calculatePathLength(path),
-            delay: Math.random() * 0.8,
-            speed: 0.003 + Math.random() * 0.004,
-            color: Math.random() > 0.5 ? '#00f0ff' : '#FFD700'
+            path: pathCyan,
+            length: calculatePathLength(pathCyan),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#00f0ff',
+            offset: -3
+        });
+        heroLines.push({
+            path: pathGold,
+            length: calculatePathLength(pathGold),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#FFD700',
+            offset: 3
         });
     }
 }
@@ -394,13 +448,13 @@ function animateHero() {
         heroCtx.strokeStyle = line.color;
         heroCtx.shadowColor = line.color;
 
-        heroCtx.beginPath();
-        heroCtx.moveTo(line.path[0].x, line.path[0].y);
-
         let targetLength = line.length * p;
         let currentLength = 0;
         let drawEndNode = false;
         let endNodePos = null;
+
+        heroCtx.beginPath();
+        let startedDrawing = false;
 
         for (let i = 1; i < line.path.length; i++) {
             const p1 = line.path[i - 1];
@@ -410,23 +464,36 @@ function animateHero() {
             const dy = p2.y - p1.y;
             const segmentLength = Math.sqrt(dx * dx + dy * dy);
 
+            // Calculate Normal Vector for Perpendicular Offset
+            let offsetX = 0;
+            let offsetY = 0;
+            if (segmentLength > 0) {
+                offsetX = (-dy / segmentLength) * line.offset;
+                offsetY = (dx / segmentLength) * line.offset;
+            }
+
+            if (!startedDrawing) {
+                heroCtx.moveTo(p1.x + offsetX, p1.y + offsetY);
+                startedDrawing = true;
+            }
+
             if (currentLength + segmentLength <= targetLength) {
-                heroCtx.lineTo(p2.x, p2.y);
+                heroCtx.lineTo(p2.x + offsetX, p2.y + offsetY);
                 currentLength += segmentLength;
 
                 if (i === line.path.length - 1 && p >= 0.99) {
                     drawEndNode = true;
-                    endNodePos = { x: p2.x, y: p2.y };
+                    endNodePos = { x: p2.x + offsetX, y: p2.y + offsetY };
                 }
             } else {
                 const ratio = (targetLength - currentLength) / segmentLength;
                 const intermediateX = p1.x + dx * ratio;
                 const intermediateY = p1.y + dy * ratio;
-                heroCtx.lineTo(intermediateX, intermediateY);
+                heroCtx.lineTo(intermediateX + offsetX, intermediateY + offsetY);
 
                 heroCtx.stroke(); // STROKE BEFORE DRAWING NODE
 
-                drawHeroNode(intermediateX, intermediateY, line.color);
+                drawHeroNode(intermediateX + offsetX, intermediateY + offsetY, line.color);
                 currentLength += segmentLength;
                 break;
             }
