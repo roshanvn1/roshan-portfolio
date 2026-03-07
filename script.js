@@ -89,3 +89,161 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeModal();
     });
 });
+
+// Interactive Circuit Background Animation
+const canvas = document.getElementById('circuit-bg');
+const ctx = canvas.getContext('2d');
+
+let width, height;
+let lines = [];
+const gridSize = 30; // Spacing logic for circuit traces
+
+function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    initLines();
+}
+
+// Generate the paths for the "circuit" traces
+function initLines() {
+    lines = [];
+    // Generate ~30-40 lines depending on screen width
+    const numLines = Math.floor(width / gridSize);
+
+    for (let i = 0; i < numLines; i++) {
+        const startX = Math.floor(Math.random() * (width / gridSize)) * gridSize;
+        // Lines can start anywhere in the top 20% of the screen
+        const startY = Math.random() * (height * 0.2);
+
+        const path = [];
+        path.push({ x: startX, y: startY });
+
+        let currentX = startX;
+        let currentY = startY;
+
+        // Procedurally generate the trace moving downwards
+        const numSegments = 5 + Math.floor(Math.random() * 8);
+        for (let j = 0; j < numSegments; j++) {
+            // Pick a direction: 0 = straight down, 1 = right, 2 = left, 3 = diagonal right, 4 = diagonal left
+            const dir = Math.floor(Math.random() * 5);
+            const distance = (2 + Math.floor(Math.random() * 4)) * gridSize;
+
+            if (dir === 0) {
+                currentY += distance;
+            } else if (dir === 1) {
+                currentX += distance;
+            } else if (dir === 2) {
+                currentX -= distance;
+            } else if (dir === 3) {
+                currentX += distance;
+                currentY += distance;
+            } else if (dir === 4) {
+                currentX -= distance;
+                currentY += distance;
+            }
+            // Clamp coordinates to stay somewhat within screen bounds
+            currentX = Math.max(0, Math.min(width, currentX));
+            path.push({ x: currentX, y: currentY });
+        }
+
+        lines.push({
+            path: path,
+            length: calculatePathLength(path),
+            delay: Math.random() * 0.3 // Random offset for slightly organic feeling
+        });
+    }
+    draw();
+}
+
+function calculatePathLength(path) {
+    let len = 0;
+    for (let i = 1; i < path.length; i++) {
+        const dx = path[i].x - path[i - 1].x;
+        const dy = path[i].y - path[i - 1].y;
+        len += Math.sqrt(dx * dx + dy * dy);
+    }
+    return len;
+}
+
+// Update drawing based on scroll
+let scrollProgress = 0;
+window.addEventListener('scroll', () => {
+    // Calculate total scrollable height
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress = window.scrollY / scrollHeight;
+    // Add small buffer so it doesn't need to reach 100% to finish drawing
+    scrollProgress = Math.min(1.0, scrollProgress * 1.1);
+
+    requestAnimationFrame(draw);
+});
+
+function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    // Cyber/Neon styling
+    ctx.strokeStyle = '#00f0ff';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = '#00f0ff';
+
+    lines.forEach(line => {
+        // Adjust individual line progress based on random delay
+        let p = Math.max(0, (scrollProgress - line.delay) / (1 - line.delay));
+        if (p <= 0) return; // Not started drawing yet
+
+        ctx.beginPath();
+        ctx.moveTo(line.path[0].x, line.path[0].y);
+
+        let targetLength = line.length * p;
+        let currentLength = 0;
+
+        for (let i = 1; i < line.path.length; i++) {
+            const p1 = line.path[i - 1];
+            const p2 = line.path[i];
+
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            const segmentLength = Math.sqrt(dx * dx + dy * dy);
+
+            if (currentLength + segmentLength <= targetLength) {
+                // Draw full segment
+                ctx.lineTo(p2.x, p2.y);
+                currentLength += segmentLength;
+
+                // Draw an end node if this is the absolute end of the line and the trace has finished
+                if (i === line.path.length - 1 && p >= 0.99) {
+                    drawNode(p2.x, p2.y);
+                }
+            } else {
+                // Interpolate partial segment
+                const ratio = (targetLength - currentLength) / segmentLength;
+                const intermediateX = p1.x + dx * ratio;
+                const intermediateY = p1.y + dy * ratio;
+                ctx.lineTo(intermediateX, intermediateY);
+
+                // Draw leading glow/node at the current drawing head
+                drawNode(intermediateX, intermediateY);
+                break;
+            }
+        }
+        ctx.stroke();
+    });
+}
+
+function drawNode(x, y) {
+    ctx.save();
+    ctx.fillStyle = '#00f0ff';
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+}
+
+window.addEventListener('resize', resize);
+// Initialize canvas size and traces
+resize();
+

@@ -274,12 +274,24 @@ a {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
     background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
             rgba(0, 240, 255, 0.10),
             transparent 40%);
     transition: background 0.1s ease-out;
     /* Optional smooth transition */
+}
+
+/* Background Animated Canvas */
+#circuit-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.8;
 }
 
 /* Background Animated Shapes */
