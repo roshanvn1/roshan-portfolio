@@ -106,69 +106,85 @@ function resize() {
     initLines();
 }
 
-// Generate the paths for the "circuit" traces
+// Generate the paths for the "circuit" traces targeting DOM chips
 function initLines() {
     lines = [];
-    // We only want ~6 major structural "wires", 3 on the left, 3 on the right
-    const numLines = 6;
-    const gSize = 40; // Larger grid for thicker trace feel
+    const gSize = 25; // Grid size for rendering corners
 
-    // Define a central "safe zone" width where lines cannot cross, simulating the main container wrapper (max ~1200px)
-    const contentWidth = Math.min(1200, width * 0.9);
-    const safeLeft = (width / 2) - (contentWidth / 2) - 40; // 40px padding away from container
-    const safeRight = (width / 2) + (contentWidth / 2) + 40;
+    // 1. Identify "Chip" Targets in the DOM
+    const targets = [
+        document.querySelector('#about .container'),
+        document.querySelector('#skills .container'),
+        document.querySelector('#projects .container'),
+        document.querySelector('#contact .container')
+    ];
 
-    for (let i = 0; i < numLines; i++) {
-        const isLeft = i % 2 === 0; // Alternate left/right side
-        const startX = isLeft ? 0 : width; // Begin purely at the edges
+    // Read bounding boxes globally relative to the document
+    const chipBoxes = targets.filter(el => el).map(el => {
+        const rect = el.getBoundingClientRect();
+        return {
+            top: rect.top + window.scrollY,
+            bottom: rect.bottom + window.scrollY,
+            left: rect.left + window.scrollX,
+            right: rect.right + window.scrollX,
+            height: rect.height
+        };
+    });
 
-        // Spawn them distributed down the top 50% of the canvas height to scroll along
-        const startY = Math.random() * (height * 0.5);
+    // 2. Generate targeting wires for each chip
+    chipBoxes.forEach((chip, index) => {
+        // We want 2 wires connecting to the left side, and 2 connecting to the right side of EACH chip
+        const wiresPerSide = 2;
 
-        const path = [];
-        path.push({ x: startX, y: startY });
+        for (let side = 0; side < 2; side++) {
+            const isLeft = (side === 0);
 
-        let currentX = startX;
-        let currentY = startY;
+            for (let i = 0; i < wiresPerSide; i++) {
+                const path = [];
 
-        // Route them organically downwards and inwards, but stop at the safe zone
-        const numSegments = 5 + Math.floor(Math.random() * 4);
-        for (let j = 0; j < numSegments; j++) {
-            // Priority: 0 = Down, 1 = Inward, 2 = Down, 3 = Diagonal Inward-Down
-            const dir = Math.floor(Math.random() * 4);
-            const distance = (2 + Math.floor(Math.random() * 6)) * gSize;
+                // Spawn on extreme edge of screen
+                const startX = isLeft ? 0 : width;
+                // Spawn somewhere significantly above the chip to allow scrolling length
+                const startY = Math.max(0, chip.top - (height * 0.3) - (Math.random() * height * 0.4));
 
-            if (dir === 0 || dir === 2) {
+                path.push({ x: startX, y: startY });
+
+                let cx = startX;
+                let cy = startY;
+
                 // Move down
-                currentY += distance;
-            } else if (dir === 1) {
-                // Move inward horizontally
-                currentX += (isLeft ? distance : -distance);
-            } else if (dir === 3) {
-                // Diagonal inward-down
-                currentX += (isLeft ? distance : -distance);
-                currentY += distance;
+                const downDist1 = (chip.top - startY) * (0.3 + Math.random() * 0.4);
+                cy += downDist1;
+                path.push({ x: cx, y: cy });
+
+                // Move inwards roughly half way
+                const inwardDist1 = (isLeft ? (chip.left / 2) : (width - chip.right) / 2) * (0.5 + Math.random() * 0.5);
+                cx += (isLeft ? inwardDist1 : -inwardDist1);
+                path.push({ x: cx, y: cy });
+
+                // Move down to align exactly with a specific "plug" point on the chip's side border
+                // Ensure it plugs somewhere uniquely along the chip's height
+                const plugY = chip.top + (chip.height * 0.2) + (chip.height * 0.6 * Math.random());
+                cy = plugY;
+                path.push({ x: cx, y: cy });
+
+                // Move precisely horizontally to intersect the chip's border!
+                cx = isLeft ? chip.left : chip.right;
+                path.push({ x: cx, y: cy });
+
+                // Assign 50/50 Neon Blue or Gold color
+                const color = Math.random() > 0.5 ? '#00f0ff' : '#FFD700';
+
+                lines.push({
+                    path: path,
+                    length: calculatePathLength(path),
+                    delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6, // Delay based on scroll depth
+                    color: color
+                });
             }
-
-            // ENFORCE SAFE ZONE
-            if (isLeft && currentX > safeLeft) {
-                currentX = safeLeft; // Cap it at the border
-            } else if (!isLeft && currentX < safeRight) {
-                currentX = safeRight; // Cap it at the border
-            }
-
-            // Ensure Y doesn't explode past reasonable bounds un-tracked
-            currentY = Math.min(height * 2.5, currentY);
-
-            path.push({ x: currentX, y: currentY });
         }
+    });
 
-        lines.push({
-            path: path,
-            length: calculatePathLength(path),
-            delay: (Math.random() * 0.2) + (i * 0.05) // Stagger their scroll emergence slowly
-        });
-    }
     draw();
 }
 
@@ -197,18 +213,19 @@ window.addEventListener('scroll', () => {
 function draw() {
     ctx.clearRect(0, 0, width, height);
 
-    // Cyber/Neon styling
-    ctx.strokeStyle = '#00f0ff';
+    // Dynamic styling
     ctx.lineWidth = 2;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.shadowBlur = 10;
-    ctx.shadowColor = '#00f0ff';
 
     lines.forEach(line => {
-        // Adjust individual line progress based on random delay
+        // Adjust individual line progress based on delay
         let p = Math.max(0, (scrollProgress - line.delay) / (1 - line.delay));
         if (p <= 0) return; // Not started drawing yet
+
+        ctx.strokeStyle = line.color;
+        ctx.shadowColor = line.color;
 
         ctx.beginPath();
         ctx.moveTo(line.path[0].x, line.path[0].y);
@@ -247,7 +264,7 @@ function draw() {
                 ctx.stroke(); // STROKE THE LINE FIRST TO AVOID THE BUG
 
                 // Draw leading glow/node at the current drawing head
-                drawNode(intermediateX, intermediateY);
+                drawNode(intermediateX, intermediateY, line.color);
                 break;
             }
         }
@@ -256,14 +273,14 @@ function draw() {
             ctx.stroke();
         }
         if (drawEndNode && endNodePos) {
-            drawNode(endNodePos.x, endNodePos.y);
+            drawNode(endNodePos.x, endNodePos.y, line.color);
         }
     });
 }
 
-function drawNode(x, y) {
+function drawNode(x, y, color) {
     ctx.save();
-    ctx.fillStyle = '#00f0ff';
+    ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, 4, 0, Math.PI * 2);
     ctx.fill();
@@ -316,7 +333,8 @@ function generateHeroLines() {
             path: path,
             length: calculatePathLength(path),
             delay: Math.random() * 0.8, // Faster stagger
-            speed: 0.003 + Math.random() * 0.004 // Increased speed greatly so it draws quickly initially
+            speed: 0.003 + Math.random() * 0.004, // Increased speed greatly so it draws quickly initially
+            color: Math.random() > 0.5 ? '#00f0ff' : '#FFD700'
         });
     }
 
@@ -345,7 +363,8 @@ function generateHeroLines() {
             path: path,
             length: calculatePathLength(path),
             delay: Math.random() * 0.8,
-            speed: 0.003 + Math.random() * 0.004
+            speed: 0.003 + Math.random() * 0.004,
+            color: Math.random() > 0.5 ? '#00f0ff' : '#FFD700'
         });
     }
 }
@@ -356,12 +375,10 @@ function animateHero() {
     heroTime += 1;
     heroCtx.clearRect(0, 0, heroWidth, heroHeight);
 
-    heroCtx.strokeStyle = '#00f0ff';
     heroCtx.lineWidth = 2;
     heroCtx.lineCap = 'round';
     heroCtx.lineJoin = 'round';
     heroCtx.shadowBlur = 12;
-    heroCtx.shadowColor = '#00f0ff';
 
     let allComplete = true; // Track completion
 
@@ -373,6 +390,9 @@ function animateHero() {
         if (p >= 1.0) p = 1.0; // Cap
 
         if (p === 0) return; // Do not draw if unstarted
+
+        heroCtx.strokeStyle = line.color;
+        heroCtx.shadowColor = line.color;
 
         heroCtx.beginPath();
         heroCtx.moveTo(line.path[0].x, line.path[0].y);
@@ -406,7 +426,7 @@ function animateHero() {
 
                 heroCtx.stroke(); // STROKE BEFORE DRAWING NODE
 
-                drawHeroNode(intermediateX, intermediateY);
+                drawHeroNode(intermediateX, intermediateY, line.color);
                 currentLength += segmentLength;
                 break;
             }
@@ -415,7 +435,7 @@ function animateHero() {
             heroCtx.stroke();
         }
         if (drawEndNode && endNodePos) {
-            drawHeroNode(endNodePos.x, endNodePos.y);
+            drawHeroNode(endNodePos.x, endNodePos.y, line.color);
         }
     });
 
@@ -424,9 +444,9 @@ function animateHero() {
     }
 }
 
-function drawHeroNode(x, y) {
+function drawHeroNode(x, y, color) {
     heroCtx.save();
-    heroCtx.fillStyle = '#00f0ff';
+    heroCtx.fillStyle = color;
     heroCtx.beginPath();
     heroCtx.arc(x, y, 5, 0, Math.PI * 2);
     heroCtx.fill();
