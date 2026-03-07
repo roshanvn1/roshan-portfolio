@@ -300,8 +300,8 @@ function generateHeroLines() {
         heroLines.push({
             path: path,
             length: calculatePathLength(path),
-            delay: Math.random(),
-            speed: 0.001 + Math.random() * 0.002
+            delay: Math.random() * 2, // Wider delay spread
+            speed: 0.0003 + Math.random() * 0.0005 // Exceedingly slow drawing
         });
     }
 
@@ -329,8 +329,8 @@ function generateHeroLines() {
         heroLines.push({
             path: path,
             length: calculatePathLength(path),
-            delay: Math.random(),
-            speed: 0.001 + Math.random() * 0.002
+            delay: Math.random() * 2,
+            speed: 0.0003 + Math.random() * 0.0005
         });
     }
 }
@@ -348,10 +348,16 @@ function animateHero() {
     heroCtx.shadowBlur = 12;
     heroCtx.shadowColor = '#00f0ff';
 
+    let allComplete = true; // Track completion
+
     heroLines.forEach(line => {
-        // Loop progress between 0 and 1 continuously
-        let p = ((heroTime * line.speed) + line.delay) % 1.5; // Mod 1.5 adds a pause at the end
-        if (p > 1.0) p = 1.0;
+        // Line progress increments strictly up to 1.0 (no looping)
+        let p = (heroTime * line.speed) - line.delay;
+        if (p < 0) p = 0; // Waiting for delay
+        if (p < 1.0) allComplete = false; // Still drawing
+        if (p >= 1.0) p = 1.0; // Cap
+
+        if (p === 0) return; // Do not draw if unstarted
 
         heroCtx.beginPath();
         heroCtx.moveTo(line.path[0].x, line.path[0].y);
@@ -386,6 +392,7 @@ function animateHero() {
                 heroCtx.stroke(); // STROKE BEFORE DRAWING NODE
 
                 drawHeroNode(intermediateX, intermediateY);
+                currentLength += segmentLength;
                 break;
             }
         }
@@ -397,7 +404,9 @@ function animateHero() {
         }
     });
 
-    requestAnimationFrame(animateHero);
+    if (!allComplete) {
+        requestAnimationFrame(animateHero);
+    }
 }
 
 function drawHeroNode(x, y) {

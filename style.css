@@ -14,8 +14,8 @@
     --clr-text-muted: #94a3b8;
 
     /* Glassmorphism */
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(20, 25, 35, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.15);
 
     /* Typography */
     --font-heading: 'Space Grotesk', sans-serif;
@@ -226,6 +226,10 @@ a {
     width: 100%;
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 #hero-canvas {
@@ -252,6 +256,7 @@ a {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
+    text-align: center;
     background: linear-gradient(135deg, #fff, #94a3b8);
     -webkit-background-clip: text;
     background-clip: text;
@@ -272,6 +277,7 @@ a {
 
 .hero-btns {
     display: flex;
+    justify-content: center;
     gap: 1.5rem;
 }
 
@@ -450,6 +456,7 @@ a {
     color: var(--clr-primary);
     text-align: center;
     margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 .project-image-container {
