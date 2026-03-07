@@ -103,6 +103,9 @@ function resize() {
     height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
+    if (typeof heroCanvas !== 'undefined' && heroCanvas) {
+        initHeroCanvas();
+    }
     initLines();
 }
 
@@ -114,6 +117,19 @@ function initLines() {
     // 1. Identify "Chip" Targets in the DOM
     const heroBox = document.querySelector('.hero-content').getBoundingClientRect();
     const heroCenterY = heroBox.top + window.scrollY + (heroBox.height / 2);
+
+    // Grab endpoints from hero lines
+    const leftHeroEndpoints = [];
+    const rightHeroEndpoints = [];
+    if (typeof heroLines !== 'undefined' && heroLines.length > 0) {
+        heroLines.forEach(hLine => {
+            if (hLine.color === '#00f0ff') {
+                const endPt = hLine.path[hLine.path.length - 1];
+                if (endPt.x < width / 2) leftHeroEndpoints.push(endPt);
+                else rightHeroEndpoints.push(endPt);
+            }
+        });
+    }
 
     const targets = [
         document.querySelector('#about .container'),
@@ -146,10 +162,16 @@ function initLines() {
                 const path = [];
 
                 // Spawn EXACTLY where the hero lines end!
-                // The hero lines travel inwards and typically stop ~35% and ~65% of the screen width.
-                // We'll spawn our scroll lines from those boundary edges at the center height to link them.
-                const startX = isLeft ? (width * 0.35) : (width * 0.65);
-                const startY = heroCenterY;
+                let startX, startY;
+                const endpointsList = isLeft ? leftHeroEndpoints : rightHeroEndpoints;
+                if (endpointsList.length > 0) {
+                    const pt = endpointsList[Math.floor(Math.random() * endpointsList.length)];
+                    startX = pt.x;
+                    startY = pt.y;
+                } else {
+                    startX = isLeft ? (width * 0.35) : (width * 0.65);
+                    startY = heroCenterY;
+                }
 
                 path.push({ x: startX, y: startY });
 
@@ -190,7 +212,7 @@ function initLines() {
                     path: pathCyan,
                     length: calculatePathLength(pathCyan),
                     delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6,
-                    color: '#00f0ff',
+                    color: 'rgba(0, 240, 255, 0.4)',
                     offset: -3 // Shift 3 pixels left/up
                 });
 
@@ -198,7 +220,7 @@ function initLines() {
                     path: pathGold,
                     length: calculatePathLength(pathGold),
                     delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6,
-                    color: '#FFD700',
+                    color: 'rgba(255, 215, 0, 0.4)',
                     offset: 3 // Shift 3 pixels right/down
                 });
             }
@@ -241,17 +263,16 @@ function draw() {
     ctx.lineWidth = 2;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.shadowBlur = 10;
+    ctx.shadowBlur = 4;
 
     lines.forEach(line => {
         // Adjust individual line progress based on delay
         let p = Math.max(0, (scrollProgress - line.delay) / (1 - line.delay));
-        if (p <= 0) return; // Not started drawing yet
 
         ctx.strokeStyle = line.color;
         ctx.shadowColor = line.color;
 
-        let targetLength = line.length * p;
+        let targetLength = Math.min(line.length, line.length * p + 80);
         let currentLength = 0;
         let drawEndNode = false;
         let endNodePos = null;
@@ -537,12 +558,12 @@ function drawHeroNode(x, y, color) {
 
 window.addEventListener('resize', () => {
     resize();
-    initHeroCanvas();
 });
 
 // Initialize everything
-resize();
 if (heroCanvas) {
-    initHeroCanvas();
+    resize();
     animateHero();
+} else {
+    resize();
 }

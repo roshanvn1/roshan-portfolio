@@ -262,19 +262,33 @@ a {
     font-size: 1.5rem;
     color: var(--clr-primary);
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.greeting:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .name {
     font-size: 4.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background: linear-gradient(45deg, #fff, var(--primary-color));
+    background: linear-gradient(45deg, #fff, var(--clr-primary));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     opacity: 0;
     animation: fade-in-up 1s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
     animation-delay: 0.2s;
+    transition: all 0.3s ease;
+}
+
+.name:hover {
+    background: none;
+    -webkit-text-fill-color: #FFD700;
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .title {
@@ -282,6 +296,12 @@ a {
     font-weight: 300;
     color: var(--clr-text-muted);
     margin-bottom: 3rem;
+    transition: all 0.3s ease;
+}
+
+.title:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .title i {
