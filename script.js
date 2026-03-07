@@ -225,12 +225,17 @@ function draw() {
                 const intermediateY = p1.y + dy * ratio;
                 ctx.lineTo(intermediateX, intermediateY);
 
+                ctx.stroke(); // STROKE THE LINE FIRST TO AVOID THE BUG
+
                 // Draw leading glow/node at the current drawing head
                 drawNode(intermediateX, intermediateY);
                 break;
             }
         }
-        ctx.stroke();
+        // If the line finished perfectly on a node, make sure it is stroked
+        if (currentLength <= targetLength) {
+            ctx.stroke();
+        }
     });
 }
 
@@ -243,7 +248,162 @@ function drawNode(x, y) {
     ctx.restore();
 }
 
-window.addEventListener('resize', resize);
-// Initialize canvas size and traces
-resize();
+// ----------------------------------------------------
+// Hero Canvas Animation (Facing Circuits)
+// ----------------------------------------------------
+const heroCanvas = document.getElementById('hero-canvas');
+const heroCtx = heroCanvas.getContext('2d');
+let heroWidth, heroHeight;
+let heroLines = [];
 
+function initHeroCanvas() {
+    heroWidth = heroCanvas.parentElement.clientWidth;
+    heroHeight = heroCanvas.parentElement.clientHeight;
+    heroCanvas.width = heroWidth;
+    heroCanvas.height = heroHeight;
+    generateHeroLines();
+}
+
+function generateHeroLines() {
+    heroLines = [];
+    const hGrid = 40; // larger grid for hero
+    const numLinesPerSide = Math.floor(heroHeight / hGrid);
+
+    // Generate Left Side Lines
+    for (let i = 0; i < numLinesPerSide; i++) {
+        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
+        const path = [{ x: 0, y: startY }];
+        let cx = 0, cy = startY;
+
+        const segments = 3 + Math.floor(Math.random() * 4);
+        for (let j = 0; j < segments; j++) {
+            const dir = Math.floor(Math.random() * 3); // 0=right, 1=diag up-right, 2=diag down-right
+            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
+
+            if (dir === 0) { cx += dist; }
+            else if (dir === 1) { cx += dist; cy -= dist; }
+            else if (dir === 2) { cx += dist; cy += dist; }
+
+            // Stop before hitting the middle text area roughly
+            if (cx > heroWidth * 0.4) {
+                cx = heroWidth * 0.4;
+            }
+            path.push({ x: cx, y: cy });
+        }
+        heroLines.push({
+            path: path,
+            length: calculatePathLength(path),
+            delay: Math.random(),
+            speed: 0.005 + Math.random() * 0.01
+        });
+    }
+
+    // Generate Right Side Lines
+    for (let i = 0; i < numLinesPerSide; i++) {
+        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
+        const path = [{ x: heroWidth, y: startY }];
+        let cx = heroWidth, cy = startY;
+
+        const segments = 3 + Math.floor(Math.random() * 4);
+        for (let j = 0; j < segments; j++) {
+            const dir = Math.floor(Math.random() * 3); // 0=left, 1=diag up-left, 2=diag down-left
+            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
+
+            if (dir === 0) { cx -= dist; }
+            else if (dir === 1) { cx -= dist; cy -= dist; }
+            else if (dir === 2) { cx -= dist; cy += dist; }
+
+            // Stop before hitting the middle text area roughly
+            if (cx < heroWidth * 0.6) {
+                cx = heroWidth * 0.6;
+            }
+            path.push({ x: cx, y: cy });
+        }
+        heroLines.push({
+            path: path,
+            length: calculatePathLength(path),
+            delay: Math.random(),
+            speed: 0.005 + Math.random() * 0.01
+        });
+    }
+}
+
+// Hero Animation Loop
+let heroTime = 0;
+function animateHero() {
+    heroTime += 1;
+    heroCtx.clearRect(0, 0, heroWidth, heroHeight);
+
+    heroCtx.strokeStyle = '#00f0ff';
+    heroCtx.lineWidth = 2;
+    heroCtx.lineCap = 'round';
+    heroCtx.lineJoin = 'round';
+    heroCtx.shadowBlur = 12;
+    heroCtx.shadowColor = '#00f0ff';
+
+    heroLines.forEach(line => {
+        // Loop progress between 0 and 1 continuously
+        let p = ((heroTime * line.speed) + line.delay) % 1.5; // Mod 1.5 adds a pause at the end
+        if (p > 1.0) p = 1.0;
+
+        heroCtx.beginPath();
+        heroCtx.moveTo(line.path[0].x, line.path[0].y);
+
+        let targetLength = line.length * p;
+        let currentLength = 0;
+
+        for (let i = 1; i < line.path.length; i++) {
+            const p1 = line.path[i - 1];
+            const p2 = line.path[i];
+
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            const segmentLength = Math.sqrt(dx * dx + dy * dy);
+
+            if (currentLength + segmentLength <= targetLength) {
+                heroCtx.lineTo(p2.x, p2.y);
+                currentLength += segmentLength;
+
+                if (i === line.path.length - 1 && p >= 0.99) {
+                    drawHeroNode(p2.x, p2.y);
+                }
+            } else {
+                const ratio = (targetLength - currentLength) / segmentLength;
+                const intermediateX = p1.x + dx * ratio;
+                const intermediateY = p1.y + dy * ratio;
+                heroCtx.lineTo(intermediateX, intermediateY);
+
+                heroCtx.stroke(); // STROKE BEFORE DRAWING NODE
+
+                drawHeroNode(intermediateX, intermediateY);
+                break;
+            }
+        }
+        if (currentLength <= targetLength && p >= 0.99) {
+            heroCtx.stroke();
+        }
+    });
+
+    requestAnimationFrame(animateHero);
+}
+
+function drawHeroNode(x, y) {
+    heroCtx.save();
+    heroCtx.fillStyle = '#00f0ff';
+    heroCtx.beginPath();
+    heroCtx.arc(x, y, 5, 0, Math.PI * 2);
+    heroCtx.fill();
+    heroCtx.restore();
+}
+
+window.addEventListener('resize', () => {
+    resize();
+    initHeroCanvas();
+});
+
+// Initialize everything
+resize();
+if (heroCanvas) {
+    initHeroCanvas();
+    animateHero();
+}
