@@ -109,13 +109,21 @@ function resize() {
 // Generate the paths for the "circuit" traces
 function initLines() {
     lines = [];
-    // Generate ~30-40 lines depending on screen width
-    const numLines = Math.floor(width / gridSize);
+    // We only want ~6 major structural "wires", 3 on the left, 3 on the right
+    const numLines = 6;
+    const gSize = 40; // Larger grid for thicker trace feel
+
+    // Define a central "safe zone" width where lines cannot cross, simulating the main container wrapper (max ~1200px)
+    const contentWidth = Math.min(1200, width * 0.9);
+    const safeLeft = (width / 2) - (contentWidth / 2) - 40; // 40px padding away from container
+    const safeRight = (width / 2) + (contentWidth / 2) + 40;
 
     for (let i = 0; i < numLines; i++) {
-        const startX = Math.floor(Math.random() * (width / gridSize)) * gridSize;
-        // Lines can start anywhere in the top 20% of the screen
-        const startY = Math.random() * (height * 0.2);
+        const isLeft = i % 2 === 0; // Alternate left/right side
+        const startX = isLeft ? 0 : width; // Begin purely at the edges
+
+        // Spawn them distributed down the top 50% of the canvas height to scroll along
+        const startY = Math.random() * (height * 0.5);
 
         const path = [];
         path.push({ x: startX, y: startY });
@@ -123,35 +131,42 @@ function initLines() {
         let currentX = startX;
         let currentY = startY;
 
-        // Procedurally generate the trace moving downwards
-        const numSegments = 5 + Math.floor(Math.random() * 8);
+        // Route them organically downwards and inwards, but stop at the safe zone
+        const numSegments = 5 + Math.floor(Math.random() * 4);
         for (let j = 0; j < numSegments; j++) {
-            // Pick a direction: 0 = straight down, 1 = right, 2 = left, 3 = diagonal right, 4 = diagonal left
-            const dir = Math.floor(Math.random() * 5);
-            const distance = (2 + Math.floor(Math.random() * 4)) * gridSize;
+            // Priority: 0 = Down, 1 = Inward, 2 = Down, 3 = Diagonal Inward-Down
+            const dir = Math.floor(Math.random() * 4);
+            const distance = (2 + Math.floor(Math.random() * 6)) * gSize;
 
-            if (dir === 0) {
+            if (dir === 0 || dir === 2) {
+                // Move down
                 currentY += distance;
             } else if (dir === 1) {
-                currentX += distance;
-            } else if (dir === 2) {
-                currentX -= distance;
+                // Move inward horizontally
+                currentX += (isLeft ? distance : -distance);
             } else if (dir === 3) {
-                currentX += distance;
-                currentY += distance;
-            } else if (dir === 4) {
-                currentX -= distance;
+                // Diagonal inward-down
+                currentX += (isLeft ? distance : -distance);
                 currentY += distance;
             }
-            // Clamp coordinates to stay somewhat within screen bounds
-            currentX = Math.max(0, Math.min(width, currentX));
+
+            // ENFORCE SAFE ZONE
+            if (isLeft && currentX > safeLeft) {
+                currentX = safeLeft; // Cap it at the border
+            } else if (!isLeft && currentX < safeRight) {
+                currentX = safeRight; // Cap it at the border
+            }
+
+            // Ensure Y doesn't explode past reasonable bounds un-tracked
+            currentY = Math.min(height * 2.5, currentY);
+
             path.push({ x: currentX, y: currentY });
         }
 
         lines.push({
             path: path,
             length: calculatePathLength(path),
-            delay: Math.random() * 0.3 // Random offset for slightly organic feeling
+            delay: (Math.random() * 0.2) + (i * 0.05) // Stagger their scroll emergence slowly
         });
     }
     draw();
@@ -300,8 +315,8 @@ function generateHeroLines() {
         heroLines.push({
             path: path,
             length: calculatePathLength(path),
-            delay: Math.random() * 2, // Wider delay spread
-            speed: 0.0003 + Math.random() * 0.0005 // Exceedingly slow drawing
+            delay: Math.random() * 0.8, // Faster stagger
+            speed: 0.003 + Math.random() * 0.004 // Increased speed greatly so it draws quickly initially
         });
     }
 
@@ -329,8 +344,8 @@ function generateHeroLines() {
         heroLines.push({
             path: path,
             length: calculatePathLength(path),
-            delay: Math.random() * 2,
-            speed: 0.0003 + Math.random() * 0.0005
+            delay: Math.random() * 0.8,
+            speed: 0.003 + Math.random() * 0.004
         });
     }
 }
