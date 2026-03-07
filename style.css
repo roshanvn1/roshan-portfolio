@@ -92,6 +92,13 @@ a {
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: #fff;
+    transition: all 0.3s ease;
+}
+
+.section-title:hover h2,
+.section-title:hover span {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .glass-card {
@@ -363,6 +370,13 @@ a {
     color: var(--primary-color);
     margin-bottom: 1rem;
     font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.highlight-box:hover h4,
+.highlight-box h4:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .highlight-box p {
@@ -448,6 +462,13 @@ a {
 .category-header h3 {
     margin: 0;
     font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.category-header:hover h3,
+.category-header h3:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .skill-list {
