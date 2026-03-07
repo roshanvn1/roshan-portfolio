@@ -112,6 +112,9 @@ function initLines() {
     const gSize = 25; // Grid size for rendering corners
 
     // 1. Identify "Chip" Targets in the DOM
+    const heroBox = document.querySelector('.hero-content').getBoundingClientRect();
+    const heroCenterY = heroBox.top + window.scrollY + (heroBox.height / 2);
+
     const targets = [
         document.querySelector('#about .container'),
         document.querySelector('#skills .container'),
@@ -142,18 +145,24 @@ function initLines() {
             for (let i = 0; i < wiresPerSide; i++) {
                 const path = [];
 
-                // Spawn on extreme edge of screen
-                const startX = isLeft ? 0 : width;
-                // Spawn somewhere significantly above the chip to allow scrolling length
-                const startY = Math.max(0, chip.top - (height * 0.3) - (Math.random() * height * 0.4));
+                // Spawn EXACTLY where the hero lines end!
+                // The hero lines travel inwards and typically stop ~35% and ~65% of the screen width.
+                // We'll spawn our scroll lines from those boundary edges at the center height to link them.
+                const startX = isLeft ? (width * 0.35) : (width * 0.65);
+                const startY = heroCenterY;
 
                 path.push({ x: startX, y: startY });
 
                 let cx = startX;
                 let cy = startY;
 
-                // Move down
-                const downDist1 = (chip.top - startY) * (0.3 + Math.random() * 0.4);
+                // Move OUTWARDS horizontally to the edges of the screen
+                const outDist = isLeft ? (startX - 40) : (width - startX - 40);
+                cx += isLeft ? -outDist : outDist;
+                path.push({ x: cx, y: cy });
+
+                // Move DOWN deeply along the flank towards the target chip
+                const downDist1 = Math.max(0, chip.top - cy - (Math.random() * chip.height * 0.5));
                 cy += downDist1;
                 path.push({ x: cx, y: cy });
 
@@ -223,6 +232,10 @@ window.addEventListener('scroll', () => {
 
 function draw() {
     ctx.clearRect(0, 0, width, height);
+
+    ctx.save();
+    // TRANSLATE CANVAS SO FIXED BACKGROUND SCROLLS
+    ctx.translate(0, -window.scrollY);
 
     // Dynamic styling
     ctx.lineWidth = 2;
@@ -300,6 +313,8 @@ function draw() {
             drawNode(endNodePos.x, endNodePos.y, line.color);
         }
     });
+
+    ctx.restore();
 }
 
 function drawNode(x, y, color) {
@@ -357,7 +372,7 @@ function generateHeroLines() {
         const pathCyan = JSON.parse(JSON.stringify(path));
         const pathGold = JSON.parse(JSON.stringify(path));
         const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.003 + Math.random() * 0.004;
+        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
 
         heroLines.push({
             path: pathCyan,
@@ -402,7 +417,7 @@ function generateHeroLines() {
         const pathCyan = JSON.parse(JSON.stringify(path));
         const pathGold = JSON.parse(JSON.stringify(path));
         const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.003 + Math.random() * 0.004;
+        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
 
         heroLines.push({
             path: pathCyan,

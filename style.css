@@ -87,20 +87,13 @@ a {
     border-radius: 2px;
 }
 
-.section-title {
-    transition: all 0.3s ease;
+.section-title h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #fff;
 }
 
-.section-title:hover {
-    color: #FFD700 !important;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
-}
-
-.section-title:hover span {
-    color: #FFD700 !important;
-}
-
-/* Glassmorphism Card Utility */
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
@@ -243,13 +236,7 @@ a {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
     padding: 3rem;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 #hero-canvas {
@@ -281,15 +268,6 @@ a {
     opacity: 0;
     animation: fade-in-up 1s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
     animation-delay: 0.2s;
-    transition: all 0.3s ease;
-}
-
-.name:hover {
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    color: #FFD700 !important;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .title {
@@ -359,6 +337,12 @@ a {
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
     color: var(--clr-text-muted);
+    transition: all 0.3s ease;
+}
+
+.about-text p:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
 }
 
 .about-text strong {
@@ -379,12 +363,6 @@ a {
     color: var(--primary-color);
     margin-bottom: 1rem;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.highlight-box h4:hover {
-    color: #FFD700 !important;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .highlight-box p {
@@ -470,12 +448,6 @@ a {
 .category-header h3 {
     margin: 0;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.category-header h3:hover {
-    color: #FFD700 !important;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .skill-list {
@@ -491,6 +463,12 @@ a {
     margin-bottom: 0.5rem;
     font-weight: 600;
     font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.skill-list li:hover .skill-name {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
 }
 
 
@@ -567,6 +545,12 @@ a {
     font-size: 0.95rem;
     color: var(--clr-text-muted);
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-content-text p {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
 }
 
 .project-tags {
@@ -583,6 +567,13 @@ a {
     color: var(--clr-primary);
     border-radius: 20px;
     border: 1px solid rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    color: #FFD700 !important;
+    border-color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 /* Footer / Contact */
@@ -765,6 +756,12 @@ a {
     color: #cbd5e1;
     line-height: 1.7;
     font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+
+.modal-body p:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
 }
 
 .modal-body ul {
@@ -776,6 +773,12 @@ a {
 
 .modal-body li {
     margin-bottom: 0.6rem;
+    transition: all 0.3s ease;
+}
+
+.modal-body li:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
 }
 
 .modal-body em {
