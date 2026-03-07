@@ -65,12 +65,10 @@ a {
     font-family: var(--font-heading);
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 3rem;
+    margin: 0 auto 3rem auto;
     text-align: center;
     position: relative;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
+    display: table;
 }
 
 .section-title span {
@@ -565,7 +563,8 @@ a {
 }
 
 .fade-in-up {
-    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+    animation: fadeInUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes fadeInUp {

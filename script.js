@@ -201,6 +201,9 @@ function draw() {
         let targetLength = line.length * p;
         let currentLength = 0;
 
+        let drawEndNode = false;
+        let endNodePos = null;
+
         for (let i = 1; i < line.path.length; i++) {
             const p1 = line.path[i - 1];
             const p2 = line.path[i];
@@ -214,9 +217,10 @@ function draw() {
                 ctx.lineTo(p2.x, p2.y);
                 currentLength += segmentLength;
 
-                // Draw an end node if this is the absolute end of the line and the trace has finished
+                // Track if we need to draw an end node
                 if (i === line.path.length - 1 && p >= 0.99) {
-                    drawNode(p2.x, p2.y);
+                    drawEndNode = true;
+                    endNodePos = { x: p2.x, y: p2.y };
                 }
             } else {
                 // Interpolate partial segment
@@ -232,9 +236,12 @@ function draw() {
                 break;
             }
         }
-        // If the line finished perfectly on a node, make sure it is stroked
-        if (currentLength <= targetLength) {
+        // If the line finished perfectly, make sure it is stroked
+        if (p >= 0.99) {
             ctx.stroke();
+        }
+        if (drawEndNode && endNodePos) {
+            drawNode(endNodePos.x, endNodePos.y);
         }
     });
 }
@@ -294,7 +301,7 @@ function generateHeroLines() {
             path: path,
             length: calculatePathLength(path),
             delay: Math.random(),
-            speed: 0.005 + Math.random() * 0.01
+            speed: 0.001 + Math.random() * 0.002
         });
     }
 
@@ -323,7 +330,7 @@ function generateHeroLines() {
             path: path,
             length: calculatePathLength(path),
             delay: Math.random(),
-            speed: 0.005 + Math.random() * 0.01
+            speed: 0.001 + Math.random() * 0.002
         });
     }
 }
@@ -351,6 +358,8 @@ function animateHero() {
 
         let targetLength = line.length * p;
         let currentLength = 0;
+        let drawEndNode = false;
+        let endNodePos = null;
 
         for (let i = 1; i < line.path.length; i++) {
             const p1 = line.path[i - 1];
@@ -365,7 +374,8 @@ function animateHero() {
                 currentLength += segmentLength;
 
                 if (i === line.path.length - 1 && p >= 0.99) {
-                    drawHeroNode(p2.x, p2.y);
+                    drawEndNode = true;
+                    endNodePos = { x: p2.x, y: p2.y };
                 }
             } else {
                 const ratio = (targetLength - currentLength) / segmentLength;
@@ -379,8 +389,11 @@ function animateHero() {
                 break;
             }
         }
-        if (currentLength <= targetLength && p >= 0.99) {
+        if (p >= 0.99) {
             heroCtx.stroke();
+        }
+        if (drawEndNode && endNodePos) {
+            drawHeroNode(endNodePos.x, endNodePos.y);
         }
     });
 
