@@ -96,135 +96,58 @@ const ctx = canvas.getContext('2d');
 
 let width, height;
 let lines = [];
-const gridSize = 30; // Spacing logic for circuit traces
 
 function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
-    if (typeof heroCanvas !== 'undefined' && heroCanvas) {
-        initHeroCanvas();
-    }
     initLines();
 }
 
-// Generate the paths for the "circuit" traces targeting DOM chips
+// Generate vertical side lines originating from the hero title area
 function initLines() {
     lines = [];
-    const gSize = 25; // Grid size for rendering corners
 
-    // 1. Identify "Chip" Targets in the DOM
-    const heroBox = document.querySelector('.hero-content').getBoundingClientRect();
-    const heroCenterY = heroBox.top + window.scrollY + (heroBox.height / 2);
+    const heroSection = document.getElementById('hero');
+    const heroRect = heroSection.getBoundingClientRect();
+    const heroTopY = heroRect.top + window.scrollY;
+    const heroCenterY = heroTopY + (heroRect.height / 2);
+    const heroBottomY = heroTopY + heroRect.height;
+    const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
 
-    // Grab endpoints from hero lines
-    const leftHeroEndpoints = [];
-    const rightHeroEndpoints = [];
-    if (typeof heroLines !== 'undefined' && heroLines.length > 0) {
-        heroLines.forEach(hLine => {
-            if (hLine.color === '#00f0ff') {
-                const endPt = hLine.path[hLine.path.length - 1];
-                if (endPt.x < width / 2) leftHeroEndpoints.push(endPt);
-                else rightHeroEndpoints.push(endPt);
-            }
-        });
-    }
+    const margin = 25; // px from edge
 
-    const targets = [
-        document.querySelector('#about .container'),
-        document.querySelector('#skills .container'),
-        document.querySelector('#projects .container'),
-        document.querySelector('#contact .container')
+    // Lines start at heroCenterY (midpoint of hero title) and end at page bottom.
+    // The portion from heroCenterY -> heroBottomY is ALWAYS drawn (static part).
+    // The portion from heroBottomY -> documentHeight grows with scroll progress.
+
+    // 1. Left vertical line (Cyan)
+    const leftPath = [
+        { x: margin, y: heroCenterY },
+        { x: margin, y: documentHeight }
     ];
-
-    // Read bounding boxes globally relative to the document
-    const chipBoxes = targets.filter(el => el).map(el => {
-        const rect = el.getBoundingClientRect();
-        return {
-            top: rect.top + window.scrollY,
-            bottom: rect.bottom + window.scrollY,
-            left: rect.left + window.scrollX,
-            right: rect.right + window.scrollX,
-            height: rect.height
-        };
+    lines.push({
+        path: leftPath,
+        length: calculatePathLength(leftPath),
+        staticLength: heroBottomY - heroCenterY, // always-shown portion
+        delay: 0,
+        color: '#00f0ff',
+        offset: 0
     });
 
-    // 2. Generate targeting wires for each chip
-    chipBoxes.forEach((chip, index) => {
-        // We want 2 wires connecting to the left side, and 2 connecting to the right side of EACH chip
-        const wiresPerSide = 2;
-
-        for (let side = 0; side < 2; side++) {
-            const isLeft = (side === 0);
-
-            for (let i = 0; i < wiresPerSide; i++) {
-                const path = [];
-
-                // Spawn EXACTLY where the hero lines end!
-                let startX, startY;
-                const endpointsList = isLeft ? leftHeroEndpoints : rightHeroEndpoints;
-                if (endpointsList.length > 0) {
-                    const pt = endpointsList[Math.floor(Math.random() * endpointsList.length)];
-                    startX = pt.x;
-                    startY = pt.y;
-                } else {
-                    startX = isLeft ? (width * 0.35) : (width * 0.65);
-                    startY = heroCenterY;
-                }
-
-                path.push({ x: startX, y: startY });
-
-                let cx = startX;
-                let cy = startY;
-
-                // Move OUTWARDS horizontally to the edges of the screen
-                const outDist = isLeft ? (startX - 40) : (width - startX - 40);
-                cx += isLeft ? -outDist : outDist;
-                path.push({ x: cx, y: cy });
-
-                // Move DOWN deeply along the flank towards the target chip
-                const downDist1 = Math.max(0, chip.top - cy - (Math.random() * chip.height * 0.5));
-                cy += downDist1;
-                path.push({ x: cx, y: cy });
-
-                // Move inwards roughly half way
-                const inwardDist1 = (isLeft ? (chip.left / 2) : (width - chip.right) / 2) * (0.5 + Math.random() * 0.5);
-                cx += (isLeft ? inwardDist1 : -inwardDist1);
-                path.push({ x: cx, y: cy });
-
-                // Move down to align exactly with a specific "plug" point on the chip's side border
-                // Ensure it plugs somewhere uniquely along the chip's height
-                const plugY = chip.top + (chip.height * 0.2) + (chip.height * 0.6 * Math.random());
-                cy = plugY;
-                path.push({ x: cx, y: cy });
-
-                // Move precisely horizontally to intersect the chip's border!
-                cx = isLeft ? chip.left : chip.right;
-                path.push({ x: cx, y: cy });
-
-                // Generate identical paths but add paired assignments
-                const pathCyan = JSON.parse(JSON.stringify(path));
-                const pathGold = JSON.parse(JSON.stringify(path));
-
-                // Add to lines array with specific offset tracking tags
-                lines.push({
-                    path: pathCyan,
-                    length: calculatePathLength(pathCyan),
-                    delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6,
-                    color: 'rgba(0, 240, 255, 0.4)',
-                    offset: -3 // Shift 3 pixels left/up
-                });
-
-                lines.push({
-                    path: pathGold,
-                    length: calculatePathLength(pathGold),
-                    delay: (chip.top / (document.documentElement.scrollHeight || 1)) * 0.6,
-                    color: 'rgba(255, 215, 0, 0.4)',
-                    offset: 3 // Shift 3 pixels right/down
-                });
-            }
-        }
+    // 2. Right vertical line (Gold)
+    const rightPath = [
+        { x: width - margin, y: heroCenterY },
+        { x: width - margin, y: documentHeight }
+    ];
+    lines.push({
+        path: rightPath,
+        length: calculatePathLength(rightPath),
+        staticLength: heroBottomY - heroCenterY,
+        delay: 0,
+        color: '#FFD700',
+        offset: 0
     });
 
     draw();
@@ -263,16 +186,15 @@ function draw() {
     ctx.lineWidth = 2;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.shadowBlur = 4;
+    ctx.shadowBlur = 12;
 
     lines.forEach(line => {
-        // Adjust individual line progress based on delay
-        let p = Math.max(0, (scrollProgress - line.delay) / (1 - line.delay));
+        // staticLength is always drawn; scroll grows the rest
+        const scrollablePortion = line.length - line.staticLength;
+        const targetLength = line.staticLength + (scrollablePortion * scrollProgress);
 
         ctx.strokeStyle = line.color;
         ctx.shadowColor = line.color;
-
-        let targetLength = Math.min(line.length, line.length * p + 80);
         let currentLength = 0;
         let drawEndNode = false;
         let endNodePos = null;
@@ -287,6 +209,8 @@ function draw() {
             const dx = p2.x - p1.x;
             const dy = p2.y - p1.y;
             const segmentLength = Math.sqrt(dx * dx + dy * dy);
+
+            if (segmentLength < 0.001) continue;
 
             // Calculate Normal Vector for Perpendicular Offset
             let offsetX = 0;
@@ -308,7 +232,7 @@ function draw() {
                 currentLength += segmentLength;
 
                 // Track if we need to draw an end node
-                if (i === line.path.length - 1 && p >= 0.99) {
+                if (i === line.path.length - 1 && targetLength >= line.length * 0.99) {
                     drawEndNode = true;
                     endNodePos = { x: p2.x + offsetX, y: p2.y + offsetY };
                 }
@@ -327,7 +251,7 @@ function draw() {
             }
         }
         // If the line finished perfectly, make sure it is stroked
-        if (p >= 0.99) {
+        if (targetLength >= line.length * 0.99) {
             ctx.stroke();
         }
         if (drawEndNode && endNodePos) {
@@ -347,223 +271,10 @@ function drawNode(x, y, color) {
     ctx.restore();
 }
 
-// ----------------------------------------------------
-// Hero Canvas Animation (Facing Circuits)
-// ----------------------------------------------------
-const heroCanvas = document.getElementById('hero-canvas');
-const heroCtx = heroCanvas.getContext('2d');
-let heroWidth, heroHeight;
-let heroLines = [];
-
-function initHeroCanvas() {
-    heroWidth = heroCanvas.parentElement.clientWidth;
-    heroHeight = heroCanvas.parentElement.clientHeight;
-    heroCanvas.width = heroWidth;
-    heroCanvas.height = heroHeight;
-    generateHeroLines();
-}
-
-function generateHeroLines() {
-    heroLines = [];
-    const hGrid = 40; // larger grid for hero
-    const numLinesPerSide = Math.floor(heroHeight / hGrid);
-
-    // Generate Left Side Lines
-    for (let i = 0; i < numLinesPerSide; i++) {
-        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
-        const path = [{ x: 0, y: startY }];
-        let cx = 0, cy = startY;
-
-        const segments = 3 + Math.floor(Math.random() * 4);
-        for (let j = 0; j < segments; j++) {
-            const dir = Math.floor(Math.random() * 3); // 0=right, 1=diag up-right, 2=diag down-right
-            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
-
-            if (dir === 0) { cx += dist; }
-            else if (dir === 1) { cx += dist; cy -= dist; }
-            else if (dir === 2) { cx += dist; cy += dist; }
-
-            // Stop before hitting the middle text area roughly
-            if (cx > heroWidth * 0.4) {
-                cx = heroWidth * 0.4;
-            }
-            path.push({ x: cx, y: cy });
-        }
-
-        const pathCyan = JSON.parse(JSON.stringify(path));
-        const pathGold = JSON.parse(JSON.stringify(path));
-        const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
-
-        heroLines.push({
-            path: pathCyan,
-            length: calculatePathLength(pathCyan),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: '#00f0ff',
-            offset: -3
-        });
-        heroLines.push({
-            path: pathGold,
-            length: calculatePathLength(pathGold),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: '#FFD700',
-            offset: 3
-        });
-    }
-
-    // Generate Right Side Lines
-    for (let i = 0; i < numLinesPerSide; i++) {
-        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
-        const path = [{ x: heroWidth, y: startY }];
-        let cx = heroWidth, cy = startY;
-
-        const segments = 3 + Math.floor(Math.random() * 4);
-        for (let j = 0; j < segments; j++) {
-            const dir = Math.floor(Math.random() * 3); // 0=left, 1=diag up-left, 2=diag down-left
-            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
-
-            if (dir === 0) { cx -= dist; }
-            else if (dir === 1) { cx -= dist; cy -= dist; }
-            else if (dir === 2) { cx -= dist; cy += dist; }
-
-            // Stop before hitting the middle text area roughly
-            if (cx < heroWidth * 0.6) {
-                cx = heroWidth * 0.6;
-            }
-            path.push({ x: cx, y: cy });
-        }
-
-        const pathCyan = JSON.parse(JSON.stringify(path));
-        const pathGold = JSON.parse(JSON.stringify(path));
-        const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
-
-        heroLines.push({
-            path: pathCyan,
-            length: calculatePathLength(pathCyan),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: '#00f0ff',
-            offset: -3
-        });
-        heroLines.push({
-            path: pathGold,
-            length: calculatePathLength(pathGold),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: '#FFD700',
-            offset: 3
-        });
-    }
-}
-
-// Hero Animation Loop
-let heroTime = 0;
-function animateHero() {
-    heroTime += 1;
-    heroCtx.clearRect(0, 0, heroWidth, heroHeight);
-
-    heroCtx.lineWidth = 2;
-    heroCtx.lineCap = 'round';
-    heroCtx.lineJoin = 'round';
-    heroCtx.shadowBlur = 12;
-
-    let allComplete = true; // Track completion
-
-    heroLines.forEach(line => {
-        // Line progress increments strictly up to 1.0 (no looping)
-        let p = (heroTime * line.speed) - line.delay;
-        if (p < 0) p = 0; // Waiting for delay
-        if (p < 1.0) allComplete = false; // Still drawing
-        if (p >= 1.0) p = 1.0; // Cap
-
-        if (p === 0) return; // Do not draw if unstarted
-
-        heroCtx.strokeStyle = line.color;
-        heroCtx.shadowColor = line.color;
-
-        let targetLength = line.length * p;
-        let currentLength = 0;
-        let drawEndNode = false;
-        let endNodePos = null;
-
-        heroCtx.beginPath();
-        let startedDrawing = false;
-
-        for (let i = 1; i < line.path.length; i++) {
-            const p1 = line.path[i - 1];
-            const p2 = line.path[i];
-
-            const dx = p2.x - p1.x;
-            const dy = p2.y - p1.y;
-            const segmentLength = Math.sqrt(dx * dx + dy * dy);
-
-            // Calculate Normal Vector for Perpendicular Offset
-            let offsetX = 0;
-            let offsetY = 0;
-            if (segmentLength > 0) {
-                offsetX = (-dy / segmentLength) * line.offset;
-                offsetY = (dx / segmentLength) * line.offset;
-            }
-
-            if (!startedDrawing) {
-                heroCtx.moveTo(p1.x + offsetX, p1.y + offsetY);
-                startedDrawing = true;
-            }
-
-            if (currentLength + segmentLength <= targetLength) {
-                heroCtx.lineTo(p2.x + offsetX, p2.y + offsetY);
-                currentLength += segmentLength;
-
-                if (i === line.path.length - 1 && p >= 0.99) {
-                    drawEndNode = true;
-                    endNodePos = { x: p2.x + offsetX, y: p2.y + offsetY };
-                }
-            } else {
-                const ratio = (targetLength - currentLength) / segmentLength;
-                const intermediateX = p1.x + dx * ratio;
-                const intermediateY = p1.y + dy * ratio;
-                heroCtx.lineTo(intermediateX + offsetX, intermediateY + offsetY);
-
-                heroCtx.stroke(); // STROKE BEFORE DRAWING NODE
-
-                drawHeroNode(intermediateX + offsetX, intermediateY + offsetY, line.color);
-                currentLength += segmentLength;
-                break;
-            }
-        }
-        if (p >= 0.99) {
-            heroCtx.stroke();
-        }
-        if (drawEndNode && endNodePos) {
-            drawHeroNode(endNodePos.x, endNodePos.y, line.color);
-        }
-    });
-
-    if (!allComplete) {
-        requestAnimationFrame(animateHero);
-    }
-}
-
-function drawHeroNode(x, y, color) {
-    heroCtx.save();
-    heroCtx.fillStyle = color;
-    heroCtx.beginPath();
-    heroCtx.arc(x, y, 5, 0, Math.PI * 2);
-    heroCtx.fill();
-    heroCtx.restore();
-}
-
 window.addEventListener('resize', () => {
     resize();
 });
 
 // Initialize everything
-if (heroCanvas) {
-    resize();
-    animateHero();
-} else {
-    resize();
-}
+resize();
+draw(); // render initial static portion of lines
