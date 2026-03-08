@@ -255,7 +255,7 @@ function draw() {
             }
         }
         // If the line finished perfectly, make sure it is stroked
-        if (p >= 0.99) {
+        if (targetLength >= line.length * 0.99) {
             ctx.stroke();
         }
         if (drawEndNode && endNodePos) {
