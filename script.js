@@ -122,6 +122,16 @@ window.addEventListener('scroll', () => {
 });
 
 
+function calculatePathLength(path) {
+    let len = 0;
+    for (let i = 1; i < path.length; i++) {
+        const dx = path[i].x - path[i - 1].x;
+        const dy = path[i].y - path[i - 1].y;
+        len += Math.sqrt(dx * dx + dy * dy);
+    }
+    return len;
+}
+
 // ----------------------------------------------------
 // Hero Canvas Animation (Facing Circuits)
 // ----------------------------------------------------
