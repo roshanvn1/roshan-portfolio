@@ -139,6 +139,7 @@ const heroCanvas = document.getElementById('hero-canvas');
 const heroCtx = heroCanvas.getContext('2d');
 let heroWidth, heroHeight;
 let heroLines = [];
+let heroAnimationDone = false;
 
 function initHeroCanvas() {
     heroWidth = heroCanvas.parentElement.clientWidth;
