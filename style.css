@@ -977,3 +977,89 @@ a {
 .reveal.active .skill-category:nth-child(5) {
     animation-delay: 0.5s;
 }
+
+/* ---------------------------------------------------
+   Interactive Cursor Circuit Background
+--------------------------------------------------- */
+.interactive-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -5;
+    /* Create a glowing circuit grid that illuminates near the mouse */
+    background:
+        radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 240, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(circle 200px at calc(var(--mouse-x, 50%) + 40px) calc(var(--mouse-y, 50%) - 40px), rgba(255, 215, 0, 0.08) 0%, transparent 60%),
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+    background-position: center, center, center, center;
+    transition: background 0.1s ease-out;
+}
+
+/* Base class properties specifically if not already defined elsewhere */
+.glass-card {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    /* Create new stacking context */
+}
+
+/* ---------------------------------------------------
+   PCB Laser Trace Hover Effects (Electronics Vibe)
+--------------------------------------------------- */
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    /* Rotating conic gradient acts as the "laser trace" */
+    background: conic-gradient(from 0deg, transparent 70%, var(--clr-primary) 80%, transparent 100%);
+    animation: rotateLaser 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -2;
+}
+
+/* Create the dark inner mask so the gradient ONLY shows on the exact 1px border */
+.glass-card::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    /* The glowing border will be exactly 1px thick */
+    background: var(--glass-bg);
+    border-radius: 15px;
+    /* Matches the 16px border-radius minus 1px inset */
+    z-index: -1;
+    backdrop-filter: blur(10px);
+    transition: background 0.3s ease;
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+.glass-card:hover::after {
+    background: rgba(20, 25, 35, 0.65);
+    /* slightly darken inside on hover */
+}
+
+/* Make Project Cards highlight Gold instead of Cyan */
+.project-card::before {
+    background: conic-gradient(from 0deg, transparent 70%, #FFD700 80%, transparent 100%);
+}
+
+@keyframes rotateLaser {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -90,20 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Interactive Circuit Background Animation
-const canvas = document.getElementById('circuit-bg');
-const ctx = canvas.getContext('2d');
-
-let width, height;
-let lines = [];
-const gridSize = 30; // Spacing logic for circuit traces
-let heroAnimationDone = false;
-
+// Hero Animation Loop is triggered below on resize
 function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
     if (typeof heroCanvas !== 'undefined' && heroCanvas) {
         initHeroCanvas();
     }
