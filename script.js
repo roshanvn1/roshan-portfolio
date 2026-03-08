@@ -123,16 +123,19 @@ function initLines() {
     const margin = 25; // px from edge
     const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
 
+    // Start the lines completely below the first viewport so they are not visible until you scroll past the hero title
+    const startY = window.innerHeight;
+
     // 1. Left line (Cyan)
     const leftPath = [
-        { x: margin, y: heroCenterY },
+        { x: margin, y: startY },
         { x: margin, y: documentHeight }
     ];
 
     lines.push({
         path: leftPath,
         length: calculatePathLength(leftPath),
-        staticLength: Math.max(0, heroBottomY - heroCenterY),
+        staticLength: 0,
         delay: 0,
         color: '#00f0ff',
         offset: 0
@@ -140,14 +143,14 @@ function initLines() {
 
     // 2. Right line (Gold)
     const rightPath = [
-        { x: width - margin, y: heroCenterY },
+        { x: width - margin, y: startY },
         { x: width - margin, y: documentHeight }
     ];
 
     lines.push({
         path: rightPath,
         length: calculatePathLength(rightPath),
-        staticLength: Math.max(0, heroBottomY - heroCenterY),
+        staticLength: 0,
         delay: 0,
         color: '#FFD700',
         offset: 0
