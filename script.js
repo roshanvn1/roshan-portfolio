@@ -107,90 +107,47 @@ function resize() {
     if (typeof heroCanvas !== 'undefined' && heroCanvas) {
         initHeroCanvas();
     }
-    if (heroAnimationDone) {
-        initLines();
-    }
+    initLines();
 }
 
-// Generate the paths for the "circuit" traces targeting DOM chips
 // Generate vertical side lines originating from the hero title area endpoints
 function initLines() {
     lines = [];
 
     const heroBox = document.querySelector('.hero-content').getBoundingClientRect();
     const heroTopY = heroBox.top + window.scrollY;
+    // Start slightly below the very center to align well with the text content
     const heroCenterY = heroTopY + (heroBox.height / 2);
     const heroBottomY = heroTopY + heroBox.height;
-
-    // Grab endpoints from hero lines
-    const leftHeroEndpoints = [];
-    const rightHeroEndpoints = [];
-    if (typeof heroLines !== 'undefined' && heroLines.length > 0) {
-        heroLines.forEach(hLine => {
-            if (hLine.color === '#00f0ff') {
-                const endPt = hLine.path[hLine.path.length - 1];
-                if (endPt.x < width / 2) leftHeroEndpoints.push(endPt);
-            } else if (hLine.color === '#FFD700') {
-                const endPt = hLine.path[hLine.path.length - 1];
-                if (endPt.x >= width / 2) rightHeroEndpoints.push(endPt);
-            }
-        });
-    }
 
     const margin = 25; // px from edge
     const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
 
     // 1. Left line (Cyan)
-    let startXLeft, startYLeft;
-    if (leftHeroEndpoints.length > 0) {
-        const pt = leftHeroEndpoints[Math.floor(Math.random() * leftHeroEndpoints.length)];
-        startXLeft = pt.x;
-        startYLeft = pt.y;
-    } else {
-        startXLeft = width * 0.35;
-        startYLeft = heroCenterY;
-    }
-
-    const pathCyan = [];
-    pathCyan.push({ x: startXLeft, y: startYLeft });
-    pathCyan.push({ x: margin, y: startYLeft });
-    pathCyan.push({ x: margin, y: documentHeight });
-
-    const finalPathCyan = pathCyan.filter((pt, i, arr) => i === 0 || pt.x !== arr[i - 1].x || pt.y !== arr[i - 1].y);
-    const lengthCyan = calculatePathLength(finalPathCyan);
+    const leftPath = [
+        { x: margin, y: heroCenterY },
+        { x: margin, y: documentHeight }
+    ];
 
     lines.push({
-        path: finalPathCyan,
-        length: lengthCyan,
-        staticLength: Math.max(0, heroBottomY - startYLeft) + (startXLeft - margin),
+        path: leftPath,
+        length: calculatePathLength(leftPath),
+        staticLength: Math.max(0, heroBottomY - heroCenterY),
         delay: 0,
         color: '#00f0ff',
         offset: 0
     });
 
     // 2. Right line (Gold)
-    let startXRight, startYRight;
-    if (rightHeroEndpoints.length > 0) {
-        const pt = rightHeroEndpoints[Math.floor(Math.random() * rightHeroEndpoints.length)];
-        startXRight = pt.x;
-        startYRight = pt.y;
-    } else {
-        startXRight = width * 0.65;
-        startYRight = heroCenterY;
-    }
-
-    const pathGold = [];
-    pathGold.push({ x: startXRight, y: startYRight });
-    pathGold.push({ x: width - margin, y: startYRight });
-    pathGold.push({ x: width - margin, y: documentHeight });
-
-    const finalPathGold = pathGold.filter((pt, i, arr) => i === 0 || pt.x !== arr[i - 1].x || pt.y !== arr[i - 1].y);
-    const lengthGold = calculatePathLength(finalPathGold);
+    const rightPath = [
+        { x: width - margin, y: heroCenterY },
+        { x: width - margin, y: documentHeight }
+    ];
 
     lines.push({
-        path: finalPathGold,
-        length: lengthGold,
-        staticLength: Math.max(0, heroBottomY - startYRight) + ((width - margin) - startXRight),
+        path: rightPath,
+        length: calculatePathLength(rightPath),
+        staticLength: Math.max(0, heroBottomY - heroCenterY),
         delay: 0,
         color: '#FFD700',
         offset: 0
