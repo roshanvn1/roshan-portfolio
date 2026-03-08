@@ -1006,60 +1006,57 @@ a {
     z-index: 1;
     isolation: isolate;
     /* Create new stacking context */
+    overflow: hidden;
+    /* Constrain the wave effect to inside the card */
 }
 
 /* ---------------------------------------------------
-   PCB Laser Trace Hover Effects (Electronics Vibe)
+   Confined Hover Wave Effect
 --------------------------------------------------- */
 .glass-card::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    /* Rotating conic gradient acts as the "laser trace" */
-    background: conic-gradient(from 0deg, transparent 70%, var(--clr-primary) 80%, transparent 100%);
-    animation: rotateLaser 3s linear infinite;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* A blurry translucent bar of light */
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            var(--clr-primary-glow) 40%,
+            var(--clr-primary) 50%,
+            var(--clr-primary-glow) 60%,
+            transparent 100%);
     opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: -2;
-}
-
-/* Create the dark inner mask so the gradient ONLY shows on the exact 1px border */
-.glass-card::after {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    /* The glowing border will be exactly 1px thick */
-    background: var(--glass-bg);
-    border-radius: 15px;
-    /* Matches the 16px border-radius minus 1px inset */
+    transform: translateY(-100%);
+    transition: opacity 0.3s ease;
     z-index: -1;
-    backdrop-filter: blur(10px);
-    transition: background 0.3s ease;
+    pointer-events: none;
+    filter: blur(15px);
 }
 
+/* Trigger the wave and slightly darken the card on hover */
 .glass-card:hover::before {
     opacity: 1;
-}
-
-.glass-card:hover::after {
-    background: rgba(20, 25, 35, 0.65);
-    /* slightly darken inside on hover */
+    animation: waveSlide 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 /* Make Project Cards highlight Gold instead of Cyan */
 .project-card::before {
-    background: conic-gradient(from 0deg, transparent 70%, #FFD700 80%, transparent 100%);
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(255, 215, 0, 0.2) 40%,
+            rgba(255, 215, 0, 0.6) 50%,
+            rgba(255, 215, 0, 0.2) 60%,
+            transparent 100%);
 }
 
-@keyframes rotateLaser {
-    from {
-        transform: rotate(0deg);
+@keyframes waveSlide {
+    0% {
+        transform: translateY(-100%);
     }
 
-    to {
-        transform: rotate(360deg);
+    100% {
+        transform: translateY(100%);
     }
 }
