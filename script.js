@@ -481,22 +481,7 @@ function animateHero() {
     if (!allComplete) {
         requestAnimationFrame(animateHero);
     } else if (!heroAnimationDone) {
-        // Hero animation just completed — fade out the hero canvas then init side lines
         heroAnimationDone = true;
-        let fadeOpacity = 0.9;
-        function fadeOutHero() {
-            fadeOpacity -= 0.02;
-            if (fadeOpacity <= 0) {
-                heroCanvas.style.opacity = '0';
-                heroCtx.clearRect(0, 0, heroWidth, heroHeight);
-                // Now init the side scroll lines using the completed hero endpoints
-                initLines();
-                return;
-            }
-            heroCanvas.style.opacity = fadeOpacity.toString();
-            requestAnimationFrame(fadeOutHero);
-        }
-        requestAnimationFrame(fadeOutHero);
     }
 }
 
