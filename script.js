@@ -107,176 +107,32 @@ function resize() {
     if (typeof heroCanvas !== 'undefined' && heroCanvas) {
         initHeroCanvas();
     }
-    initLines();
 }
 
-// Generate vertical side lines originating from the hero title area endpoints
-function initLines() {
-    lines = [];
-
-    const heroBox = document.querySelector('.hero-content').getBoundingClientRect();
-    const heroTopY = heroBox.top + window.scrollY;
-    // Start slightly below the very center to align well with the text content
-    const heroCenterY = heroTopY + (heroBox.height / 2);
-    const heroBottomY = heroTopY + heroBox.height;
-
-    const margin = 25; // px from edge
-    const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-
-    // Start the lines completely below the first viewport so they are not visible until you scroll past the hero title
-    const startY = window.innerHeight;
-
-    // 1. Left line (Cyan)
-    const leftPath = [
-        { x: margin, y: startY },
-        { x: margin, y: documentHeight }
-    ];
-
-    lines.push({
-        path: leftPath,
-        length: calculatePathLength(leftPath),
-        staticLength: 0,
-        delay: 0,
-        color: '#00f0ff',
-        offset: 0
-    });
-
-    // 2. Right line (Gold)
-    const rightPath = [
-        { x: width - margin, y: startY },
-        { x: width - margin, y: documentHeight }
-    ];
-
-    lines.push({
-        path: rightPath,
-        length: calculatePathLength(rightPath),
-        staticLength: 0,
-        delay: 0,
-        color: '#FFD700',
-        offset: 0
-    });
-
-    draw();
-}
-
-function calculatePathLength(path) {
-    let len = 0;
-    for (let i = 1; i < path.length; i++) {
-        const dx = path[i].x - path[i - 1].x;
-        const dy = path[i].y - path[i - 1].y;
-        len += Math.sqrt(dx * dx + dy * dy);
-    }
-    return len;
-}
-
-// Update drawing based on scroll
-let scrollProgress = 0;
+// ----------------------------------------------------
+// Viewport-Relative CSS Scroll Lines
+// ----------------------------------------------------
 window.addEventListener('scroll', () => {
-    // Calculate total scrollable height
+    // 1. Calculate how far down the document we scrolled (0 to 1)
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    scrollProgress = window.scrollY / scrollHeight;
-    // Add small buffer so it doesn't need to reach 100% to finish drawing
-    scrollProgress = Math.min(1.0, scrollProgress * 1.1);
+    const scrollProgress = window.scrollY / scrollHeight;
 
-    requestAnimationFrame(draw);
+    // Update the height of the pure CSS scroll neon lines
+    document.documentElement.style.setProperty('--scroll-progress', `${scrollProgress * 100}%`);
+
+    // 2. Hide lines completely when inside the hero title, fade in once past
+    const heroContent = document.querySelector('.hero-content');
+    if (heroContent) {
+        const heroBottom = heroContent.getBoundingClientRect().bottom + window.scrollY;
+        // If we scrolled past the hero content (with a little margin), show the lines
+        if (window.scrollY > heroBottom - window.innerHeight / 2) {
+            document.documentElement.style.setProperty('--scroll-lines-opacity', '1');
+        } else {
+            document.documentElement.style.setProperty('--scroll-lines-opacity', '0');
+        }
+    }
 });
 
-function draw() {
-    ctx.clearRect(0, 0, width, height);
-
-    ctx.save();
-    // TRANSLATE CANVAS SO FIXED BACKGROUND SCROLLS
-    ctx.translate(0, -window.scrollY);
-
-    // Dynamic styling
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.shadowBlur = 12;
-
-    lines.forEach(line => {
-        // staticLength is always drawn; scroll grows the rest
-        const scrollablePortion = line.length - line.staticLength;
-        const targetLength = line.staticLength + (scrollablePortion * scrollProgress);
-
-        ctx.strokeStyle = line.color;
-        ctx.shadowColor = line.color;
-
-        let currentLength = 0;
-        let drawEndNode = false;
-        let endNodePos = null;
-
-        ctx.beginPath();
-        let startedDrawing = false; // Flag to prevent offset plotting before the first move
-
-        for (let i = 1; i < line.path.length; i++) {
-            const p1 = line.path[i - 1];
-            const p2 = line.path[i];
-
-            const dx = p2.x - p1.x;
-            const dy = p2.y - p1.y;
-            const segmentLength = Math.sqrt(dx * dx + dy * dy);
-
-            if (segmentLength < 0.001) continue;
-
-            // Calculate Normal Vector for Perpendicular Offset
-            let offsetX = 0;
-            let offsetY = 0;
-            if (segmentLength > 0) {
-                // Normal vector [-dy, dx] normalized, multiplied by offset radius
-                offsetX = (-dy / segmentLength) * line.offset;
-                offsetY = (dx / segmentLength) * line.offset;
-            }
-
-            if (!startedDrawing) {
-                ctx.moveTo(p1.x + offsetX, p1.y + offsetY);
-                startedDrawing = true;
-            }
-
-            if (currentLength + segmentLength <= targetLength) {
-                // Draw full segment with calculated orthogonal offset
-                ctx.lineTo(p2.x + offsetX, p2.y + offsetY);
-                currentLength += segmentLength;
-
-                // Track if we need to draw an end node
-                if (i === line.path.length - 1 && targetLength >= line.length * 0.99) {
-                    drawEndNode = true;
-                    endNodePos = { x: p2.x + offsetX, y: p2.y + offsetY };
-                }
-            } else {
-                // Interpolate partial segment
-                const ratio = (targetLength - currentLength) / segmentLength;
-                const intermediateX = p1.x + dx * ratio;
-                const intermediateY = p1.y + dy * ratio;
-                ctx.lineTo(intermediateX + offsetX, intermediateY + offsetY);
-
-                ctx.stroke(); // STROKE THE LINE FIRST TO AVOID THE BUG
-
-                // Draw leading glow/node at the current drawing head
-                drawNode(intermediateX + offsetX, intermediateY + offsetY, line.color);
-                break;
-            }
-        }
-        // If the line finished perfectly, make sure it is stroked
-        if (targetLength >= line.length * 0.99) {
-            ctx.stroke();
-        }
-        if (drawEndNode && endNodePos) {
-            drawNode(endNodePos.x, endNodePos.y, line.color);
-        }
-    });
-
-    ctx.restore();
-}
-
-function drawNode(x, y, color) {
-    ctx.save();
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x, y, 4, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-}
 
 // ----------------------------------------------------
 // Hero Canvas Animation (Facing Circuits)

@@ -876,3 +876,104 @@ a {
 .modal-content-box::-webkit-scrollbar-thumb:hover {
     background: var(--clr-primary);
 }
+
+/* ---------------------------------------------------
+   Hardware-Accelerated Viewport Scroll Lines
+--------------------------------------------------- */
+.scroll-neon-line {
+    position: fixed;
+    top: 0;
+    width: 3px;
+    height: var(--scroll-progress, 0%);
+    opacity: var(--scroll-lines-opacity, 0);
+    z-index: 999;
+    transition: opacity 0.4s ease-out;
+    /* Smooth fade in/out */
+    border-radius: 0 0 3px 3px;
+}
+
+.scroll-neon-line.left {
+    left: 25px;
+    background: var(--clr-primary);
+    box-shadow: 0 0 10px var(--clr-primary-glow), 0 0 20px var(--clr-primary);
+}
+
+.scroll-neon-line.right {
+    right: 25px;
+    background: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4), 0 0 20px #FFD700;
+}
+
+/* Glow dot at the bottom of the scroll lines */
+.scroll-neon-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: inherit;
+    box-shadow: inherit;
+}
+
+/* ---------------------------------------------------
+   Smooth Slide-Up Reveal (Antigravity Style)
+--------------------------------------------------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered children for a cascading reveal effect */
+.reveal.active .glass-card,
+.reveal.active .project-card,
+.reveal.active .skill-category {
+    animation: revealStagger 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+@keyframes revealStagger {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reveal.active .glass-card:nth-child(1),
+.reveal.active .project-card:nth-child(1),
+.reveal.active .skill-category:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.reveal.active .glass-card:nth-child(2),
+.reveal.active .project-card:nth-child(2),
+.reveal.active .skill-category:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.reveal.active .glass-card:nth-child(3),
+.reveal.active .project-card:nth-child(3),
+.reveal.active .skill-category:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.reveal.active .glass-card:nth-child(4),
+.reveal.active .project-card:nth-child(4),
+.reveal.active .skill-category:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.reveal.active .glass-card:nth-child(5),
+.reveal.active .project-card:nth-child(5),
+.reveal.active .skill-category:nth-child(5) {
+    animation-delay: 0.5s;
+}
