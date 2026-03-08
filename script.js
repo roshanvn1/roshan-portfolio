@@ -96,55 +96,101 @@ const ctx = canvas.getContext('2d');
 
 let width, height;
 let lines = [];
+const gridSize = 30; // Spacing logic for circuit traces
+let heroAnimationDone = false;
 
 function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
-    initLines();
+    if (typeof heroCanvas !== 'undefined' && heroCanvas) {
+        initHeroCanvas();
+    }
+    if (heroAnimationDone) {
+        initLines();
+    }
 }
 
-// Generate vertical side lines originating from the hero title area
+// Generate the paths for the "circuit" traces targeting DOM chips
+// Generate vertical side lines originating from the hero title area endpoints
 function initLines() {
     lines = [];
 
-    const heroSection = document.getElementById('hero');
-    const heroRect = heroSection.getBoundingClientRect();
-    const heroTopY = heroRect.top + window.scrollY;
-    const heroCenterY = heroTopY + (heroRect.height / 2);
-    const heroBottomY = heroTopY + heroRect.height;
-    const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    const heroBox = document.querySelector('.hero-content').getBoundingClientRect();
+    const heroTopY = heroBox.top + window.scrollY;
+    const heroCenterY = heroTopY + (heroBox.height / 2);
+    const heroBottomY = heroTopY + heroBox.height;
+
+    // Grab endpoints from hero lines
+    const leftHeroEndpoints = [];
+    const rightHeroEndpoints = [];
+    if (typeof heroLines !== 'undefined' && heroLines.length > 0) {
+        heroLines.forEach(hLine => {
+            if (hLine.color === '#00f0ff') {
+                const endPt = hLine.path[hLine.path.length - 1];
+                if (endPt.x < width / 2) leftHeroEndpoints.push(endPt);
+            } else if (hLine.color === '#FFD700') {
+                const endPt = hLine.path[hLine.path.length - 1];
+                if (endPt.x >= width / 2) rightHeroEndpoints.push(endPt);
+            }
+        });
+    }
 
     const margin = 25; // px from edge
+    const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
 
-    // Lines start at heroCenterY (midpoint of hero title) and end at page bottom.
-    // The portion from heroCenterY -> heroBottomY is ALWAYS drawn (static part).
-    // The portion from heroBottomY -> documentHeight grows with scroll progress.
+    // 1. Left line (Cyan)
+    let startXLeft, startYLeft;
+    if (leftHeroEndpoints.length > 0) {
+        const pt = leftHeroEndpoints[Math.floor(Math.random() * leftHeroEndpoints.length)];
+        startXLeft = pt.x;
+        startYLeft = pt.y;
+    } else {
+        startXLeft = width * 0.35;
+        startYLeft = heroCenterY;
+    }
 
-    // 1. Left vertical line (Cyan)
-    const leftPath = [
-        { x: margin, y: heroCenterY },
-        { x: margin, y: documentHeight }
-    ];
+    const pathCyan = [];
+    pathCyan.push({ x: startXLeft, y: startYLeft });
+    pathCyan.push({ x: margin, y: startYLeft });
+    pathCyan.push({ x: margin, y: documentHeight });
+
+    const finalPathCyan = pathCyan.filter((pt, i, arr) => i === 0 || pt.x !== arr[i - 1].x || pt.y !== arr[i - 1].y);
+    const lengthCyan = calculatePathLength(finalPathCyan);
+
     lines.push({
-        path: leftPath,
-        length: calculatePathLength(leftPath),
-        staticLength: heroBottomY - heroCenterY, // always-shown portion
+        path: finalPathCyan,
+        length: lengthCyan,
+        staticLength: Math.max(0, heroBottomY - startYLeft) + (startXLeft - margin),
         delay: 0,
         color: '#00f0ff',
         offset: 0
     });
 
-    // 2. Right vertical line (Gold)
-    const rightPath = [
-        { x: width - margin, y: heroCenterY },
-        { x: width - margin, y: documentHeight }
-    ];
+    // 2. Right line (Gold)
+    let startXRight, startYRight;
+    if (rightHeroEndpoints.length > 0) {
+        const pt = rightHeroEndpoints[Math.floor(Math.random() * rightHeroEndpoints.length)];
+        startXRight = pt.x;
+        startYRight = pt.y;
+    } else {
+        startXRight = width * 0.65;
+        startYRight = heroCenterY;
+    }
+
+    const pathGold = [];
+    pathGold.push({ x: startXRight, y: startYRight });
+    pathGold.push({ x: width - margin, y: startYRight });
+    pathGold.push({ x: width - margin, y: documentHeight });
+
+    const finalPathGold = pathGold.filter((pt, i, arr) => i === 0 || pt.x !== arr[i - 1].x || pt.y !== arr[i - 1].y);
+    const lengthGold = calculatePathLength(finalPathGold);
+
     lines.push({
-        path: rightPath,
-        length: calculatePathLength(rightPath),
-        staticLength: heroBottomY - heroCenterY,
+        path: finalPathGold,
+        length: lengthGold,
+        staticLength: Math.max(0, heroBottomY - startYRight) + ((width - margin) - startXRight),
         delay: 0,
         color: '#FFD700',
         offset: 0
@@ -195,6 +241,7 @@ function draw() {
 
         ctx.strokeStyle = line.color;
         ctx.shadowColor = line.color;
+
         let currentLength = 0;
         let drawEndNode = false;
         let endNodePos = null;
@@ -251,7 +298,7 @@ function draw() {
             }
         }
         // If the line finished perfectly, make sure it is stroked
-        if (targetLength >= line.length * 0.99) {
+        if (p >= 0.99) {
             ctx.stroke();
         }
         if (drawEndNode && endNodePos) {
@@ -271,10 +318,247 @@ function drawNode(x, y, color) {
     ctx.restore();
 }
 
+// ----------------------------------------------------
+// Hero Canvas Animation (Facing Circuits)
+// ----------------------------------------------------
+const heroCanvas = document.getElementById('hero-canvas');
+const heroCtx = heroCanvas.getContext('2d');
+let heroWidth, heroHeight;
+let heroLines = [];
+
+function initHeroCanvas() {
+    heroWidth = heroCanvas.parentElement.clientWidth;
+    heroHeight = heroCanvas.parentElement.clientHeight;
+    heroCanvas.width = heroWidth;
+    heroCanvas.height = heroHeight;
+    generateHeroLines();
+}
+
+function generateHeroLines() {
+    heroLines = [];
+    const hGrid = 40; // larger grid for hero
+    const numLinesPerSide = Math.floor(heroHeight / hGrid);
+
+    // Generate Left Side Lines
+    for (let i = 0; i < numLinesPerSide; i++) {
+        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
+        const path = [{ x: 0, y: startY }];
+        let cx = 0, cy = startY;
+
+        const segments = 3 + Math.floor(Math.random() * 4);
+        for (let j = 0; j < segments; j++) {
+            const dir = Math.floor(Math.random() * 3); // 0=right, 1=diag up-right, 2=diag down-right
+            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
+
+            if (dir === 0) { cx += dist; }
+            else if (dir === 1) { cx += dist; cy -= dist; }
+            else if (dir === 2) { cx += dist; cy += dist; }
+
+            // Stop before hitting the middle text area roughly
+            if (cx > heroWidth * 0.4) {
+                cx = heroWidth * 0.4;
+            }
+            path.push({ x: cx, y: cy });
+        }
+
+        // Remove duplicate sequential points avoiding NaN segment lengths
+        const filteredPath = path.filter((pt, k, arr) => k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y);
+
+        const pathCyan = JSON.parse(JSON.stringify(filteredPath));
+        const pathGold = JSON.parse(JSON.stringify(filteredPath));
+        const sharedDelay = Math.random() * 0.8;
+        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
+
+        heroLines.push({
+            path: pathCyan,
+            length: calculatePathLength(pathCyan),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#00f0ff',
+            offset: -3
+        });
+        heroLines.push({
+            path: pathGold,
+            length: calculatePathLength(pathGold),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#FFD700',
+            offset: 3
+        });
+    }
+
+    // Generate Right Side Lines
+    for (let i = 0; i < numLinesPerSide; i++) {
+        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
+        const path = [{ x: heroWidth, y: startY }];
+        let cx = heroWidth, cy = startY;
+
+        const segments = 3 + Math.floor(Math.random() * 4);
+        for (let j = 0; j < segments; j++) {
+            const dir = Math.floor(Math.random() * 3); // 0=left, 1=diag up-left, 2=diag down-left
+            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
+
+            if (dir === 0) { cx -= dist; }
+            else if (dir === 1) { cx -= dist; cy -= dist; }
+            else if (dir === 2) { cx -= dist; cy += dist; }
+
+            // Stop before hitting the middle text area roughly
+            if (cx < heroWidth * 0.6) {
+                cx = heroWidth * 0.6;
+            }
+            path.push({ x: cx, y: cy });
+        }
+
+        // Remove duplicate sequential points avoiding NaN segment lengths
+        const filteredPath = path.filter((pt, k, arr) => k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y);
+
+        const pathCyan = JSON.parse(JSON.stringify(filteredPath));
+        const pathGold = JSON.parse(JSON.stringify(filteredPath));
+        const sharedDelay = Math.random() * 0.8;
+        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
+
+        heroLines.push({
+            path: pathCyan,
+            length: calculatePathLength(pathCyan),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#00f0ff',
+            offset: -3
+        });
+        heroLines.push({
+            path: pathGold,
+            length: calculatePathLength(pathGold),
+            delay: sharedDelay,
+            speed: sharedSpeed,
+            color: '#FFD700',
+            offset: 3
+        });
+    }
+}
+
+// Hero Animation Loop
+let heroTime = 0;
+function animateHero() {
+    heroTime += 1;
+    heroCtx.clearRect(0, 0, heroWidth, heroHeight);
+
+    heroCtx.lineWidth = 2;
+    heroCtx.lineCap = 'round';
+    heroCtx.lineJoin = 'round';
+    heroCtx.shadowBlur = 12;
+
+    let allComplete = true; // Track completion
+
+    heroLines.forEach(line => {
+        // Line progress increments strictly up to 1.0 (no looping)
+        let p = (heroTime * line.speed) - line.delay;
+        if (p < 0) p = 0; // Waiting for delay
+        if (p < 1.0) allComplete = false; // Still drawing
+        if (p >= 1.0) p = 1.0; // Cap
+
+        if (p === 0) return; // Do not draw if unstarted
+
+        heroCtx.strokeStyle = line.color;
+        heroCtx.shadowColor = line.color;
+
+        let targetLength = line.length * p;
+        let currentLength = 0;
+        let drawEndNode = false;
+        let endNodePos = null;
+
+        heroCtx.beginPath();
+        let startedDrawing = false;
+
+        for (let i = 1; i < line.path.length; i++) {
+            const p1 = line.path[i - 1];
+            const p2 = line.path[i];
+
+            const dx = p2.x - p1.x;
+            const segmentLength = Math.sqrt(dx * dx + dy * dy);
+
+            if (segmentLength < 0.001) continue;
+
+            // Calculate Normal Vector for Perpendicular Offset
+            let offsetX = 0;
+            let offsetY = 0;
+            if (segmentLength > 0) {
+                offsetX = (-dy / segmentLength) * line.offset;
+                offsetY = (dx / segmentLength) * line.offset;
+            }
+
+            if (!startedDrawing) {
+                heroCtx.moveTo(p1.x + offsetX, p1.y + offsetY);
+                startedDrawing = true;
+            }
+
+            if (currentLength + segmentLength <= targetLength) {
+                heroCtx.lineTo(p2.x + offsetX, p2.y + offsetY);
+                currentLength += segmentLength;
+
+                if (i === line.path.length - 1 && p >= 0.99) {
+                    drawEndNode = true;
+                    endNodePos = { x: p2.x + offsetX, y: p2.y + offsetY };
+                }
+            } else {
+                const ratio = (targetLength - currentLength) / segmentLength;
+                const intermediateX = p1.x + dx * ratio;
+                const intermediateY = p1.y + dy * ratio;
+                heroCtx.lineTo(intermediateX + offsetX, intermediateY + offsetY);
+
+                heroCtx.stroke(); // STROKE BEFORE DRAWING NODE
+
+                drawHeroNode(intermediateX + offsetX, intermediateY + offsetY, line.color);
+                currentLength += segmentLength;
+                break;
+            }
+        }
+        if (p >= 0.99) {
+            heroCtx.stroke();
+        }
+        if (drawEndNode && endNodePos) {
+            drawHeroNode(endNodePos.x, endNodePos.y, line.color);
+        }
+    });
+
+    if (!allComplete) {
+        requestAnimationFrame(animateHero);
+    } else if (!heroAnimationDone) {
+        // Hero animation just completed — fade out the hero canvas then init side lines
+        heroAnimationDone = true;
+        let fadeOpacity = 0.9;
+        function fadeOutHero() {
+            fadeOpacity -= 0.02;
+            if (fadeOpacity <= 0) {
+                heroCanvas.style.opacity = '0';
+                heroCtx.clearRect(0, 0, heroWidth, heroHeight);
+                // Now init the side scroll lines using the completed hero endpoints
+                initLines();
+                return;
+            }
+            heroCanvas.style.opacity = fadeOpacity.toString();
+            requestAnimationFrame(fadeOutHero);
+        }
+        requestAnimationFrame(fadeOutHero);
+    }
+}
+
+function drawHeroNode(x, y, color) {
+    heroCtx.save();
+    heroCtx.fillStyle = color;
+    heroCtx.beginPath();
+    heroCtx.arc(x, y, 5, 0, Math.PI * 2);
+    heroCtx.fill();
+    heroCtx.restore();
+}
+
 window.addEventListener('resize', () => {
     resize();
 });
 
 // Initialize everything
-resize();
-draw(); // render initial static portion of lines
+if (heroCanvas) {
+    resize();
+    animateHero();
+} else {
+    resize();
+}
