@@ -474,6 +474,7 @@ function animateHero() {
             const p2 = line.path[i];
 
             const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
             const segmentLength = Math.sqrt(dx * dx + dy * dy);
 
             if (segmentLength < 0.001) continue;
