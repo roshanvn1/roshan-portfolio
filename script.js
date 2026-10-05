@@ -56,39 +56,47 @@ if (hamburger && mobileMenu) {
 }
 
 // ---- Hero Entrance Animation ----
+// Set initial invisible states via JS (CSS keeps them visible as fallback)
+gsap.set('.hero-eyebrow', { opacity: 0, x: -30 });
+gsap.set('.hero-name-line', { opacity: 0, y: 60 });
+gsap.set('.hero-subtitle', { opacity: 0, y: 30 });
+gsap.set('.hero-btns', { opacity: 0, y: 20 });
+gsap.set('.hero-stats', { opacity: 0, x: 40 });
+gsap.set('.hero-scroll-hint', { opacity: 0, y: 20 });
+
 const heroTL = gsap.timeline({ defaults: { ease: "power4.out" } });
 
 heroTL
-    .from('.hero-eyebrow', {
-        opacity: 0,
-        x: -30,
+    .to('.hero-eyebrow', {
+        opacity: 1,
+        x: 0,
         duration: 0.8,
         delay: 0.3
     })
-    .from('.hero-name-line', {
-        opacity: 0,
-        y: 60,
+    .to('.hero-name-line', {
+        opacity: 1,
+        y: 0,
         duration: 1,
         stagger: 0.15
     }, '-=0.4')
-    .from('.hero-subtitle', {
-        opacity: 0,
-        y: 30,
+    .to('.hero-subtitle', {
+        opacity: 1,
+        y: 0,
         duration: 0.8
     }, '-=0.5')
-    .from('.hero-btns', {
-        opacity: 0,
-        y: 20,
+    .to('.hero-btns', {
+        opacity: 1,
+        y: 0,
         duration: 0.7
     }, '-=0.4')
-    .from('.hero-stats', {
-        opacity: 0,
-        x: 40,
+    .to('.hero-stats', {
+        opacity: 1,
+        x: 0,
         duration: 0.8
     }, '-=0.5')
-    .from('.hero-scroll-hint', {
-        opacity: 0,
-        y: 20,
+    .to('.hero-scroll-hint', {
+        opacity: 1,
+        y: 0,
         duration: 0.6
     }, '-=0.3');
 
@@ -118,163 +126,106 @@ statNumbers.forEach(el => {
 
 // ---- Section Reveal Animations ----
 // About section
-gsap.from('.about .section-heading', {
-    scrollTrigger: {
-        trigger: '.about',
-        start: 'top 75%',
-        once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    ease: "power3.out"
-});
+gsap.fromTo('.about .section-heading',
+    { opacity: 0, y: 40 },
+    {
+        scrollTrigger: { trigger: '.about', start: 'top 75%', once: true },
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
+    }
+);
 
-gsap.from('.about-body p', {
-    scrollTrigger: {
-        trigger: '.about-body',
-        start: 'top 80%',
-        once: true
-    },
-    opacity: 0,
-    y: 30,
-    duration: 0.7,
-    stagger: 0.15,
-    ease: "power3.out"
-});
+gsap.fromTo('.about-body p',
+    { opacity: 0, y: 30 },
+    {
+        scrollTrigger: { trigger: '.about-body', start: 'top 80%', once: true },
+        opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out"
+    }
+);
 
-gsap.from('.achievement-card', {
-    scrollTrigger: {
-        trigger: '.achievement-cards',
-        start: 'top 80%',
-        once: true
-    },
-    opacity: 0,
-    x: -30,
-    duration: 0.6,
-    stagger: 0.12,
-    ease: "power3.out"
-});
+gsap.fromTo('.achievement-card',
+    { opacity: 0, x: -30 },
+    {
+        scrollTrigger: { trigger: '.achievement-cards', start: 'top 80%', once: true },
+        opacity: 1, x: 0, duration: 0.6, stagger: 0.12, ease: "power3.out"
+    }
+);
 
-gsap.from('.interview-callout', {
-    scrollTrigger: {
-        trigger: '.interview-callout',
-        start: 'top 85%',
-        once: true
-    },
-    opacity: 0,
-    y: 30,
-    duration: 0.7,
-    ease: "power3.out"
-});
+gsap.fromTo('.interview-callout',
+    { opacity: 0, y: 30 },
+    {
+        scrollTrigger: { trigger: '.interview-callout', start: 'top 85%', once: true },
+        opacity: 1, y: 0, duration: 0.7, ease: "power3.out"
+    }
+);
 
-gsap.from('.domain-card', {
-    scrollTrigger: {
-        trigger: '.domain-grid',
-        start: 'top 80%',
-        once: true
-    },
-    opacity: 0,
-    scale: 0.85,
-    y: 20,
-    duration: 0.6,
-    stagger: {
-        amount: 0.4,
-        from: "random"
-    },
-    ease: "back.out(1.5)"
-});
+gsap.fromTo('.domain-card',
+    { opacity: 0, scale: 0.85, y: 20 },
+    {
+        scrollTrigger: { trigger: '.domain-grid', start: 'top 80%', once: true },
+        opacity: 1, scale: 1, y: 0, duration: 0.6,
+        stagger: { amount: 0.4, from: "random" },
+        ease: "back.out(1.5)"
+    }
+);
 
 // Skills section
-gsap.from('.skills .section-heading', {
-    scrollTrigger: {
-        trigger: '.skills',
-        start: 'top 75%',
-        once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    ease: "power3.out"
-});
+gsap.fromTo('.skills .section-heading',
+    { opacity: 0, y: 40 },
+    {
+        scrollTrigger: { trigger: '.skills', start: 'top 75%', once: true },
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
+    }
+);
 
-gsap.from('.skill-block', {
-    scrollTrigger: {
-        trigger: '.skills-bento',
-        start: 'top 80%',
-        once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.7,
-    stagger: 0.12,
-    ease: "power3.out"
-});
+gsap.fromTo('.skill-block',
+    { opacity: 0, y: 40 },
+    {
+        scrollTrigger: { trigger: '.skills-bento', start: 'top 80%', once: true },
+        opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out"
+    }
+);
 
 // Projects section
-gsap.from('.projects .section-heading', {
-    scrollTrigger: {
-        trigger: '.projects',
-        start: 'top 75%',
-        once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    ease: "power3.out"
-});
+gsap.fromTo('.projects .section-heading',
+    { opacity: 0, y: 40 },
+    {
+        scrollTrigger: { trigger: '.projects', start: 'top 75%', once: true },
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
+    }
+);
 
-gsap.from('.projects-subtitle', {
-    scrollTrigger: {
-        trigger: '.projects',
-        start: 'top 75%',
-        once: true
-    },
-    opacity: 0,
-    y: 20,
-    duration: 0.7,
-    delay: 0.2,
-    ease: "power3.out"
-});
+gsap.fromTo('.projects-subtitle',
+    { opacity: 0, y: 20 },
+    {
+        scrollTrigger: { trigger: '.projects', start: 'top 75%', once: true },
+        opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power3.out"
+    }
+);
 
-gsap.from('.project-card', {
-    scrollTrigger: {
-        trigger: '.projects-track',
-        start: 'top 80%',
-        once: true
-    },
-    opacity: 0,
-    x: 60,
-    duration: 0.8,
-    stagger: 0.1,
-    ease: "power3.out"
-});
+gsap.fromTo('.project-card',
+    { opacity: 0, x: 60 },
+    {
+        scrollTrigger: { trigger: '.projects-track', start: 'top 80%', once: true },
+        opacity: 1, x: 0, duration: 0.8, stagger: 0.1, ease: "power3.out"
+    }
+);
 
 // Footer section
-gsap.from('.footer .section-heading', {
-    scrollTrigger: {
-        trigger: '.footer',
-        start: 'top 80%',
-        once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    ease: "power3.out"
-});
+gsap.fromTo('.footer .section-heading',
+    { opacity: 0, y: 40 },
+    {
+        scrollTrigger: { trigger: '.footer', start: 'top 80%', once: true },
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
+    }
+);
 
-gsap.from('.footer-link-card', {
-    scrollTrigger: {
-        trigger: '.footer-links',
-        start: 'top 85%',
-        once: true
-    },
-    opacity: 0,
-    x: 30,
-    duration: 0.6,
-    stagger: 0.1,
-    ease: "power3.out"
-});
+gsap.fromTo('.footer-link-card',
+    { opacity: 0, x: 30 },
+    {
+        scrollTrigger: { trigger: '.footer-links', start: 'top 85%', once: true },
+        opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: "power3.out"
+    }
+);
 
 // ---- Parallax Orbs on Scroll ----
 gsap.to('.orb-1', {
