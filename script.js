@@ -1,58 +1,342 @@
-// Navbar Scroll Effect
-const navbar = document.getElementById('navbar');
+// ============================================================
+// GSAP Premium Portfolio — Motion Choreography
+// ============================================================
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin);
 
-// Interactive Chip Background tracking
-const interactiveBg = document.querySelector('.interactive-bg');
-document.addEventListener('mousemove', (e) => {
-    if (interactiveBg) {
-        // Calculate the mouse position as a percentage of the window size
-        const x = (e.clientX / window.innerWidth) * 100;
-        const y = (e.clientY / window.innerHeight) * 100;
-
-        // Update the CSS variables directly on the element
-        interactiveBg.style.setProperty('--mouse-x', `${x}%`);
-        interactiveBg.style.setProperty('--mouse-y', `${y}%`);
-    }
-});
-
-// Scroll Reveal Animation (Intersection Observer)
-const revealElements = document.querySelectorAll('.reveal');
-
-const revealOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
-};
-
-const revealOnScroll = new IntersectionObserver(function (entries, observer) {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-            return;
-        } else {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
+// ---- Smooth scroll for nav links ----
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+            gsap.to(window, {
+                scrollTo: { y: target, offsetY: 80 },
+                duration: 1,
+                ease: "power3.inOut"
+            });
+        }
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.getElementById('hamburger');
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
     });
-}, revealOptions);
-
-revealElements.forEach(el => {
-    revealOnScroll.observe(el);
 });
 
-// Modal System Initialization
+// ---- Navbar Scroll Effect ----
+const navbar = document.getElementById('navbar');
+
+ScrollTrigger.create({
+    start: 'top -80',
+    onUpdate: (self) => {
+        if (self.scroll() > 80) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }
+});
+
+// ---- Hamburger Menu ----
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+}
+
+// ---- Hero Entrance Animation ----
+const heroTL = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+heroTL
+    .from('.hero-eyebrow', {
+        opacity: 0,
+        x: -30,
+        duration: 0.8,
+        delay: 0.3
+    })
+    .from('.hero-name-line', {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+        stagger: 0.15
+    }, '-=0.4')
+    .from('.hero-subtitle', {
+        opacity: 0,
+        y: 30,
+        duration: 0.8
+    }, '-=0.5')
+    .from('.hero-btns', {
+        opacity: 0,
+        y: 20,
+        duration: 0.7
+    }, '-=0.4')
+    .from('.hero-stats', {
+        opacity: 0,
+        x: 40,
+        duration: 0.8
+    }, '-=0.5')
+    .from('.hero-scroll-hint', {
+        opacity: 0,
+        y: 20,
+        duration: 0.6
+    }, '-=0.3');
+
+// ---- Counter Animation ----
+const statNumbers = document.querySelectorAll('.stat-number');
+
+statNumbers.forEach(el => {
+    const target = parseInt(el.dataset.count, 10);
+    
+    ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+            gsap.to(el, {
+                innerText: target,
+                duration: 1.5,
+                ease: "power2.out",
+                snap: { innerText: 1 },
+                onUpdate: function () {
+                    el.textContent = Math.round(parseFloat(el.textContent));
+                }
+            });
+        }
+    });
+});
+
+// ---- Section Reveal Animations ----
+// About section
+gsap.from('.about .section-heading', {
+    scrollTrigger: {
+        trigger: '.about',
+        start: 'top 75%',
+        once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: "power3.out"
+});
+
+gsap.from('.about-body p', {
+    scrollTrigger: {
+        trigger: '.about-body',
+        start: 'top 80%',
+        once: true
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power3.out"
+});
+
+gsap.from('.achievement-card', {
+    scrollTrigger: {
+        trigger: '.achievement-cards',
+        start: 'top 80%',
+        once: true
+    },
+    opacity: 0,
+    x: -30,
+    duration: 0.6,
+    stagger: 0.12,
+    ease: "power3.out"
+});
+
+gsap.from('.interview-callout', {
+    scrollTrigger: {
+        trigger: '.interview-callout',
+        start: 'top 85%',
+        once: true
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    ease: "power3.out"
+});
+
+gsap.from('.domain-card', {
+    scrollTrigger: {
+        trigger: '.domain-grid',
+        start: 'top 80%',
+        once: true
+    },
+    opacity: 0,
+    scale: 0.85,
+    y: 20,
+    duration: 0.6,
+    stagger: {
+        amount: 0.4,
+        from: "random"
+    },
+    ease: "back.out(1.5)"
+});
+
+// Skills section
+gsap.from('.skills .section-heading', {
+    scrollTrigger: {
+        trigger: '.skills',
+        start: 'top 75%',
+        once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: "power3.out"
+});
+
+gsap.from('.skill-block', {
+    scrollTrigger: {
+        trigger: '.skills-bento',
+        start: 'top 80%',
+        once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.7,
+    stagger: 0.12,
+    ease: "power3.out"
+});
+
+// Projects section
+gsap.from('.projects .section-heading', {
+    scrollTrigger: {
+        trigger: '.projects',
+        start: 'top 75%',
+        once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: "power3.out"
+});
+
+gsap.from('.projects-subtitle', {
+    scrollTrigger: {
+        trigger: '.projects',
+        start: 'top 75%',
+        once: true
+    },
+    opacity: 0,
+    y: 20,
+    duration: 0.7,
+    delay: 0.2,
+    ease: "power3.out"
+});
+
+gsap.from('.project-card', {
+    scrollTrigger: {
+        trigger: '.projects-track',
+        start: 'top 80%',
+        once: true
+    },
+    opacity: 0,
+    x: 60,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: "power3.out"
+});
+
+// Footer section
+gsap.from('.footer .section-heading', {
+    scrollTrigger: {
+        trigger: '.footer',
+        start: 'top 80%',
+        once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: "power3.out"
+});
+
+gsap.from('.footer-link-card', {
+    scrollTrigger: {
+        trigger: '.footer-links',
+        start: 'top 85%',
+        once: true
+    },
+    opacity: 0,
+    x: 30,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: "power3.out"
+});
+
+// ---- Parallax Orbs on Scroll ----
+gsap.to('.orb-1', {
+    y: -150,
+    scrollTrigger: {
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 2
+    }
+});
+
+gsap.to('.orb-2', {
+    y: -200,
+    x: -80,
+    scrollTrigger: {
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 3
+    }
+});
+
+gsap.to('.orb-3', {
+    y: -100,
+    scrollTrigger: {
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1.5
+    }
+});
+
+// ---- Hero Scroll Fade ----
+gsap.to('.hero-content', {
+    opacity: 0,
+    y: -60,
+    scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: '60% top',
+        scrub: 1
+    }
+});
+
+gsap.to('#hero-canvas', {
+    opacity: 0,
+    scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: '80% top',
+        scrub: 1
+    }
+});
+
+// ---- Modal System ----
 document.addEventListener('DOMContentLoaded', () => {
-    // Inject Modal HTML into the DOM
+    // Inject Modal HTML
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'modal-overlay';
     modalOverlay.innerHTML = `
-        <div class="modal-content-box window-glass">
+        <div class="modal-content-box">
             <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-body"></div>
         </div>
@@ -64,13 +348,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add click listeners to project cards
     document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+            // Don't open modal if clicking a link inside the card
+            if (e.target.closest('a')) return;
+            
             const detailsElement = card.querySelector('.project-details');
             if (detailsElement) {
-                // Transfer hidden HTML to the modal exactly as formatted
                 modalBody.innerHTML = detailsElement.innerHTML;
                 modalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Stop background scrolling
+                document.body.style.overflow = 'hidden';
             }
         });
     });
@@ -78,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close logic
     const closeModal = () => {
         modalOverlay.classList.remove('active');
-        document.body.style.overflow = 'auto'; // Restore background scrolling
+        document.body.style.overflow = 'auto';
     };
 
     modalClose.addEventListener('click', closeModal);
@@ -90,37 +376,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Hero Animation Loop is triggered below on resize
-function resize() {
-    if (typeof heroCanvas !== 'undefined' && heroCanvas) {
-        initHeroCanvas();
-    }
-}
+// ---- Magnetic Hover on Cards ----
+const magneticCards = document.querySelectorAll('.domain-card, .stat-item');
 
-// ----------------------------------------------------
-// Viewport-Relative CSS Scroll Lines
-// ----------------------------------------------------
-window.addEventListener('scroll', () => {
-    // 1. Calculate how far down the document we scrolled (0 to 1)
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollProgress = window.scrollY / scrollHeight;
+magneticCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        gsap.to(card, {
+            rotateX: -y / 15,
+            rotateY: x / 15,
+            duration: 0.5,
+            ease: "power2.out",
+            transformPerspective: 800
+        });
+    });
 
-    // Update the height of the pure CSS scroll neon lines
-    document.documentElement.style.setProperty('--scroll-progress', `${scrollProgress * 100}%`);
-
-    // 2. Hide lines completely when inside the hero title, fade in once past
-    const heroContent = document.querySelector('.hero-content');
-    if (heroContent) {
-        const heroBottom = heroContent.getBoundingClientRect().bottom + window.scrollY;
-        // If we scrolled past the hero content (with a little margin), show the lines
-        if (window.scrollY > heroBottom - window.innerHeight / 2) {
-            document.documentElement.style.setProperty('--scroll-lines-opacity', '1');
-        } else {
-            document.documentElement.style.setProperty('--scroll-lines-opacity', '0');
-        }
-    }
+    card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+            rotateX: 0,
+            rotateY: 0,
+            duration: 0.7,
+            ease: "elastic.out(1, 0.5)"
+        });
+    });
 });
 
+// ---- Skill Tag Hover Stagger ----
+const skillBlocks = document.querySelectorAll('.skill-block');
+
+skillBlocks.forEach(block => {
+    const tags = block.querySelectorAll('.skill-tag');
+    
+    block.addEventListener('mouseenter', () => {
+        gsap.from(tags, {
+            scale: 0.9,
+            opacity: 0.5,
+            duration: 0.3,
+            stagger: 0.04,
+            ease: "back.out(2)"
+        });
+    });
+});
+
+// ============================================================
+// Hero Canvas Animation (Circuit Lines)
+// ============================================================
+const heroCanvas = document.getElementById('hero-canvas');
+const heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
+let heroWidth, heroHeight;
+let heroLines = [];
+let heroAnimationDone = false;
 
 function calculatePathLength(path) {
     let len = 0;
@@ -132,16 +440,8 @@ function calculatePathLength(path) {
     return len;
 }
 
-// ----------------------------------------------------
-// Hero Canvas Animation (Facing Circuits)
-// ----------------------------------------------------
-const heroCanvas = document.getElementById('hero-canvas');
-const heroCtx = heroCanvas.getContext('2d');
-let heroWidth, heroHeight;
-let heroLines = [];
-let heroAnimationDone = false;
-
 function initHeroCanvas() {
+    if (!heroCanvas) return;
     heroWidth = heroCanvas.parentElement.clientWidth;
     heroHeight = heroCanvas.parentElement.clientHeight;
     heroCanvas.width = heroWidth;
@@ -151,7 +451,7 @@ function initHeroCanvas() {
 
 function generateHeroLines() {
     heroLines = [];
-    const hGrid = 40; // larger grid for hero
+    const hGrid = 40;
     const numLinesPerSide = Math.floor(heroHeight / hGrid);
 
     // Generate Left Side Lines
@@ -162,42 +462,43 @@ function generateHeroLines() {
 
         const segments = 3 + Math.floor(Math.random() * 4);
         for (let j = 0; j < segments; j++) {
-            const dir = Math.floor(Math.random() * 3); // 0=right, 1=diag up-right, 2=diag down-right
+            const dir = Math.floor(Math.random() * 3);
             const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
 
             if (dir === 0) { cx += dist; }
             else if (dir === 1) { cx += dist; cy -= dist; }
             else if (dir === 2) { cx += dist; cy += dist; }
 
-            // Stop before hitting the middle text area roughly
-            if (cx > heroWidth * 0.4) {
-                cx = heroWidth * 0.4;
-            }
+            if (cx > heroWidth * 0.35) cx = heroWidth * 0.35;
             path.push({ x: cx, y: cy });
         }
 
-        // Remove duplicate sequential points avoiding NaN segment lengths
-        const filteredPath = path.filter((pt, k, arr) => k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y);
+        const filteredPath = path.filter((pt, k, arr) =>
+            k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y
+        );
 
-        const pathCyan = JSON.parse(JSON.stringify(filteredPath));
-        const pathGold = JSON.parse(JSON.stringify(filteredPath));
+        const accentColor = '#34d399';
+        const dimColor = 'rgba(52, 211, 153, 0.3)';
+
+        const pathAccent = JSON.parse(JSON.stringify(filteredPath));
+        const pathDim = JSON.parse(JSON.stringify(filteredPath));
         const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
+        const sharedSpeed = 0.0008 + Math.random() * 0.0004;
 
         heroLines.push({
-            path: pathCyan,
-            length: calculatePathLength(pathCyan),
+            path: pathAccent,
+            length: calculatePathLength(pathAccent),
             delay: sharedDelay,
             speed: sharedSpeed,
-            color: '#00f0ff',
+            color: accentColor,
             offset: -3
         });
         heroLines.push({
-            path: pathGold,
-            length: calculatePathLength(pathGold),
+            path: pathDim,
+            length: calculatePathLength(pathDim),
             delay: sharedDelay,
             speed: sharedSpeed,
-            color: '#FFD700',
+            color: dimColor,
             offset: 3
         });
     }
@@ -210,42 +511,43 @@ function generateHeroLines() {
 
         const segments = 3 + Math.floor(Math.random() * 4);
         for (let j = 0; j < segments; j++) {
-            const dir = Math.floor(Math.random() * 3); // 0=left, 1=diag up-left, 2=diag down-left
+            const dir = Math.floor(Math.random() * 3);
             const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
 
             if (dir === 0) { cx -= dist; }
             else if (dir === 1) { cx -= dist; cy -= dist; }
             else if (dir === 2) { cx -= dist; cy += dist; }
 
-            // Stop before hitting the middle text area roughly
-            if (cx < heroWidth * 0.6) {
-                cx = heroWidth * 0.6;
-            }
+            if (cx < heroWidth * 0.65) cx = heroWidth * 0.65;
             path.push({ x: cx, y: cy });
         }
 
-        // Remove duplicate sequential points avoiding NaN segment lengths
-        const filteredPath = path.filter((pt, k, arr) => k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y);
+        const filteredPath = path.filter((pt, k, arr) =>
+            k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y
+        );
 
-        const pathCyan = JSON.parse(JSON.stringify(filteredPath));
-        const pathGold = JSON.parse(JSON.stringify(filteredPath));
+        const accentColor = '#34d399';
+        const dimColor = 'rgba(52, 211, 153, 0.3)';
+
+        const pathAccent = JSON.parse(JSON.stringify(filteredPath));
+        const pathDim = JSON.parse(JSON.stringify(filteredPath));
         const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.001 + Math.random() * 0.0005; // SLOWED DOWN
+        const sharedSpeed = 0.0008 + Math.random() * 0.0004;
 
         heroLines.push({
-            path: pathCyan,
-            length: calculatePathLength(pathCyan),
+            path: pathAccent,
+            length: calculatePathLength(pathAccent),
             delay: sharedDelay,
             speed: sharedSpeed,
-            color: '#00f0ff',
+            color: accentColor,
             offset: -3
         });
         heroLines.push({
-            path: pathGold,
-            length: calculatePathLength(pathGold),
+            path: pathDim,
+            length: calculatePathLength(pathDim),
             delay: sharedDelay,
             speed: sharedSpeed,
-            color: '#FFD700',
+            color: dimColor,
             offset: 3
         });
     }
@@ -253,25 +555,26 @@ function generateHeroLines() {
 
 // Hero Animation Loop
 let heroTime = 0;
+
 function animateHero() {
+    if (!heroCtx) return;
     heroTime += 1;
     heroCtx.clearRect(0, 0, heroWidth, heroHeight);
 
-    heroCtx.lineWidth = 2;
+    heroCtx.lineWidth = 1.5;
     heroCtx.lineCap = 'round';
     heroCtx.lineJoin = 'round';
-    heroCtx.shadowBlur = 12;
+    heroCtx.shadowBlur = 8;
 
-    let allComplete = true; // Track completion
+    let allComplete = true;
 
     heroLines.forEach(line => {
-        // Line progress increments strictly up to 1.0 (no looping)
         let p = (heroTime * line.speed) - line.delay;
-        if (p < 0) p = 0; // Waiting for delay
-        if (p < 1.0) allComplete = false; // Still drawing
-        if (p >= 1.0) p = 1.0; // Cap
+        if (p < 0) p = 0;
+        if (p < 1.0) allComplete = false;
+        if (p >= 1.0) p = 1.0;
 
-        if (p === 0) return; // Do not draw if unstarted
+        if (p === 0) return;
 
         heroCtx.strokeStyle = line.color;
         heroCtx.shadowColor = line.color;
@@ -294,13 +597,8 @@ function animateHero() {
 
             if (segmentLength < 0.001) continue;
 
-            // Calculate Normal Vector for Perpendicular Offset
-            let offsetX = 0;
-            let offsetY = 0;
-            if (segmentLength > 0) {
-                offsetX = (-dy / segmentLength) * line.offset;
-                offsetY = (dx / segmentLength) * line.offset;
-            }
+            let offsetX = (-dy / segmentLength) * line.offset;
+            let offsetY = (dx / segmentLength) * line.offset;
 
             if (!startedDrawing) {
                 heroCtx.moveTo(p1.x + offsetX, p1.y + offsetY);
@@ -320,9 +618,7 @@ function animateHero() {
                 const intermediateX = p1.x + dx * ratio;
                 const intermediateY = p1.y + dy * ratio;
                 heroCtx.lineTo(intermediateX + offsetX, intermediateY + offsetY);
-
-                heroCtx.stroke(); // STROKE BEFORE DRAWING NODE
-
+                heroCtx.stroke();
                 drawHeroNode(intermediateX + offsetX, intermediateY + offsetY, line.color);
                 currentLength += segmentLength;
                 break;
@@ -346,20 +642,58 @@ function animateHero() {
 function drawHeroNode(x, y, color) {
     heroCtx.save();
     heroCtx.fillStyle = color;
+    heroCtx.shadowBlur = 12;
+    heroCtx.shadowColor = color;
     heroCtx.beginPath();
-    heroCtx.arc(x, y, 5, 0, Math.PI * 2);
+    heroCtx.arc(x, y, 3, 0, Math.PI * 2);
     heroCtx.fill();
     heroCtx.restore();
 }
 
+// Initialize canvas
 window.addEventListener('resize', () => {
-    resize();
+    if (heroCanvas) initHeroCanvas();
 });
 
-// Initialize everything
 if (heroCanvas) {
-    resize();
+    initHeroCanvas();
     animateHero();
-} else {
-    resize();
 }
+
+// ---- Active Nav Link Highlighting ----
+const sections = document.querySelectorAll('section, footer');
+const navAnchors = document.querySelectorAll('.nav-links a[data-nav]');
+
+ScrollTrigger.create({
+    trigger: 'body',
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate: () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 200;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navAnchors.forEach(a => {
+            a.classList.remove('active-nav');
+            if (a.getAttribute('href') === `#${current}`) {
+                a.classList.add('active-nav');
+            }
+        });
+    }
+});
+
+// Style for active nav (injected dynamically)
+const navStyle = document.createElement('style');
+navStyle.textContent = `
+    .nav-links a.active-nav {
+        color: var(--accent) !important;
+    }
+    .nav-links a.active-nav::after {
+        width: 100% !important;
+    }
+`;
+document.head.appendChild(navStyle);
