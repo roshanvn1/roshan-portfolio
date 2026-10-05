@@ -380,13 +380,17 @@ skillBlocks.forEach(block => {
     const tags = block.querySelectorAll('.skill-tag');
     
     block.addEventListener('mouseenter', () => {
-        gsap.from(tags, {
-            scale: 0.9,
-            opacity: 0.5,
-            duration: 0.3,
-            stagger: 0.04,
-            ease: "back.out(2)"
-        });
+        gsap.fromTo(tags,
+            { scale: 0.9, opacity: 0.5 },
+            {
+                scale: 1,
+                opacity: 1,
+                duration: 0.3,
+                stagger: 0.04,
+                ease: "back.out(2)",
+                overwrite: "auto"
+            }
+        );
     });
 });
 
