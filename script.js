@@ -202,11 +202,29 @@ gsap.fromTo('.projects-subtitle',
     }
 );
 
+// Horizontal scroll for projects track
+const projectsTrack = document.querySelector('.projects-track');
+if (projectsTrack) {
+    gsap.to(projectsTrack, {
+        x: () => -(projectsTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
+        ease: "none",
+        scrollTrigger: {
+            trigger: ".projects",
+            start: "top top",
+            end: () => `+=${projectsTrack.scrollWidth}`,
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true
+        }
+    });
+}
+
+// Fade in project cards as they enter
 gsap.fromTo('.project-card',
-    { opacity: 0, x: 60 },
+    { opacity: 0, scale: 0.9 },
     {
-        scrollTrigger: { trigger: '.projects-track', start: 'top 80%', once: true },
-        opacity: 1, x: 0, duration: 0.8, stagger: 0.1, ease: "power3.out"
+        scrollTrigger: { trigger: '.projects', start: 'top 50%', once: true },
+        opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: "power3.out"
     }
 );
 

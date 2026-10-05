@@ -393,16 +393,18 @@ button {
     width: 100%;
     position: relative;
     z-index: 2;
-    display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
-    gap: 4rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 2rem;
     padding-top: 5rem;
 }
 
 .hero-left {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .hero-eyebrow {
@@ -413,6 +415,7 @@ button {
     color: var(--accent);
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     margin-bottom: 1.5rem;
 }
@@ -454,6 +457,7 @@ button {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 /* Stats */
@@ -461,12 +465,15 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .hero-stats {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 2.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .stat-item {
@@ -870,6 +877,7 @@ button {
 .projects {
     padding: 8rem 0 4rem;
     position: relative;
+    overflow: hidden;
 }
 
 .projects-subtitle {
@@ -883,32 +891,13 @@ button {
 .projects-track {
     display: flex;
     gap: 1.5rem;
-    overflow-x: auto;
-    overflow-y: visible;
+    width: max-content;
     padding: 1rem clamp(1.5rem, 5vw, 3rem) 4rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent) transparent;
-}
-
-.projects-track::-webkit-scrollbar {
-    height: 4px;
-}
-
-.projects-track::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.projects-track::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 4px;
 }
 
 /* Project Card */
 .project-card {
     flex: 0 0 380px;
-    scroll-snap-align: start;
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-xl);
@@ -1244,18 +1233,7 @@ button {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
     .hero-content {
-        grid-template-columns: 1fr;
         gap: 3rem;
-        text-align: left;
-    }
-
-    .hero-right {
-        justify-content: flex-start;
-    }
-
-    .hero-stats {
-        flex-direction: row;
-        gap: 1rem;
     }
 
     .about-layout {
