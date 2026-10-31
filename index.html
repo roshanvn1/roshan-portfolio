@@ -4,56 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roshan V N | Electronics Engineer & Innovator</title>
+    <title>Roshan V N | Electronics Engineer &amp; Innovator</title>
     <!-- SEO Optimization -->
     <meta name="description"
-        content="Roshan V N - Electronics & Communication Engineering Student and Innovator. Explore my portfolio spanning Robotics, Embedded Systems, SLAM, and Hardware Design.">
+        content="Roshan V N - Electronics &amp; Communication Engineering Student and Innovator. Explore my portfolio spanning Robotics, Embedded Systems, SLAM, and Hardware Design.">
     <meta name="keywords"
         content="Roshan V N, Roshan VN, Electronics Engineer, Electronics and Communication Engineering, Robotics, Embedded Systems, Hardware Design, SLAM Robot, Kerala">
     <meta name="author" content="Roshan V N">
 
     <!-- Open Graph (Social Sharing & SEO) -->
-    <meta property="og:title" content="Roshan V N | Electronics Engineer & Innovator">
+    <meta property="og:title" content="Roshan V N | Electronics Engineer &amp; Innovator">
     <meta property="og:description"
-        content="Portfolio of Roshan V N, an Electronics & Communication Engineering Student specializing in Robotics, Embedded Systems, and innovative Hardware Design.">
+        content="Portfolio of Roshan V N, an Electronics &amp; Communication Engineering Student specializing in Robotics, Embedded Systems, and innovative Hardware Design.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://roshanvn1.github.io/roshan-portfolio/">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"
         rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <!-- Ambient Background Layers -->
-    <div class="ambient-bg" aria-hidden="true">
-        <div class="ambient-orb orb-1"></div>
-        <div class="ambient-orb orb-2"></div>
-        <div class="ambient-orb orb-3"></div>
-    </div>
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <div class="grid-overlay" aria-hidden="true"></div>
+<body class="silicon-body">
+    <!-- Interactive Spark Cursor Canvas (Metal-on-Stone Physics) -->
+    <canvas id="cursor-canvas" class="cursor-canvas" aria-hidden="true"></canvas>
 
-    <!-- Navigation -->
+    <!-- Ambient Circuit Substrate & Grids -->
+    <div class="ambient-substrate" aria-hidden="true">
+        <div class="ambient-glow glow-cerulean"></div>
+        <div class="ambient-glow glow-rose"></div>
+    </div>
+    <div class="circuit-grid-overlay" aria-hidden="true"></div>
+
+    <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <a href="#hero" class="logo">
+            <a href="#hero" class="logo" aria-label="Roshan V N Home">
+                <span class="logo-chip"><i class="fa-solid fa-microchip"></i></span>
                 <span class="logo-text">RVN</span>
-                <span class="logo-dot"></span>
+                <span class="logo-status-dot"></span>
             </a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#about" data-nav>About</a></li>
                 <li><a href="#skills" data-nav>Skills</a></li>
                 <li><a href="#projects" data-nav>Projects</a></li>
-                <li><a href="#contact" class="nav-cta" data-nav>Get In Touch</a></li>
+                <li><a href="#contact" class="nav-cta" data-nav>Contact</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
@@ -61,124 +63,140 @@
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobile-menu">
+    <div class="mobile-menu-overlay" id="mobile-menu" aria-hidden="true">
         <ul class="mobile-nav-links">
             <li><a href="#about" data-mobile-nav>About</a></li>
             <li><a href="#skills" data-mobile-nav>Skills</a></li>
             <li><a href="#projects" data-mobile-nav>Projects</a></li>
-            <li><a href="#contact" data-mobile-nav>Get In Touch</a></li>
+            <li><a href="#contact" data-mobile-nav>Contact</a></li>
         </ul>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section: Name Positioned on Top with Directed Vector Conduits -->
     <section id="hero" class="hero">
-        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-content">
-            <div class="hero-left">
-                <p class="hero-eyebrow">
-                    
-                    Electronics & Communication Engineer
-                </p>
-                <h1 class="hero-name">
-                    <span class="hero-name-line">Roshan V N</span>
-                </h1>
-                <p class="hero-subtitle">Building the future through hardware, firmware, and relentless curiosity.</p>
-                <div class="hero-btns">
-                    <a href="#projects" class="btn primary-btn">
-                        View My Work
-                        <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/roshan-v-n/" target="_blank" class="btn secondary-btn">
-                        <i class="fa-brands fa-linkedin"></i> LinkedIn
-                    </a>
+            <!-- Top Nameplate Anchor with Clear Exclusion Margin -->
+            <div class="hero-header-block">
+                <div class="hero-eyebrow">
+                    <span class="eyebrow-beacon"></span>
+                    <span class="eyebrow-text">Electronics &amp; Communication Engineering</span>
                 </div>
+                <h1 class="hero-name" id="hero-name-target">
+                    <span class="greeting-prefix">Hi, I'm</span>
+                    <span class="hero-name-line">ROSHAN</span>
+                    <span class="hero-name-line">V N<span class="hero-accent">.</span></span>
+                </h1>
+                <p class="hero-title">
+                    <i class="fa-solid fa-microchip"></i> Electronics Engineering Student &amp; Innovator
+                </p>
             </div>
-            <div class="hero-right">
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="8">0</span>
-                        <span class="stat-label">Projects Built</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="4">0</span>
-                        <span class="stat-label">Years Tinkering</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="1">0</span>
-                        <span class="stat-label">Award Won</span>
-                    </div>
+
+            <!-- Action Cluster -->
+            <div class="hero-btns">
+                <a href="#projects" class="btn primary-btn">
+                    View My Work
+                    <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                <a href="https://www.linkedin.com/in/roshan-v-n/" target="_blank" rel="noopener noreferrer" class="btn secondary-btn">
+                    <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="#" onclick="navigator.clipboard.writeText('roshanvn1@gmail.com'); const originalHTML = this.innerHTML; this.innerHTML = '<i class=\'fa-solid fa-check\'></i> Copied!'; setTimeout(() => { this.innerHTML = originalHTML; }, 2000); return false;" title="Copy to clipboard" class="btn secondary-btn btn-copy-email">
+                    <i class="fa-solid fa-envelope"></i> roshanvn1@gmail.com
+                </a>
+            </div>
+
+            <!-- Engineering Telemetry Highlights -->
+            <div class="hero-telemetry">
+                <div class="telemetry-card">
+                    <span class="telemetry-value" data-count="8">8</span>
+                    <span class="telemetry-label">Projects Built</span>
+                </div>
+                <div class="telemetry-card">
+                    <span class="telemetry-value" data-count="4">4</span>
+                    <span class="telemetry-label">Years Tinkering</span>
+                </div>
+                <div class="telemetry-card">
+                    <span class="telemetry-value" data-count="1">1</span>
+                    <span class="telemetry-label">Award Won</span>
                 </div>
             </div>
         </div>
+
         <div class="hero-scroll-hint" aria-hidden="true">
-            <span class="scroll-text">Scroll</span>
-            <div class="scroll-line"></div>
+            <span class="scroll-label">EXPLORE</span>
+            <div class="scroll-track">
+                <div class="scroll-pip"></div>
+            </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-layout">
-                <div class="about-text-col">
-                    <h2 class="section-heading">
-                        <span class="heading-accent">About</span> Me
-                    </h2>
+    <section id="about" class="about section-padding">
+        <div class="container reveal">
+            <h2 class="section-title">
+                About Me <span><i class="fa-solid fa-user-astronaut"></i></span>
+            </h2>
+
+            <div class="about-grid">
+                <!-- Narrative & Achievements -->
+                <div class="about-text glass-card">
                     <div class="about-body">
-                        <p>I'm an <strong>Electronics and Communication Engineering student</strong> who loves
-                            tinkering and experimenting with ideas. Every project I build is unique, from reusing old
-                            components to creating new circuits and systems from scratch.</p>
-                        <p>I enjoy learning more about electronics and constantly exploring how things work, driven by
-                            curiosity and hands-on creativity.</p>
+                        <p>I’m an <strong>Electronics and Communication Engineering student</strong> who loves tinkering and experimenting with ideas. Every project I build is unique, from reusing old components to creating new circuits and systems from scratch.</p>
+                        <p>I enjoy learning more about electronics and constantly exploring how things work, driven by curiosity and hands-on creativity.</p>
                     </div>
 
-                    <div class="achievement-cards">
-                        <div class="achievement-card">
-                            <div class="achievement-icon"><i class="fa-solid fa-certificate"></i></div>
-                            <div class="achievement-info">
-                                <h4>Level 4 Robotics Certificate</h4>
-                                <p>Industrial Robotics Institute</p>
-                            </div>
-                        </div>
-                        <div class="achievement-card">
-                            <div class="achievement-icon"><i class="fa-solid fa-trophy"></i></div>
-                            <div class="achievement-info">
-                                <h4>3rd Prize, District Science Exhibition</h4>
-                                <p>Smart Electric Meter (12th Grade)</p>
-                            </div>
-                        </div>
+                    <div class="achievements-wrap">
+                        <h4 class="achievements-heading">Certifications &amp; Achievements</h4>
+                        <ul class="achievements-list">
+                            <li class="achievement-item">
+                                <div class="achievement-icon-wrap"><i class="fa-solid fa-certificate"></i></div>
+                                <div class="achievement-detail">
+                                    <p><strong>Level 4 Robotics Certificate</strong> from Industrial Robotics Institute</p>
+                                </div>
+                            </li>
+                            <li class="achievement-item">
+                                <div class="achievement-icon-wrap"><i class="fa-solid fa-trophy"></i></div>
+                                <div class="achievement-detail">
+                                    <p><strong>3rd Prize in District Science Exhibition</strong> for Smart Electric Meter (12th Grade)</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="interview-callout">
-                        <div class="callout-icon"><i class="fa-brands fa-youtube"></i></div>
-                        <div class="callout-content">
-                            <h4>My IEDC Interview</h4>
+                    <!-- Highlight Box (Interview Callout) -->
+                    <div class="highlight-box">
+                        <div class="highlight-icon">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <div class="highlight-body">
+                            <h4>Check out my Interview!</h4>
                             <p>I was interviewed by IEDC about my projects and journey.</p>
-                            <a href="https://youtu.be/6sV6i2OQ4HU?si=ILEB8pLC-w3nWgbQ" target="_blank"
-                                class="callout-link">
-                                Watch on YouTube <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <a href="https://youtu.be/6sV6i2OQ4HU?si=ILEB8pLC-w3nWgbQ" target="_blank" rel="noopener noreferrer" class="highlight-link">
+                                Watch it on YouTube <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="about-visual-col">
+                <!-- Domain Visual Cards -->
+                <div class="about-visual glass-card">
                     <div class="domain-grid">
                         <div class="domain-card" data-domain="hardware">
-                            <i class="fa-solid fa-microchip"></i>
-                            <span>Hardware</span>
+                            <div class="domain-icon"><i class="fa-solid fa-microchip"></i></div>
+                            <span class="domain-title">Hardware</span>
                         </div>
                         <div class="domain-card" data-domain="firmware">
-                            <i class="fa-solid fa-code"></i>
-                            <span>Firmware</span>
+                            <div class="domain-icon"><i class="fa-solid fa-code"></i></div>
+                            <span class="domain-title">Firmware</span>
                         </div>
                         <div class="domain-card" data-domain="robotics">
-                            <i class="fa-solid fa-robot"></i>
-                            <span>Robotics</span>
+                            <div class="domain-icon"><i class="fa-solid fa-robot"></i></div>
+                            <span class="domain-title">Robotics</span>
                         </div>
                         <div class="domain-card" data-domain="analog">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span>Analog</span>
+                            <div class="domain-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <span class="domain-title">Analog</span>
                         </div>
                     </div>
                 </div>
@@ -187,20 +205,20 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-heading center-heading">
-                Technical <span class="heading-accent">Arsenal</span>
+    <section id="skills" class="skills section-padding bg-darker">
+        <div class="container reveal">
+            <h2 class="section-title">
+                Technical Arsenal <span><i class="fa-solid fa-toolbox"></i></span>
             </h2>
 
-            <div class="skills-bento">
-                <!-- Software & Programming -->
-                <div class="skill-block skill-block-lg">
-                    <div class="skill-block-header">
-                        <div class="skill-icon-wrap"><i class="fa-solid fa-terminal"></i></div>
-                        <h3>Software & Programming</h3>
+            <div class="skills-container">
+                <!-- Category 1: Software & Programming -->
+                <div class="skill-category glass-card">
+                    <div class="skill-category-header">
+                        <div class="skill-icon"><i class="fa-solid fa-terminal"></i></div>
+                        <h3>Software &amp; Programming</h3>
                     </div>
-                    <div class="skill-tags">
+                    <div class="skill-tag-cloud">
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">Embedded C (Arduino IDE)</span>
                         <span class="skill-tag">Java (Basic)</span>
@@ -208,13 +226,13 @@
                     </div>
                 </div>
 
-                <!-- EDA & Simulation -->
-                <div class="skill-block">
-                    <div class="skill-block-header">
-                        <div class="skill-icon-wrap"><i class="fa-solid fa-wave-square"></i></div>
-                        <h3>EDA & Simulation Tools</h3>
+                <!-- Category 2: EDA & Simulation Tools -->
+                <div class="skill-category glass-card">
+                    <div class="skill-category-header">
+                        <div class="skill-icon"><i class="fa-solid fa-wave-square"></i></div>
+                        <h3>EDA &amp; Simulation Tools</h3>
                     </div>
-                    <div class="skill-tags">
+                    <div class="skill-tag-cloud">
                         <span class="skill-tag">Cadence Virtuoso</span>
                         <span class="skill-tag">LT Spice</span>
                         <span class="skill-tag">Tina TI</span>
@@ -222,13 +240,13 @@
                     </div>
                 </div>
 
-                <!-- HDLs -->
-                <div class="skill-block">
-                    <div class="skill-block-header">
-                        <div class="skill-icon-wrap"><i class="fa-solid fa-network-wired"></i></div>
+                <!-- Category 3: Hardware Description Languages -->
+                <div class="skill-category glass-card">
+                    <div class="skill-category-header">
+                        <div class="skill-icon"><i class="fa-solid fa-network-wired"></i></div>
                         <h3>Hardware Description Languages</h3>
                     </div>
-                    <div class="skill-tags">
+                    <div class="skill-tag-cloud">
                         <span class="skill-tag">Verilog HDL</span>
                         <span class="skill-tag">System Verilog</span>
                     </div>
@@ -237,397 +255,348 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-heading">
-                <span class="heading-accent">Projects</span>
-            </h2>
-            <p class="projects-subtitle">Each project is a hands-on exploration. Click any card for full details.</p>
+    <!-- Projects Section (Google AI Reference: Sideways Scrolling Carousel) -->
+    <section id="projects" class="projects section-padding">
+        <div class="container projects-header-container">
+            <div class="projects-header-left">
+                <h2 class="section-title">
+                    My Projects <span><i class="fa-solid fa-rocket"></i></span>
+                </h2>
+                <p class="projects-subtitle">Each project is a hands-on exploration. Click any card for full details.</p>
+            </div>
+
+            <!-- Google AI Carousel Controls (Counter & Circular Prev/Next Buttons) -->
+            <div class="projects-controls" aria-label="Project carousel navigation">
+                <div class="projects-counter" aria-live="polite">
+                    <span class="counter-current" id="projects-counter-current">01</span>
+                    <span class="counter-sep">/</span>
+                    <span class="counter-total">08</span>
+                </div>
+                <div class="projects-nav-btns">
+                    <button class="carousel-btn prev-btn" id="proj-prev-btn" aria-label="Previous project" disabled>
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-btn next-btn" id="proj-next-btn" aria-label="Next project">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="projects-track">
-            <!-- Project 1 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="https://via.placeholder.com/600x400/0a0c14/00f0ff?text=Snake+Robot"
-                        alt="Search & Rescue Snake Robot" class="project-image" loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Search & Rescue Snake Robot</h3>
-                    <p class="project-desc">A highly maneuverable snake robot designed to go underground to search for
-                        human bodies during disasters.</p>
-                    <div class="project-tags">
-                        <span class="tag">Robotics</span>
-                        <span class="tag">Embedded C</span>
-                        <span class="tag">Hardware</span>
+        <!-- Horizontal Viewport with Bilateral Gradient Edge Fades -->
+        <div class="projects-viewport" id="projects-viewport">
+            <div class="viewport-fade fade-left" aria-hidden="true"></div>
+            <div class="projects-track" id="projects-track" role="region" aria-label="Projects horizontal track">
+                <!-- Project 1: Search & Rescue Snake Robot -->
+                <article class="project-card glass-card doppelrand" data-project="1" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="https://via.placeholder.com/600x400/12141d/00f0ff?text=Add+Photo+Here"
+                            alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">ROBOTICS</div>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-details" hidden>
-                    <h3>Search & Rescue Snake Robot</h3>
-                    <p>A highly maneuverable snake robot designed to go underground to search for human bodies during
-                        disasters. It utilizes embedded C programming and complex mechanical linkages to mimic serpentine
-                        movement, making it uniquely capable of traversing uneven and challenging terrain. This project
-                        is ongoing, will update the details soon.</p>
-                    <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
-                        style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
-
-            <!-- Project 2 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="images/slam_robot.jpg" alt="SLAM Obstacle Avoiding Robot" class="project-image"
-                        loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">SLAM Obstacle Avoiding Robot</h3>
-                    <p class="project-desc">A smart, autonomous LiDAR robot built under &#8377;2000, capable of
-                        Simultaneous Localization and Mapping.</p>
-                    <div class="project-tags">
-                        <span class="tag">SLAM</span>
-                        <span class="tag">Sensors</span>
-                        <span class="tag">Budget Build</span>
+                    <div class="project-info">
+                        <h3 class="project-title">🐍 Search &amp; Rescue Snake Robot</h3>
+                        <p class="project-desc">A highly maneuverable snake robot designed to go underground to search for human bodies during disasters.</p>
+                        <div class="project-tags">
+                            <span class="tag">Robotics</span>
+                            <span class="tag">Embedded C</span>
+                            <span class="tag">Hardware</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
 
-                <div class="project-details" hidden>
-                    <h3>SLAM Obstacle Avoiding Robot</h3>
-                    <p>During my vacation I wanted to learn and gain experience in practical project implementation,
-                        so I built a DIY LiDAR-based SLAM and obstacle-avoiding robot as a hobby project. This took
-                        more time than my two-month vacation as I was doing everything alone, debugging and fixing
-                        constant problems—all under a &#8377;2000 budget.</p>
-                    <h4>Hardware Structure</h4>
-                    <ul>
-                        <li><strong>Bottom layer:</strong> DC motors, motor driver, rechargeable batteries, buck
-                            converter</li>
-                        <li><strong>Middle layer:</strong> ESP32 microcontroller</li>
-                        <li><strong>Top layer:</strong> IMU, servo motor with a VL53L0X LiDAR mounted inside a
-                            lightweight bottle cap (a cheap, strong DIY enclosure)</li>
-                    </ul>
-                    <h4>Features & Operations</h4>
-                    <ul>
-                        <li>Scans the surroundings using a rotating LiDAR and sends readings to a Flask-based website.
-                        </li>
-                        <li>The website processes the data through my laptop and displays a live map.</li>
-                        <li>Robot moves a fixed distance, rescans, and sends updates wirelessly.</li>
-                        <li>If an obstacle is detected, it rescans and precisely turns toward the direction with more
-                            free space.</li>
-                        <li>Full control (start/stop/reset/stop generating map/clear points) available through the web
-                            interface.</li>
-                    </ul>
-                    <h4>Limitations Managed</h4>
-                    <ul>
-                        <li>Needs 1 minute of IMU calibration for accuracy at the beginning.</li>
-                        <li>ESP32 gets overloaded if it runs too long.</li>
-                        <li>Queue buildup: Robot sends data faster than the web processing speed, which I managed by
-                            slowing down the robot and optimizing data flow.</li>
-                    </ul>
-                    <h4>Skills Gained</h4>
-                    <p>Sensor fusion, Real-time data processing, Flask-based IoT communication, Embedded programming on
-                        ESP32, Mapping algorithms, Low-cost hardware design.</p>
-                    <a href="https://www.linkedin.com/posts/roshan-v-n_robotics-embeddedsystems-iot-activity-7401293452816076802-jL6P?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E"
-                        target="_blank" class="btn primary-btn modal-link-btn" style="margin-top: 1.5rem;"><i
-                            class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
-
-            <!-- Project 3 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="images/bluetooth_speaker.jpg" alt="E-Waste Bluetooth Speaker" class="project-image"
-                        loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">E-Waste Bluetooth Speaker</h3>
-                    <p class="project-desc">A fully functional Bluetooth speaker built entirely from scratch utilizing
-                        recycled e-waste components.</p>
-                    <div class="project-tags">
-                        <span class="tag">Recycling</span>
-                        <span class="tag">Audio</span>
-                        <span class="tag">Soldering</span>
+                    <div class="project-details" hidden>
+                        <h3>Search &amp; Rescue Snake Robot</h3>
+                        <p>A highly maneuverable snake robot designed to go underground to search for human bodies during disasters. It utilizes embedded C programming and complex mechanical linkages to mimic serpentine movement, making it uniquely capable of traversing uneven and challenging terrain. This project is ongoing, will update the details soon.</p>
+                        <a class="btn primary-btn modal-link-btn" href="#" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
+                </article>
 
-                <div class="project-details" hidden>
-                    <h3>Bluetooth Speaker (E-Waste)</h3>
-                    <p>Over the last 4 days, I worked on building a Bluetooth speaker as part of my hobby of tinkering
-                        with electronics and upcycling old tech, all without spending a single extra penny!</p>
-                    <h4>Hardware Components</h4>
-                    <ul>
-                        <li>A battery-damaged Boat Rockerz 400 headset</li>
-                        <li>Old computer speakers with an inbuilt amplifier</li>
-                        <li>Components from an old SMPS (Switch Mode Power Supply)</li>
-                    </ul>
-                    <h4>Development Journey</h4>
-                    <p>What makes this project unique is that, as far as I know, no one has ever combined these
-                        components in this way before. I built it using a trial-and-error method, risking both the
-                        headset and the speakers. However, I mitigated some of the risk by using LTSpice to simulate and
-                        check the circuit before assembly, reducing the chances of damaging the components.</p>
-                    <p>The final product is a fully functional and personalized Bluetooth speaker system, and it was an
-                        amazing learning experience. Looking forward to taking on more fun, experimental projects like
-                        this in the future!</p>
-                    <a href="https://www.linkedin.com/posts/roshan-v-n_diy-bluetoothspeaker-reuse-activity-7242946749743431684-ojJ3?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E"
-                        target="_blank" class="btn primary-btn modal-link-btn" style="margin-top: 1.5rem;"><i
-                            class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
-
-            <!-- Project 4 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="images/ir_obstacle_avoiding_robot.jpg" alt="Analog Obstacle Avoider"
-                        class="project-image" loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Analog Obstacle Avoider</h3>
-                    <p class="project-desc">A purely analog robot utilizing LM358 Op-Amps for logical decision making
-                        instead of microcontrollers.</p>
-                    <div class="project-tags">
-                        <span class="tag">Analog</span>
-                        <span class="tag">Op-Amps</span>
-                        <span class="tag">Circuitry</span>
+                <!-- Project 2: SLAM Obstacle Avoiding Robot -->
+                <article class="project-card glass-card doppelrand" data-project="2" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="images/slam_robot.jpg" alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">SLAM</div>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-details" hidden>
-                    <h3>Analog Obstacle Avoiding Robot</h3>
-                    <p>As part of my S4 Analog Circuits-2 course, I designed and built a collision-avoiding robot. The
-                        entire circuit design, logic, and assembly were done by me from scratch without the use of
-                        microcontrollers.</p>
-                    <h4>Hardware & Control</h4>
-                    <p>The robot uses two gear motors and a freewheel for movement, controlled by LM358 (op-amp as
-                        comparator), an L293D motor driver, a 555 timer IC, and three pairs of IR LEDs and receivers for
-                        obstacle detection.</p>
-                    <p>To avoid jerks caused by motor current fluctuations, power is separated: a 7805 regulator powers
-                        the control section from a 9V supply, while the motors are driven by an 18650 battery through
-                        the L293D driver. The motor speed can be adjusted precisely using the 555 timer.</p>
-                    <h4>Binary Logic Design</h4>
-                    <p>For obstacle detection, I developed a simple but powerful binary logic using the three IR sensor
-                        pairs (1 = object detected, 0 = no object, X = either).<br>
-                        <em>MSB: Front sensor | Middle bit: Left sensor | LSB: Right sensor</em>
-                    </p>
-                    <ul>
-                        <li><strong>100</strong> - Robot stops</li>
-                        <li><strong>X10</strong> - Robot turns strictly right until clear</li>
-                        <li><strong>X01</strong> - Robot turns strictly left until clear</li>
-                    </ul>
-                    <h4>Development Journey</h4>
-                    <p>The final design came after intensive brainstorming and testing. I tried three different op-amps
-                        before finding that the LM358 worked best as a comparator here. For motor control, I
-                        experimented with MOSFETs and transistors, but they caused heating and wasted power, prompting a
-                        switch to the L293D. Because the system is fully analog, the response is actually faster and more
-                        accurate compared to traditional microcontroller setups!</p>
-                    <a href="https://www.linkedin.com/posts/roshan-v-n_analogcircuits-electronics-robotics-activity-7370080882973437953-drdr?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E"
-                        target="_blank" class="btn primary-btn modal-link-btn" style="margin-top: 1.5rem;"><i
-                            class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
-
-            <!-- Project 5 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="images/ir_transreceiver.jpg" alt="Custom IR Transceiver" class="project-image"
-                        loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Custom IR Transceiver</h3>
-                    <p class="project-desc">A custom designed infrared transmission system using astable multivibrators
-                        for wireless communication.</p>
-                    <div class="project-tags">
-                        <span class="tag">Wireless Protocol</span>
-                        <span class="tag">Optoelectronics</span>
+                    <div class="project-info">
+                        <h3 class="project-title">🤖 SLAM Obstacle Avoiding Robot</h3>
+                        <p class="project-desc">A smart, autonomous LiDAR robot built under ₹2000, capable of Simultaneous Localization and Mapping.</p>
+                        <div class="project-tags">
+                            <span class="tag">SLAM</span>
+                            <span class="tag">Sensors</span>
+                            <span class="tag">Budget Build</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
 
-                <div class="project-details" hidden>
-                    <h3>Custom IR Transmitter & Receiver</h3>
-                    <p>As a team, we built a fully functional infrared communication system from scratch without relying
-                        on pre-built transceiver modules.</p>
-                    <h4>The Transmitter</h4>
-                    <ul>
-                        <li>Built an astable multivibrator utilizing two 2N2222 transistors to generate high-frequency
-                            square wave signals.</li>
-                        <li>One output connects to a visible LED to indicate the current frequency visually, while the
-                            other connects to an IR LED via a voltage divider to provide it with balanced power.</li>
-                        <li>Used a DPDT switch to toggle between two distinct frequencies dynamically using 30k and
-                            100k resistors.</li>
-                    </ul>
-                    <h4>The Receiver</h4>
-                    <ul>
-                        <li>Utilized a BS0038 IR receiver connected to a 2N2222 transistor and an LED to detect and
-                            amplify the incoming infrared signal.</li>
-                    </ul>
-                    <h4>Outcomes</h4>
-                    <p>Throughout this process, we deeply learned the intricate design and behavior of an astable
-                        multivibrator for signal generation, and enhanced our practical circuit design skills through
-                        iterative problem-solving.</p>
-                    <a href="https://www.linkedin.com/posts/roshan-v-n_electronics-analogcircuits-circuitdesign-activity-7287866786757099520-e5kM?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E"
-                        target="_blank" class="btn primary-btn modal-link-btn" style="margin-top: 1.5rem;"><i
-                            class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
-
-            <!-- Project 6 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="images/stopwatch_analog.jpg" alt="Analog Stopwatch" class="project-image" loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Analog Stopwatch</h3>
-                    <p class="project-desc">An intricate electronic stopwatch engineered from the ground up using
-                        fundamental analog components.</p>
-                    <div class="project-tags">
-                        <span class="tag">Timing Circuits</span>
-                        <span class="tag">Analog Design</span>
+                    <div class="project-details" hidden>
+                        <h3>SLAM Obstacle Avoiding Robot</h3>
+                        <p>During my vacation I wanted to learn and gain experience in practical project implementation, so I built a DIY LiDAR-based SLAM and obstacle-avoiding robot as a hobby project. This took more time than my two-month vacation as I was doing everything alone, debugging and fixing constant problems—all under a ₹2000 budget.</p>
+                        <h4>Hardware Structure</h4>
+                        <ul>
+                            <li><strong>Bottom layer:</strong> DC motors, motor driver, rechargeable batteries, buck converter</li>
+                            <li><strong>Middle layer:</strong> ESP32 microcontroller</li>
+                            <li><strong>Top layer:</strong> IMU, servo motor with a VL53L0X LiDAR mounted inside a lightweight bottle cap (a cheap, strong DIY enclosure)</li>
+                        </ul>
+                        <h4>Features &amp; Operations</h4>
+                        <ul>
+                            <li>Scans the surroundings using a rotating LiDAR and sends readings to a Flask-based website.</li>
+                            <li>The website processes the data through my laptop and displays a live map.</li>
+                            <li>Robot moves a fixed distance, rescans, and sends updates wirelessly.</li>
+                            <li>If an obstacle is detected, it rescans and precisely turns toward the direction with more free space.</li>
+                            <li>Full control (start/stop/reset/stop generating map/clear points) available through the web interface.</li>
+                        </ul>
+                        <h4>Limitations Managed</h4>
+                        <ul>
+                            <li>Needs 1 minute of IMU calibration for accuracy at the beginning.</li>
+                            <li>ESP32 gets overloaded if it runs too long.</li>
+                            <li>Queue buildup: Robot sends data faster than the web processing speed, which I managed by slowing down the robot and optimizing data flow.</li>
+                        </ul>
+                        <h4>Skills Gained</h4>
+                        <p>Sensor fusion, Real-time data processing, Flask-based IoT communication, Embedded programming on ESP32, Mapping algorithms, Low-cost hardware design.</p>
+                        <a class="btn primary-btn modal-link-btn" href="https://www.linkedin.com/posts/roshan-v-n_robotics-embeddedsystems-iot-activity-7401293452816076802-jL6P?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
+                </article>
 
-                <div class="project-details" hidden>
-                    <h3>Analog Stopwatch</h3>
-                    <p>An intricate electronic stopwatch engineered completely from the ground up using fundamental
-                        analog components. It serves as an exploration into high-precision timing circuits, logic gates,
-                        and counter manipulation without relying on any modern programmable microcontroller units.</p>
-                    <a href="#" target="_blank" class="btn primary-btn modal-link-btn"
-                        style="margin-top: 1.5rem;"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
-
-            <!-- Project 7 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="images/driller_diy.jpg" alt="DIY Driller" class="project-image" loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">DIY Driller</h3>
-                    <p class="project-desc">A sturdy, self-made drilling machine crafted for personal electronics
-                        prototyping and PCB making.</p>
-                    <div class="project-tags">
-                        <span class="tag">DIY Tool</span>
-                        <span class="tag">Mechanical</span>
-                        <span class="tag">Upcycling</span>
+                <!-- Project 3: E-Waste Bluetooth Speaker -->
+                <article class="project-card glass-card doppelrand" data-project="3" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="images/bluetooth_speaker.jpg" alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">UPCYCLING</div>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-details" hidden>
-                    <h3>Custom DIY Driller</h3>
-                    <p>Back in May 2021, as part of my electronics hobby, I realized I didn't have a PCB driller on
-                        hand, so I decided to make one myself using an RS-775 DC motor (24V). I repurposed some extra
-                        leftover PVC pipe from the construction of my home for the casing. This project allowed me to
-                        channel my creativity and refine my practical skills.</p>
-                    <h4>System Design</h4>
-                    <ul>
-                        <li><strong>Power Source:</strong> 24V 2.5A adapter.</li>
-                        <li><strong>Switching Mechanism:</strong> Equipped with a main power switch, a DPDT switch to
-                            toggle between speed-controlled operation (via voltage regulation) and max power, and a
-                            second DPDT switch to selectively reverse rotation (clockwise/anti-clockwise).</li>
-                        <li><strong>Speed Controller:</strong> Built using a 2SC5200 transistor and a 10k potentiometer
-                            for precision control.</li>
-                        <li><strong>Compact Enclosure:</strong> The circuit was specifically built to fit neatly within
-                            the PVC pipe handle, ensuring every component has sufficient space to function safely without
-                            crowding.</li>
-                    </ul>
-                    <p>What started as a solution to a simple need turned into a fun and rewarding exercise in
-                        electrical layout, with the added bonus of repurposing materials directly from home
-                        construction.</p>
-                    <a href="https://www.linkedin.com/posts/roshan-v-n_latepost-engineering-electronics-activity-7243237538646138880-IUe1?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E"
-                        target="_blank" class="btn primary-btn modal-link-btn" style="margin-top: 1.5rem;"><i
-                            class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
-
-            <!-- Project 8 -->
-            <article class="project-card" data-project>
-                <div class="project-image-wrap">
-                    <img src="images/smart_electric_meter.jpg" alt="Smart Electric Meter" class="project-image"
-                        loading="lazy">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Smart Electric Meter</h3>
-                    <p class="project-desc">An innovative smart meter prototype built in 12th grade that won 3rd prize
-                        in the District Science Exhibition.</p>
-                    <div class="project-tags">
-                        <span class="tag">Innovation</span>
-                        <span class="tag">Award Winning</span>
+                    <div class="project-info">
+                        <h3 class="project-title">🔊 E-Waste Bluetooth Speaker</h3>
+                        <p class="project-desc">A fully functional Bluetooth speaker built entirely from scratch utilizing recycled e-waste components.</p>
+                        <div class="project-tags">
+                            <span class="tag">Recycling</span>
+                            <span class="tag">Audio</span>
+                            <span class="tag">Soldering</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
-                    <span class="project-read-more">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
 
-                <div class="project-details" hidden>
-                    <h3>Smart Electric Meter</h3>
-                    <p>During my 12th grade, I conceptualized and developed a fully working prototype of a "Smart
-                        Electric Meter" to represent my school at a highly competitive science exhibition.</p>
-                    <p>This project was aimed at solving real-world power monitoring issues by making electric
-                        consumption tracking more accessible, transparent, and intelligent.</p>
-                    <h4>Achievement</h4>
-                    <p>The project received significant attention from judges and was officially awarded the <strong>3rd
-                            Prize in the District Science Exhibition</strong>. This accomplishment was a major milestone
-                        that cemented my passion for electronics engineering and innovative practical design early on.
-                    </p>
-                    <a href="https://www.linkedin.com/in/roshan-v-n" target="_blank"
-                        class="btn primary-btn modal-link-btn" style="margin-top: 1.5rem;"><i
-                            class="fa-brands fa-linkedin"></i> View Project Post</a>
-                </div>
-            </article>
+                    <div class="project-details" hidden>
+                        <h3>Bluetooth Speaker (E-Waste)</h3>
+                        <p>Over the last 4 days, I worked on building a Bluetooth speaker as part of my hobby of tinkering with electronics and upcycling old tech – all without spending a single extra penny!</p>
+                        <h4>Hardware Components</h4>
+                        <ul>
+                            <li>A battery-damaged Boat Rockerz 400 headset</li>
+                            <li>Old computer speakers with an inbuilt amplifier</li>
+                            <li>Components from an old SMPS (Switch Mode Power Supply)</li>
+                        </ul>
+                        <h4>Development Journey</h4>
+                        <p>What makes this project unique is that, as far as I know, no one has ever combined these components in this way before. I built it using a trial-and-error method, risking both the headset and the speakers. However, I mitigated some of the risk by using LTSpice to simulate and check the circuit before assembly, reducing the chances of damaging the components.</p>
+                        <p>The final product is a fully functional and personalized Bluetooth speaker system, and it was an amazing learning experience. Looking forward to taking on more fun, experimental projects like this in the future!</p>
+                        <a class="btn primary-btn modal-link-btn" href="https://www.linkedin.com/posts/roshan-v-n_diy-bluetoothspeaker-reuse-activity-7242946749743431684-ojJ3?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
+                    </div>
+                </article>
+
+                <!-- Project 4: Analog Obstacle Avoider -->
+                <article class="project-card glass-card doppelrand" data-project="4" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="images/ir_obstacle_avoiding_robot.jpg" alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">ANALOG LOGIC</div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">⚡ Analog Obstacle Avoider</h3>
+                        <p class="project-desc">A purely analog robot utilizing LM358 Op-Amps for logical decision making instead of microcontrollers.</p>
+                        <div class="project-tags">
+                            <span class="tag">Analog</span>
+                            <span class="tag">Op-Amps</span>
+                            <span class="tag">Circuitry</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details" hidden>
+                        <h3>Analog Obstacle Avoiding Robot</h3>
+                        <p>As part of my S4 Analog Circuits-2 course, I designed and built a collision-avoiding robot. The entire circuit design, logic, and assembly were done by me from scratch without the use of microcontrollers.</p>
+                        <h4>Hardware &amp; Control</h4>
+                        <p>The robot uses two gear motors and a freewheel for movement, controlled by LM358 (op-amp as comparator), an L293D motor driver, a 555 timer IC, and three pairs of IR LEDs and receivers for obstacle detection.</p>
+                        <p>To avoid jerks caused by motor current fluctuations, power is separated: a 7805 regulator powers the control section from a 9V supply, while the motors are driven by an 18650 battery through the L293D driver. The motor speed can be adjusted precisely using the 555 timer.</p>
+                        <h4>Binary Logic Design</h4>
+                        <p>For obstacle detection, I developed a simple but powerful binary logic using the three IR sensor pairs (1 = object detected, 0 = no object, X = either).<br><em>MSB: Front sensor | Middle bit: Left sensor | LSB: Right sensor</em></p>
+                        <ul>
+                            <li><strong>100</strong> - Robot stops</li>
+                            <li><strong>X10</strong> - Robot turns strictly right until clear</li>
+                            <li><strong>X01</strong> - Robot turns strictly left until clear</li>
+                        </ul>
+                        <h4>Development Journey</h4>
+                        <p>The final design came after intensive brainstorming and testing. I tried three different op-amps before finding that the LM358 worked best as a comparator here. For motor control, I experimented with MOSFETs and transistors, but they caused heating and wasted power, prompting a switch to the L293D. Because the system is fully analog, the response is actually faster and more accurate compared to traditional microcontroller setups!</p>
+                        <a class="btn primary-btn modal-link-btn" href="https://www.linkedin.com/posts/roshan-v-n_analogcircuits-electronics-robotics-activity-7370080882973437953-drdr?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
+                    </div>
+                </article>
+
+                <!-- Project 5: Custom IR Transceiver -->
+                <article class="project-card glass-card doppelrand" data-project="5" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="images/ir_transreceiver.jpg" alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">WIRELESS</div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">📡 Custom IR Transceiver</h3>
+                        <p class="project-desc">A custom designed and built infrared transmission system using astable multivibrators for wireless communication.</p>
+                        <div class="project-tags">
+                            <span class="tag">Wireless Protocol</span>
+                            <span class="tag">Optoelectronics</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details" hidden>
+                        <h3>Custom IR Transmitter &amp; Receiver</h3>
+                        <p>As a team, we built a fully functional infrared communication system from scratch without relying on pre-built transceiver modules.</p>
+                        <h4>The Transmitter</h4>
+                        <ul>
+                            <li>Built an astable multivibrator utilizing two 2N2222 transistors to generate high-frequency square wave signals.</li>
+                            <li>One output connects to a visible LED to indicate the current frequency visually, while the other connects to an IR LED via a voltage divider to provide it with balanced power.</li>
+                            <li>Used a DPDT switch to toggle between two distinct frequencies dynamically using 30kΩ and 100kΩ resistors.</li>
+                        </ul>
+                        <h4>The Receiver</h4>
+                        <ul>
+                            <li>Utilized a BS0038 IR receiver connected to a 2N2222 transistor and an LED to detect and amplify the incoming infrared signal.</li>
+                        </ul>
+                        <h4>Outcomes</h4>
+                        <p>Throughout this process, we deeply learned the intricate design and behavior of an astable multivibrator for signal generation, and enhanced our practical circuit design skills through iterative problem-solving.</p>
+                        <a class="btn primary-btn modal-link-btn" href="https://www.linkedin.com/posts/roshan-v-n_electronics-analogcircuits-circuitdesign-activity-7287866786757099520-e5kM?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
+                    </div>
+                </article>
+
+                <!-- Project 6: Analog Stopwatch -->
+                <article class="project-card glass-card doppelrand" data-project="6" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="images/stopwatch_analog.jpg" alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">TIMING</div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">⏱️ Analog Stopwatch</h3>
+                        <p class="project-desc">An intricate electronic stopwatch engineered completely from the ground up using fundamental analog components.</p>
+                        <div class="project-tags">
+                            <span class="tag">Timing Circuits</span>
+                            <span class="tag">Analog Design</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details" hidden>
+                        <h3>Analog Stopwatch</h3>
+                        <p>An intricate electronic stopwatch engineered completely from the ground up using fundamental analog components. It serves as an exploration into high-precision timing circuits, logic gates, and counter manipulation without relying on any modern programmable microcontroller units.</p>
+                        <a class="btn primary-btn modal-link-btn" href="#" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
+                    </div>
+                </article>
+
+                <!-- Project 7: DIY Driller -->
+                <article class="project-card glass-card doppelrand" data-project="7" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="images/driller_diy.jpg" alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">PROTOTYPING</div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">🛠️ DIY Driller</h3>
+                        <p class="project-desc">A sturdy, self-made drilling machine crafted specifically for personal electronics prototyping and PCB making.</p>
+                        <div class="project-tags">
+                            <span class="tag">DIY Tool</span>
+                            <span class="tag">Mechanical</span>
+                            <span class="tag">Upcycling</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details" hidden>
+                        <h3>Custom DIY Driller</h3>
+                        <p>Back in May 2021, as part of my electronics hobby, I realized I didn’t have a PCB driller on hand, so I decided to make one myself using an RS-775 DC motor (24V). I repurposed some extra leftover PVC pipe from the construction of my home for the casing. This project allowed me to channel my creativity and refine my practical skills.</p>
+                        <h4>System Design</h4>
+                        <ul>
+                            <li><strong>Power Source:</strong> 24V 2.5A adapter.</li>
+                            <li><strong>Switching Mechanism:</strong> Equipped with a main power switch, a DPDT switch to toggle between speed-controlled operation (via voltage regulation) and max power, and a second DPDT switch to selectively reverse rotation (clockwise/anti-clockwise).</li>
+                            <li><strong>Speed Controller:</strong> Built using a 2SC5200 transistor and a 10k potentiometer for precision control.</li>
+                            <li><strong>Compact Enclosure:</strong> The circuit was specifically built to fit neatly within the PVC pipe handle, ensuring every component has sufficient space to function safely without crowding.</li>
+                        </ul>
+                        <p>What started as a solution to a simple need turned into a fun and rewarding exercise in electrical layout, with the added bonus of repurposing materials directly from home construction.</p>
+                        <a class="btn primary-btn modal-link-btn" href="https://www.linkedin.com/posts/roshan-v-n_latepost-engineering-electronics-activity-7243237538646138880-IUe1?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAEdZopcB8G3y-_h7-QgJFjj--NtbSRjgL7E" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
+                    </div>
+                </article>
+
+                <!-- Project 8: Smart Electric Meter -->
+                <article class="project-card glass-card doppelrand" data-project="8" tabindex="0">
+                    <div class="project-image-box">
+                        <img src="images/smart_electric_meter.jpg" alt="Project Photo" class="project-image" loading="lazy">
+                        <div class="project-badge">AWARD WINNER</div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">💡 Smart Electric Meter</h3>
+                        <p class="project-desc">An innovative smart meter prototype built in 12th grade that won 3rd prize in the District Science Exhibition.</p>
+                        <div class="project-tags">
+                            <span class="tag">Innovation</span>
+                            <span class="tag">Award Winning</span>
+                        </div>
+                        <span class="project-read-more">Click for more details <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="project-details" hidden>
+                        <h3>Smart Electric Meter</h3>
+                        <p>During my 12th grade, I conceptualized and developed a fully working prototype of a "Smart Electric Meter" to represent my school at a highly competitive science exhibition.</p>
+                        <p>This project was aimed at solving real-world power monitoring issues by making electric consumption tracking more accessible, transparent, and intelligent.</p>
+                        <h4>Achievement</h4>
+                        <p>The project received significant attention from judges and was officially awarded the <strong>3rd Prize in the District Science Exhibition</strong>. This accomplishment was a major milestone that cemented my passion for electronics engineering and innovative practical design early on.</p>
+                        <a class="btn primary-btn modal-link-btn" href="https://www.linkedin.com/in/roshan-v-n" style="margin-top: 1.5rem;" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> View Project Post</a>
+                    </div>
+                </article>
+            </div>
+            <div class="viewport-fade fade-right" aria-hidden="true"></div>
+        </div>
+
+        <!-- Google AI Style Scroll Progress Indicator -->
+        <div class="container projects-progress-container">
+            <div class="projects-progress-track">
+                <div class="projects-progress-thumb" id="projects-progress-thumb"></div>
+            </div>
         </div>
     </section>
 
-    <!-- Contact & Footer -->
+    <!-- Contact & Footer Section -->
     <footer id="contact" class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-heading">
-                    <h2 class="section-heading">
-                        Let's <span class="heading-accent">Connect</span>
+        <div class="container reveal">
+            <div class="footer-card glass-card doppelrand">
+                <div class="footer-header">
+                    <h2 class="section-title">
+                        Get In Touch <span><i class="fa-regular fa-paper-plane"></i></span>
                     </h2>
-                    <p class="footer-msg">I am always open to any challenges and engineering opportunities related to
-                        electronics.</p>
+                    <p class="footer-msg">I am always open to any challenges and engineering opportunities related to electronics.</p>
                 </div>
 
-                <div class="footer-links">
-                    <a href="https://www.linkedin.com/in/roshan-v-n/" target="_blank" class="footer-link-card">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                        <span>LinkedIn</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square link-arrow"></i>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/roshan-v-n/" target="_blank" rel="noopener noreferrer" class="social-card social-icon">
+                        <div class="social-card-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                        <div class="social-card-text">
+                            <span class="social-card-label">LinkedIn</span>
+                            <span class="social-card-sub">roshan-v-n</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
                     </a>
-                    <a href="#"
-                        onclick="navigator.clipboard.writeText('roshanvn1@gmail.com'); const el = this.querySelector('.copy-feedback'); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2000); return false;"
-                        class="footer-link-card" title="Copy to clipboard">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span>roshanvn1@gmail.com</span>
-                        <span class="copy-feedback">Copied!</span>
+                    <a href="#" onclick="navigator.clipboard.writeText('roshanvn1@gmail.com'); const originalHTML = this.innerHTML; this.innerHTML = '<div class=\'social-card-icon\'><i class=\'fa-solid fa-check\'></i></div><div class=\'social-card-text\'><span class=\'social-card-label\'>Copied!</span><span class=\'social-card-sub\'>roshanvn1@gmail.com</span></div>'; setTimeout(() => { this.innerHTML = originalHTML; }, 2000); return false;" title="Copy to clipboard" class="social-card social-icon">
+                        <div class="social-card-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="social-card-text">
+                            <span class="social-card-label">Email</span>
+                            <span class="social-card-sub">roshanvn1@gmail.com</span>
+                        </div>
+                        <i class="fa-solid fa-clone social-arrow"></i>
                     </a>
                 </div>
-            </div>
 
-            <div class="footer-bottom">
-                <p class="copyright">&copy; 2026 Roshan V N. Built with passion for Electronics.</p>
+                <div class="footer-bottom">
+                    <p class="copyright">&copy; 2026 Roshan V N. Built with passion for Electronics.</p>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- GSAP Animation Library -->
+    <!-- GSAP Animation Library & Plugins -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollToPlugin.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/TextPlugin.min.js"></script>
 
+    <!-- Custom Futuristic Motion & Interactive Systems -->
     <script src="script.js"></script>
 </body>
 

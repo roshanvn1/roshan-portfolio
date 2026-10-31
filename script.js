@@ -1,312 +1,622 @@
 // ============================================================
-// GSAP Premium Portfolio — Motion Choreography
+// ROSHAN V N — Portfolio Interactive Systems
+// Core Features:
+// 1. Metal-on-Stone Spark Cursor Trail (Dormant RAF, 0% Idle CPU)
+// 2. Targeted Vector Circuit Lines with Name Exclusion Zone
+// 3. Sideways-Scrolling Projects Carousel (Google AI Reference)
+// 4. Modal System & Nav Telemetry
 // ============================================================
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// ---- Smooth scroll for nav links ----
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href === '#') return;
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-            gsap.to(window, {
-                scrollTo: { y: target, offsetY: 80 },
-                duration: 1,
-                ease: "power3.inOut"
-            });
-        }
-        // Close mobile menu if open
-        const mobileMenu = document.getElementById('mobile-menu');
-        const hamburger = document.getElementById('hamburger');
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-});
-
-// ---- Navbar Scroll Effect ----
-const navbar = document.getElementById('navbar');
-
-ScrollTrigger.create({
-    start: 'top -80',
-    onUpdate: (self) => {
-        if (self.scroll() > 80) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    }
-});
-
-// ---- Hamburger Menu ----
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobile-menu');
-
-if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
-    });
-}
-
-// ---- Hero Entrance Animation ----
-// Set initial invisible states via JS (CSS keeps them visible as fallback)
-gsap.set('.hero-eyebrow', { opacity: 0, x: -30 });
-gsap.set('.hero-name-line', { opacity: 0, y: 60 });
-gsap.set('.hero-subtitle', { opacity: 0, y: 30 });
-gsap.set('.hero-btns', { opacity: 0, y: 20 });
-gsap.set('.hero-stats', { opacity: 0, x: 40 });
-gsap.set('.hero-scroll-hint', { opacity: 0, y: 20 });
-
-const heroTL = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-heroTL
-    .to('.hero-eyebrow', {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        delay: 0.3
-    })
-    .to('.hero-name-line', {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.15
-    }, '-=0.4')
-    .to('.hero-subtitle', {
-        opacity: 1,
-        y: 0,
-        duration: 0.8
-    }, '-=0.5')
-    .to('.hero-btns', {
-        opacity: 1,
-        y: 0,
-        duration: 0.7
-    }, '-=0.4')
-    .to('.hero-stats', {
-        opacity: 1,
-        x: 0,
-        duration: 0.8
-    }, '-=0.5')
-    .to('.hero-scroll-hint', {
-        opacity: 1,
-        y: 0,
-        duration: 0.6
-    }, '-=0.3');
-
-// ---- Counter Animation ----
-const statNumbers = document.querySelectorAll('.stat-number');
-
-statNumbers.forEach(el => {
-    const target = parseInt(el.dataset.count, 10);
-    
-    ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-            gsap.to(el, {
-                innerText: target,
-                duration: 1.5,
-                ease: "power2.out",
-                snap: { innerText: 1 },
-                onUpdate: function () {
-                    el.textContent = Math.round(parseFloat(el.textContent));
-                }
-            });
-        }
-    });
-});
-
-// ---- Section Reveal Animations ----
-// About section
-gsap.fromTo('.about .section-heading',
-    { opacity: 0, y: 40 },
-    {
-        scrollTrigger: { trigger: '.about', start: 'top 75%', once: true },
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
-    }
-);
-
-gsap.fromTo('.about-body p',
-    { opacity: 0, y: 30 },
-    {
-        scrollTrigger: { trigger: '.about-body', start: 'top 80%', once: true },
-        opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out"
-    }
-);
-
-gsap.fromTo('.achievement-card',
-    { opacity: 0, x: -30 },
-    {
-        scrollTrigger: { trigger: '.achievement-cards', start: 'top 80%', once: true },
-        opacity: 1, x: 0, duration: 0.6, stagger: 0.12, ease: "power3.out"
-    }
-);
-
-gsap.fromTo('.interview-callout',
-    { opacity: 0, y: 30 },
-    {
-        scrollTrigger: { trigger: '.interview-callout', start: 'top 85%', once: true },
-        opacity: 1, y: 0, duration: 0.7, ease: "power3.out"
-    }
-);
-
-gsap.fromTo('.domain-card',
-    { opacity: 0, scale: 0.85, y: 20 },
-    {
-        scrollTrigger: { trigger: '.domain-grid', start: 'top 80%', once: true },
-        opacity: 1, scale: 1, y: 0, duration: 0.6,
-        stagger: { amount: 0.4, from: "random" },
-        ease: "back.out(1.5)"
-    }
-);
-
-// Skills section
-gsap.fromTo('.skills .section-heading',
-    { opacity: 0, y: 40 },
-    {
-        scrollTrigger: { trigger: '.skills', start: 'top 75%', once: true },
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
-    }
-);
-
-gsap.fromTo('.skill-block',
-    { opacity: 0, y: 40 },
-    {
-        scrollTrigger: { trigger: '.skills-bento', start: 'top 80%', once: true },
-        opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out"
-    }
-);
-
-// Projects section
-gsap.fromTo('.projects .section-heading',
-    { opacity: 0, y: 40 },
-    {
-        scrollTrigger: { trigger: '.projects', start: 'top 75%', once: true },
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
-    }
-);
-
-gsap.fromTo('.projects-subtitle',
-    { opacity: 0, y: 20 },
-    {
-        scrollTrigger: { trigger: '.projects', start: 'top 75%', once: true },
-        opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power3.out"
-    }
-);
-
-// Horizontal scroll for projects track
-const projectsTrack = document.querySelector('.projects-track');
-if (projectsTrack) {
-    gsap.to(projectsTrack, {
-        x: () => -(projectsTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".projects",
-            start: "top top",
-            end: () => `+=${projectsTrack.scrollWidth}`,
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true
-        }
-    });
-}
-
-// Fade in project cards as they enter
-gsap.fromTo('.project-card',
-    { opacity: 0, scale: 0.9 },
-    {
-        scrollTrigger: { trigger: '.projects', start: 'top 50%', once: true },
-        opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: "power3.out"
-    }
-);
-
-// Footer section
-gsap.fromTo('.footer .section-heading',
-    { opacity: 0, y: 40 },
-    {
-        scrollTrigger: { trigger: '.footer', start: 'top 80%', once: true },
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out"
-    }
-);
-
-gsap.fromTo('.footer-link-card',
-    { opacity: 0, x: 30 },
-    {
-        scrollTrigger: { trigger: '.footer-links', start: 'top 85%', once: true },
-        opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: "power3.out"
-    }
-);
-
-// ---- Parallax Orbs on Scroll ----
-gsap.to('.orb-1', {
-    y: -150,
-    scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 2
-    }
-});
-
-gsap.to('.orb-2', {
-    y: -200,
-    x: -80,
-    scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 3
-    }
-});
-
-gsap.to('.orb-3', {
-    y: -100,
-    scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1.5
-    }
-});
-
-// ---- Hero Scroll Fade ----
-gsap.to('.hero-content', {
-    opacity: 0,
-    y: -60,
-    scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: '60% top',
-        scrub: 1
-    }
-});
-
-gsap.to('#hero-canvas', {
-    opacity: 0,
-    scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: '80% top',
-        scrub: 1
-    }
-});
-
-// ---- Modal System ----
 document.addEventListener('DOMContentLoaded', () => {
-    // Inject Modal HTML
+    initSparkCursor();
+    initHeroLines();
+    initProjectsCarousel();
+    initProjectModal();
+    initNavAndScroll();
+    initTelemetryCounters();
+});
+
+// ============================================================
+// 1. METAL-ON-STONE SPARK CURSOR TRAIL
+// Strict Zero-Idle CPU & Stationary Extinction Protocol
+// ============================================================
+function initSparkCursor() {
+    // Only initialize on pointer-fine devices (desktops/laptops with mouse/trackpad)
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    const canvas = document.getElementById('cursor-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+
+    function resizeCanvas() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Pre-allocated Particle Pool (Zero GC allocation in frame loop)
+    const MAX_PARTICLES = 70;
+    const pool = Array.from({ length: MAX_PARTICLES }, () => ({
+        active: false,
+        x: 0,
+        y: 0,
+        prevX: 0,
+        prevY: 0,
+        vx: 0,
+        vy: 0,
+        life: 0,
+        maxLife: 0,
+        size: 1.5,
+        sparkType: 0 // 0: Cerulean blue core, 1: Neon rose accent
+    }));
+
+    let isLoopRunning = false;
+    let lastX = null;
+    let lastY = null;
+
+    function spawnSparks(x, y, dx, dy, speed) {
+        // Spark count scaled with speed: 1 to 4 sparks per movement step
+        const count = Math.min(Math.max(Math.floor(speed * 0.16), 1), 4);
+        const moveAngle = Math.atan2(dy, dx);
+
+        for (let c = 0; c < count; c++) {
+            const p = pool.find(item => !item.active);
+            if (!p) break;
+
+            p.active = true;
+            // Spawn point with micro jitter
+            p.x = x + (Math.random() - 0.5) * 4;
+            p.y = y + (Math.random() - 0.5) * 4;
+            p.prevX = p.x;
+            p.prevY = p.y;
+
+            // Metal on stone: sparks sheer backwards/tangentially with scatter cone
+            const scatter = (moveAngle + Math.PI) + (Math.random() - 0.5) * 1.5;
+            const sparkSpeed = (Math.random() * 4.5 + 2.5) * Math.min(speed * 0.09, 1.8);
+
+            p.vx = Math.cos(scatter) * sparkSpeed;
+            p.vy = Math.sin(scatter) * sparkSpeed;
+            p.maxLife = Math.floor(Math.random() * 8 + 8); // 8-16 frames (130-260ms)
+            p.life = p.maxLife;
+            p.size = Math.random() * 1.4 + 1.0;
+            p.sparkType = Math.random() < 0.22 ? 1 : 0; // 22% Neon Rose, 78% Cerulean
+        }
+
+        // Wake up RAF loop if dormant
+        if (!isLoopRunning) {
+            isLoopRunning = true;
+            requestAnimationFrame(renderSparkLoop);
+        }
+    }
+
+    window.addEventListener('pointermove', (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+
+        if (lastX !== null && lastY !== null) {
+            const dx = x - lastX;
+            const dy = y - lastY;
+            const speed = Math.hypot(dx, dy);
+
+            // STRICT MOTION THRESHOLD: No sparks when stationary or micro-jitter (< 2.0px)
+            if (speed >= 2.0) {
+                spawnSparks(x, y, dx, dy, speed);
+            }
+        }
+
+        lastX = x;
+        lastY = y;
+    }, { passive: true });
+
+    window.addEventListener('pointerleave', () => {
+        lastX = null;
+        lastY = null;
+    });
+
+    function renderSparkLoop() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.lineCap = 'round';
+
+        let activeCount = 0;
+
+        for (let i = 0; i < MAX_PARTICLES; i++) {
+            const p = pool[i];
+            if (!p.active) continue;
+
+            activeCount++;
+            p.prevX = p.x;
+            p.prevY = p.y;
+
+            // Physical air drag deceleration and subtle downward gravity
+            p.vx *= 0.88;
+            p.vy = p.vy * 0.88 + 0.22;
+
+            p.x += p.vx;
+            p.y += p.vy;
+            p.life--;
+
+            if (p.life <= 0) {
+                p.active = false;
+                continue;
+            }
+
+            const progress = 1 - (p.life / p.maxLife); // 0 (birth) -> 1 (death)
+            const alpha = Math.max(0, 1 - progress);
+
+            ctx.beginPath();
+            ctx.moveTo(p.prevX, p.prevY);
+            ctx.lineTo(p.x, p.y);
+
+            // Thermal incandescent spectrum:
+            // Ignition: White-hot core -> Mid: Neon Cerulean -> Cool down: Neon Rose
+            if (progress < 0.2) {
+                ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.lineWidth = p.size * 1.3;
+            } else if (p.sparkType === 1 || progress > 0.75) {
+                ctx.strokeStyle = `rgba(255, 0, 127, ${alpha * 0.9})`; // Neon rose
+                ctx.lineWidth = p.size * 0.85;
+            } else {
+                ctx.strokeStyle = `rgba(0, 210, 255, ${alpha})`; // Cerulean blue
+                ctx.lineWidth = p.size;
+            }
+
+            ctx.stroke();
+        }
+
+        // STRICT DORMANT RAF ENFORCEMENT:
+        // Once activeCount reaches 0, the loop halts completely (0% CPU at idle)
+        if (activeCount > 0) {
+            requestAnimationFrame(renderSparkLoop);
+        } else {
+            isLoopRunning = false;
+            ctx.clearRect(0, 0, width, height);
+        }
+    }
+}
+
+// ============================================================
+// 2. TARGETED HERO CIRCUIT LINES (CONVERGING ON TOP NAME)
+// 45°/90° PCB Routing with Text Exclusion Zone Protection
+// ============================================================
+function initHeroLines() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let traces = [];
+    let pulses = [];
+    let targetBox = { left: 0, top: 0, right: 0, bottom: 0, centerX: 0, centerY: 0, titleTop: 9999 };
+    let animFrameId = null;
+
+    function updateTargetCoordinates() {
+        const headerBlock = document.querySelector('.hero-header-block');
+        const nameEl = document.getElementById('hero-name-target') || document.querySelector('.hero-name');
+        const titleEl = document.querySelector('.hero-title');
+        const eyebrowEl = document.querySelector('.hero-eyebrow');
+        if (!headerBlock || !nameEl) return;
+
+        const nameRect = nameEl.getBoundingClientRect();
+        const headerRect = headerBlock.getBoundingClientRect();
+        const heroRect = canvas.parentElement.getBoundingClientRect();
+
+        const isMobile = width < 768;
+        // Compute widest text element inside header to ensure pads never overlap title or eyebrow
+        const titleWidth = titleEl ? titleEl.getBoundingClientRect().width : 0;
+        const eyebrowWidth = eyebrowEl ? eyebrowEl.getBoundingClientRect().width : 0;
+        const effectiveWidth = Math.max(nameRect.width, Math.min(titleWidth * 0.9, width - 80));
+
+        const padX = isMobile ? Math.max(16, (width - effectiveWidth) / 2 - 20) : 50;
+        const padY = isMobile ? 12 : 20;
+
+        targetBox = {
+            left: Math.max(16, nameRect.left - heroRect.left - padX),
+            top: Math.max(10, nameRect.top - heroRect.top - padY),
+            right: Math.min(width - 16, nameRect.right - heroRect.left + padX),
+            bottom: nameRect.bottom - heroRect.top + padY,
+            centerX: (nameRect.left + nameRect.right) / 2 - heroRect.left,
+            centerY: (nameRect.top + nameRect.bottom) / 2 - heroRect.top,
+            titleTop: titleEl ? (titleEl.getBoundingClientRect().top - heroRect.top - 16) : 9999
+        };
+    }
+
+    function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = canvas.parentElement.clientWidth;
+        height = canvas.parentElement.clientHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+
+        updateTargetCoordinates();
+        buildCircuitTraces();
+    }
+
+    function buildCircuitTraces() {
+        traces = [];
+        pulses = [];
+
+        // Scale trace density by viewport dimensions (on mobile reduce to 3 per side to avoid crowding)
+        const isMobile = width < 768;
+        const numTracesPerSide = isMobile ? 3 : Math.min(Math.max(Math.floor(height / 80), 4), 7);
+        const maxY = Math.min(targetBox.bottom, targetBox.titleTop);
+
+        // 1. LEFT CONDUITS -> Direct toward targetBox.left
+        for (let i = 0; i < numTracesPerSide; i++) {
+            const startY = isMobile ? (140 + i * 45) : (70 + i * ((height * 0.7) / numTracesPerSide));
+            const targetY = targetBox.top + (i / (numTracesPerSide - 1 || 1)) * (maxY - targetBox.top);
+            const targetX = targetBox.left;
+
+            const path = [{ x: 0, y: startY }];
+            const midX1 = Math.min(width * 0.14 + (i % 3) * 35, targetX - 60);
+            path.push({ x: midX1, y: startY });
+
+            // 45° PCB Jog
+            const dy = targetY - startY;
+            const jogDist = Math.min(Math.abs(dy), Math.max(10, targetX - midX1 - 30));
+            const jogEndX = midX1 + jogDist;
+            const jogEndY = startY + (dy > 0 ? jogDist : -jogDist);
+            path.push({ x: jogEndX, y: jogEndY });
+
+            // Terminate precisely at exclusion zone border
+            path.push({ x: targetX, y: targetY });
+
+            const isAccent = (i % 3 === 1);
+            const color = isAccent ? '#ff007f' : '#00d2ff';
+            const glowColor = isAccent ? 'rgba(255, 0, 127, 0.45)' : 'rgba(0, 210, 255, 0.4)';
+
+            traces.push({
+                path: path,
+                color: color,
+                glowColor: glowColor,
+                isAccent: isAccent,
+                length: getPathLength(path),
+                progress: 0,
+                speed: 0.016 + Math.random() * 0.012
+            });
+        }
+
+        // 2. RIGHT CONDUITS -> Direct toward targetBox.right
+        for (let i = 0; i < numTracesPerSide; i++) {
+            const startY = isMobile ? (140 + i * 45) : (70 + i * ((height * 0.7) / numTracesPerSide));
+            const targetY = targetBox.top + (i / (numTracesPerSide - 1 || 1)) * (maxY - targetBox.top);
+            const targetX = targetBox.right;
+
+            const path = [{ x: width, y: startY }];
+            const midX1 = Math.max(width - (width * 0.14 + (i % 3) * 35), targetX + 60);
+            path.push({ x: midX1, y: startY });
+
+            // 45° PCB Jog
+            const dy = targetY - startY;
+            const jogDist = Math.min(Math.abs(dy), Math.max(10, midX1 - targetX - 30));
+            const jogEndX = midX1 - jogDist;
+            const jogEndY = startY + (dy > 0 ? jogDist : -jogDist);
+            path.push({ x: jogEndX, y: jogEndY });
+
+            // Terminate precisely at exclusion zone border
+            path.push({ x: targetX, y: targetY });
+
+            const isAccent = (i % 3 === 2);
+            const color = isAccent ? '#ff007f' : '#00a6ed';
+            const glowColor = isAccent ? 'rgba(255, 0, 127, 0.45)' : 'rgba(0, 166, 237, 0.4)';
+
+            traces.push({
+                path: path,
+                color: color,
+                glowColor: glowColor,
+                isAccent: isAccent,
+                length: getPathLength(path),
+                progress: 0,
+                speed: 0.016 + Math.random() * 0.012
+            });
+        }
+
+        // Initialize micro-pulses
+        traces.forEach((t, idx) => {
+            pulses.push({
+                traceIdx: idx,
+                distance: Math.random() * t.length,
+                speed: 1.2 + Math.random() * 1.6,
+                color: t.color
+            });
+        });
+    }
+
+    function getPathLength(path) {
+        let len = 0;
+        for (let i = 1; i < path.length; i++) {
+            len += Math.hypot(path[i].x - path[i - 1].x, path[i].y - path[i - 1].y);
+        }
+        return len;
+    }
+
+    function getPointAtDistance(path, targetDist) {
+        let covered = 0;
+        for (let i = 1; i < path.length; i++) {
+            const segLen = Math.hypot(path[i].x - path[i - 1].x, path[i].y - path[i - 1].y);
+            if (covered + segLen >= targetDist) {
+                const r = (targetDist - covered) / segLen;
+                return {
+                    x: path[i - 1].x + (path[i].x - path[i - 1].x) * r,
+                    y: path[i - 1].y + (path[i].y - path[i - 1].y) * r
+                };
+            }
+            covered += segLen;
+        }
+        return path[path.length - 1];
+    }
+
+    function renderHeroTraces() {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.lineWidth = 1.3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // 1. Draw Static / Animated Conduits
+        traces.forEach(t => {
+            if (t.progress < 1) {
+                t.progress = Math.min(1, t.progress + t.speed);
+            }
+
+            ctx.save();
+            ctx.strokeStyle = t.color;
+            ctx.shadowColor = t.glowColor;
+            ctx.shadowBlur = 8;
+            ctx.globalAlpha = 0.5;
+
+            const currentLen = t.length * t.progress;
+            let drawnLen = 0;
+
+            ctx.beginPath();
+            ctx.moveTo(t.path[0].x, t.path[0].y);
+
+            for (let i = 1; i < t.path.length; i++) {
+                const segLen = Math.hypot(t.path[i].x - t.path[i - 1].x, t.path[i].y - t.path[i - 1].y);
+                if (drawnLen + segLen <= currentLen) {
+                    ctx.lineTo(t.path[i].x, t.path[i].y);
+                    drawnLen += segLen;
+                } else {
+                    const ratio = (currentLen - drawnLen) / segLen;
+                    const px = t.path[i - 1].x + (t.path[i].x - t.path[i - 1].x) * ratio;
+                    const py = t.path[i - 1].y + (t.path[i].y - t.path[i - 1].y) * ratio;
+                    ctx.lineTo(px, py);
+                    break;
+                }
+            }
+            ctx.stroke();
+
+            // Terminal Pads (Stationed at border of exclusion zone)
+            if (t.progress >= 0.99) {
+                const endPt = t.path[t.path.length - 1];
+                ctx.fillStyle = t.color;
+                ctx.shadowBlur = 10;
+                ctx.beginPath();
+                ctx.arc(endPt.x, endPt.y, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Outer concentric terminal ring
+                ctx.strokeStyle = t.color;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(endPt.x, endPt.y, 5.5, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            ctx.restore();
+        });
+
+        // 2. Draw Traveling Signal Data Packets
+        pulses.forEach(p => {
+            const trace = traces[p.traceIdx];
+            if (!trace || trace.progress < 0.5) return;
+
+            p.distance += p.speed;
+            if (p.distance > trace.length * trace.progress) {
+                p.distance = 0;
+            }
+
+            const pt = getPointAtDistance(trace.path, p.distance);
+
+            ctx.save();
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 12;
+            ctx.globalAlpha = 0.95;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 2.0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        });
+
+        animFrameId = requestAnimationFrame(renderHeroTraces);
+    }
+
+    resize();
+    renderHeroTraces();
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+            updateTargetCoordinates();
+            buildCircuitTraces();
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+        resize();
+        renderHeroTraces();
+    });
+}
+
+// ============================================================
+// 3. SIDEWAYS-SCROLLING PROJECTS (GOOGLE AI REFERENCE)
+// Horizontal Track, Bilateral Fades, Controls & Counter
+// ============================================================
+function initProjectsCarousel() {
+    const viewport = document.getElementById('projects-viewport');
+    const track = document.getElementById('projects-track');
+    const prevBtn = document.getElementById('proj-prev-btn');
+    const nextBtn = document.getElementById('proj-next-btn');
+    const counterCurrent = document.getElementById('projects-counter-current');
+    const progressThumb = document.getElementById('projects-progress-thumb');
+    const cards = document.querySelectorAll('.project-card');
+
+    if (!viewport || !track || cards.length === 0) return;
+
+    const totalCards = cards.length;
+    let isProgrammaticScrolling = false;
+
+    // Calculate individual card step distance (width + gap)
+    function getCardStep() {
+        if (cards.length < 2) return cards[0].offsetWidth;
+        const r1 = cards[0].getBoundingClientRect();
+        const r2 = cards[1].getBoundingClientRect();
+        return Math.max(r2.left - r1.left, cards[0].offsetWidth + 20);
+    }
+
+    // Update Counter, Nav Buttons and Progress Bar
+    function updateControls() {
+        const scrollLeft = viewport.scrollLeft;
+        const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+        const cardStep = getCardStep();
+
+        // Calculate 0-based active card index
+        let activeIdx = Math.round(scrollLeft / cardStep);
+        activeIdx = Math.max(0, Math.min(totalCards - 1, activeIdx));
+
+        // Format to "01", "02", etc.
+        if (counterCurrent) {
+            const formatted = String(activeIdx + 1).padStart(2, '0');
+            if (counterCurrent.textContent !== formatted) {
+                counterCurrent.textContent = formatted;
+            }
+        }
+
+        // Enable / Disable Prev and Next buttons at boundaries
+        if (prevBtn) {
+            prevBtn.disabled = scrollLeft <= 10;
+        }
+        if (nextBtn) {
+            nextBtn.disabled = scrollLeft >= maxScroll - 10;
+        }
+
+        // Update Progress Bar Thumb
+        if (progressThumb && maxScroll > 0) {
+            const progressRatio = Math.max(0, Math.min(1, scrollLeft / maxScroll));
+            // Thumb width is 12.5% (1/8th); translates across 0% to 700% of thumb width
+            const thumbShift = progressRatio * (totalCards - 1) * 100;
+            progressThumb.style.transform = `translateX(${thumbShift}%)`;
+        }
+    }
+
+    // Throttled Scroll Listener
+    let scrollRafId = null;
+    viewport.addEventListener('scroll', () => {
+        if (scrollRafId) return;
+        scrollRafId = requestAnimationFrame(() => {
+            updateControls();
+            scrollRafId = null;
+        });
+    }, { passive: true });
+
+    // Prev / Next Button Click Handlers
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const step = getCardStep();
+            viewport.scrollBy({ left: -step, behavior: 'smooth' });
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const step = getCardStep();
+            viewport.scrollBy({ left: step, behavior: 'smooth' });
+        });
+    }
+
+    // Keyboard Arrow Navigation when viewport is focused
+    viewport.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            nextBtn && nextBtn.click();
+        } else if (e.key === 'ArrowLeft') {
+            prevBtn && prevBtn.click();
+        }
+    });
+
+    // Desktop Horizontal Wheel Scroll Integration
+    viewport.addEventListener('wheel', (e) => {
+        // If scrolling primarily vertical, translate into horizontal scroll
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && Math.abs(e.deltaY) > 10) {
+            const atStart = viewport.scrollLeft <= 5 && e.deltaY < 0;
+            const atEnd = (viewport.scrollLeft >= viewport.scrollWidth - viewport.clientWidth - 5) && e.deltaY > 0;
+            
+            // Allow page vertical scroll when at boundaries; otherwise scroll horizontally
+            if (!atStart && !atEnd) {
+                e.preventDefault();
+                viewport.scrollLeft += e.deltaY * 0.9;
+            }
+        }
+    }, { passive: false });
+
+    // Drag / Swipe Distance Tracker (Prevents accidental card modal trigger on drag)
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+    let isDraggingGesture = false;
+
+    viewport.addEventListener('pointerdown', (e) => {
+        pointerStartX = e.clientX;
+        pointerStartY = e.clientY;
+        isDraggingGesture = false;
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+        const dist = Math.hypot(e.clientX - pointerStartX, e.clientY - pointerStartY);
+        if (dist > 8) {
+            isDraggingGesture = true;
+        }
+    });
+
+    // Expose drag state to card click handlers
+    window.__isProjectsCarouselDragging = () => isDraggingGesture;
+
+    // Initial controls update
+    updateControls();
+    window.addEventListener('resize', updateControls);
+}
+
+// ============================================================
+// 4. PROJECT DETAILS MODAL
+// ============================================================
+function initProjectModal() {
+    // Inject Modal DOM container
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'modal-overlay';
+    modalOverlay.setAttribute('role', 'dialog');
+    modalOverlay.setAttribute('aria-modal', 'true');
     modalOverlay.innerHTML = `
         <div class="modal-content-box">
-            <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <button class="modal-close" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-body"></div>
         </div>
     `;
@@ -315,358 +625,157 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalClose = modalOverlay.querySelector('.modal-close');
     const modalBody = modalOverlay.querySelector('.modal-body');
 
-    // Add click listeners to project cards
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Attach click listeners to cards
     document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            // Don't open modal if clicking a link inside the card
+        function triggerOpen(e) {
+            // Ignore if user was dragging or clicked a direct link
+            if (window.__isProjectsCarouselDragging && window.__isProjectsCarouselDragging()) return;
             if (e.target.closest('a')) return;
-            
-            const detailsElement = card.querySelector('.project-details');
-            if (detailsElement) {
-                modalBody.innerHTML = detailsElement.innerHTML;
+
+            const details = card.querySelector('.project-details');
+            if (details) {
+                modalBody.innerHTML = details.innerHTML;
                 modalOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
+        }
+
+        card.addEventListener('click', triggerOpen);
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                triggerOpen(e);
+            }
         });
     });
-
-    // Close logic
-    const closeModal = () => {
-        modalOverlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    };
 
     modalClose.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) closeModal();
     });
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+            closeModal();
+        }
     });
-});
-
-// ---- Magnetic Hover on Cards ----
-const magneticCards = document.querySelectorAll('.domain-card, .stat-item');
-
-magneticCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        gsap.to(card, {
-            rotateX: -y / 15,
-            rotateY: x / 15,
-            duration: 0.5,
-            ease: "power2.out",
-            transformPerspective: 800
-        });
-    });
-
-    card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-            rotateX: 0,
-            rotateY: 0,
-            duration: 0.7,
-            ease: "elastic.out(1, 0.5)"
-        });
-    });
-});
-
-// ---- Skill Tag Hover Stagger ----
-const skillBlocks = document.querySelectorAll('.skill-block');
-
-skillBlocks.forEach(block => {
-    const tags = block.querySelectorAll('.skill-tag');
-    
-    block.addEventListener('mouseenter', () => {
-        gsap.fromTo(tags,
-            { scale: 0.9, opacity: 0.5 },
-            {
-                scale: 1,
-                opacity: 1,
-                duration: 0.3,
-                stagger: 0.04,
-                ease: "back.out(2)",
-                overwrite: "auto"
-            }
-        );
-    });
-});
+}
 
 // ============================================================
-// Hero Canvas Animation (Circuit Lines)
+// 5. NAVIGATION, SMOOTH SCROLL & ACTIVE LINK TRACKER
 // ============================================================
-const heroCanvas = document.getElementById('hero-canvas');
-const heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
-let heroWidth, heroHeight;
-let heroLines = [];
-let heroAnimationDone = false;
+function initNavAndScroll() {
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-function calculatePathLength(path) {
-    let len = 0;
-    for (let i = 1; i < path.length; i++) {
-        const dx = path[i].x - path[i - 1].x;
-        const dy = path[i].y - path[i - 1].y;
-        len += Math.sqrt(dx * dx + dy * dy);
-    }
-    return len;
-}
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '') return;
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                gsap.to(window, {
+                    scrollTo: { y: target, offsetY: 70 },
+                    duration: 0.9,
+                    ease: "power3.inOut"
+                });
 
-function initHeroCanvas() {
-    if (!heroCanvas) return;
-    heroWidth = heroCanvas.parentElement.clientWidth;
-    heroHeight = heroCanvas.parentElement.clientHeight;
-    heroCanvas.width = heroWidth;
-    heroCanvas.height = heroHeight;
-    generateHeroLines();
-}
-
-function generateHeroLines() {
-    heroLines = [];
-    const hGrid = 40;
-    const numLinesPerSide = Math.floor(heroHeight / hGrid);
-
-    // Generate Left Side Lines
-    for (let i = 0; i < numLinesPerSide; i++) {
-        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
-        const path = [{ x: 0, y: startY }];
-        let cx = 0, cy = startY;
-
-        const segments = 3 + Math.floor(Math.random() * 4);
-        for (let j = 0; j < segments; j++) {
-            const dir = Math.floor(Math.random() * 3);
-            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
-
-            if (dir === 0) { cx += dist; }
-            else if (dir === 1) { cx += dist; cy -= dist; }
-            else if (dir === 2) { cx += dist; cy += dist; }
-
-            if (cx > heroWidth * 0.35) cx = heroWidth * 0.35;
-            path.push({ x: cx, y: cy });
-        }
-
-        const filteredPath = path.filter((pt, k, arr) =>
-            k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y
-        );
-
-        const accentColor = '#34d399';
-        const dimColor = 'rgba(52, 211, 153, 0.3)';
-
-        const pathAccent = JSON.parse(JSON.stringify(filteredPath));
-        const pathDim = JSON.parse(JSON.stringify(filteredPath));
-        const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.0008 + Math.random() * 0.0004;
-
-        heroLines.push({
-            path: pathAccent,
-            length: calculatePathLength(pathAccent),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: accentColor,
-            offset: -3
-        });
-        heroLines.push({
-            path: pathDim,
-            length: calculatePathLength(pathDim),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: dimColor,
-            offset: 3
-        });
-    }
-
-    // Generate Right Side Lines
-    for (let i = 0; i < numLinesPerSide; i++) {
-        const startY = Math.floor(Math.random() * (heroHeight / hGrid)) * hGrid;
-        const path = [{ x: heroWidth, y: startY }];
-        let cx = heroWidth, cy = startY;
-
-        const segments = 3 + Math.floor(Math.random() * 4);
-        for (let j = 0; j < segments; j++) {
-            const dir = Math.floor(Math.random() * 3);
-            const dist = (1 + Math.floor(Math.random() * 3)) * hGrid;
-
-            if (dir === 0) { cx -= dist; }
-            else if (dir === 1) { cx -= dist; cy -= dist; }
-            else if (dir === 2) { cx -= dist; cy += dist; }
-
-            if (cx < heroWidth * 0.65) cx = heroWidth * 0.65;
-            path.push({ x: cx, y: cy });
-        }
-
-        const filteredPath = path.filter((pt, k, arr) =>
-            k === 0 || pt.x !== arr[k - 1].x || pt.y !== arr[k - 1].y
-        );
-
-        const accentColor = '#34d399';
-        const dimColor = 'rgba(52, 211, 153, 0.3)';
-
-        const pathAccent = JSON.parse(JSON.stringify(filteredPath));
-        const pathDim = JSON.parse(JSON.stringify(filteredPath));
-        const sharedDelay = Math.random() * 0.8;
-        const sharedSpeed = 0.0008 + Math.random() * 0.0004;
-
-        heroLines.push({
-            path: pathAccent,
-            length: calculatePathLength(pathAccent),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: accentColor,
-            offset: -3
-        });
-        heroLines.push({
-            path: pathDim,
-            length: calculatePathLength(pathDim),
-            delay: sharedDelay,
-            speed: sharedSpeed,
-            color: dimColor,
-            offset: 3
-        });
-    }
-}
-
-// Hero Animation Loop
-let heroTime = 0;
-
-function animateHero() {
-    if (!heroCtx) return;
-    heroTime += 1;
-    heroCtx.clearRect(0, 0, heroWidth, heroHeight);
-
-    heroCtx.lineWidth = 1.5;
-    heroCtx.lineCap = 'round';
-    heroCtx.lineJoin = 'round';
-    heroCtx.shadowBlur = 8;
-
-    let allComplete = true;
-
-    heroLines.forEach(line => {
-        let p = (heroTime * line.speed) - line.delay;
-        if (p < 0) p = 0;
-        if (p < 1.0) allComplete = false;
-        if (p >= 1.0) p = 1.0;
-
-        if (p === 0) return;
-
-        heroCtx.strokeStyle = line.color;
-        heroCtx.shadowColor = line.color;
-
-        let targetLength = line.length * p;
-        let currentLength = 0;
-        let drawEndNode = false;
-        let endNodePos = null;
-
-        heroCtx.beginPath();
-        let startedDrawing = false;
-
-        for (let i = 1; i < line.path.length; i++) {
-            const p1 = line.path[i - 1];
-            const p2 = line.path[i];
-
-            const dx = p2.x - p1.x;
-            const dy = p2.y - p1.y;
-            const segmentLength = Math.sqrt(dx * dx + dy * dy);
-
-            if (segmentLength < 0.001) continue;
-
-            let offsetX = (-dy / segmentLength) * line.offset;
-            let offsetY = (dx / segmentLength) * line.offset;
-
-            if (!startedDrawing) {
-                heroCtx.moveTo(p1.x + offsetX, p1.y + offsetY);
-                startedDrawing = true;
-            }
-
-            if (currentLength + segmentLength <= targetLength) {
-                heroCtx.lineTo(p2.x + offsetX, p2.y + offsetY);
-                currentLength += segmentLength;
-
-                if (i === line.path.length - 1 && p >= 0.99) {
-                    drawEndNode = true;
-                    endNodePos = { x: p2.x + offsetX, y: p2.y + offsetY };
+                // Close mobile menu if open
+                if (mobileMenu && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    hamburger && hamburger.classList.remove('active');
+                    hamburger && hamburger.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = 'auto';
                 }
-            } else {
-                const ratio = (targetLength - currentLength) / segmentLength;
-                const intermediateX = p1.x + dx * ratio;
-                const intermediateY = p1.y + dy * ratio;
-                heroCtx.lineTo(intermediateX + offsetX, intermediateY + offsetY);
-                heroCtx.stroke();
-                drawHeroNode(intermediateX + offsetX, intermediateY + offsetY, line.color);
-                currentLength += segmentLength;
-                break;
             }
-        }
-        if (p >= 0.99) {
-            heroCtx.stroke();
-        }
-        if (drawEndNode && endNodePos) {
-            drawHeroNode(endNodePos.x, endNodePos.y, line.color);
-        }
+        });
     });
 
-    if (!allComplete) {
-        requestAnimationFrame(animateHero);
-    } else if (!heroAnimationDone) {
-        heroAnimationDone = true;
-    }
-}
-
-function drawHeroNode(x, y, color) {
-    heroCtx.save();
-    heroCtx.fillStyle = color;
-    heroCtx.shadowBlur = 12;
-    heroCtx.shadowColor = color;
-    heroCtx.beginPath();
-    heroCtx.arc(x, y, 3, 0, Math.PI * 2);
-    heroCtx.fill();
-    heroCtx.restore();
-}
-
-// Initialize canvas
-window.addEventListener('resize', () => {
-    if (heroCanvas) initHeroCanvas();
-});
-
-if (heroCanvas) {
-    initHeroCanvas();
-    animateHero();
-}
-
-// ---- Active Nav Link Highlighting ----
-const sections = document.querySelectorAll('section, footer');
-const navAnchors = document.querySelectorAll('.nav-links a[data-nav]');
-
-ScrollTrigger.create({
-    trigger: 'body',
-    start: 'top top',
-    end: 'bottom bottom',
-    onUpdate: () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 200;
-            if (window.scrollY >= sectionTop) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navAnchors.forEach(a => {
-            a.classList.remove('active-nav');
-            if (a.getAttribute('href') === `#${current}`) {
-                a.classList.add('active-nav');
+    // Navbar scroll background shift
+    if (navbar) {
+        ScrollTrigger.create({
+            start: 'top -60',
+            onUpdate: (self) => {
+                if (self.scroll() > 60) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
             }
         });
     }
-});
 
-// Style for active nav (injected dynamically)
-const navStyle = document.createElement('style');
-navStyle.textContent = `
-    .nav-links a.active-nav {
-        color: var(--accent) !important;
+    // Mobile Hamburger Toggle
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', String(isOpen));
+            document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+        });
     }
-    .nav-links a.active-nav::after {
-        width: 100% !important;
-    }
-`;
-document.head.appendChild(navStyle);
+
+    // Active Nav Highlighting on Scroll
+    const sections = document.querySelectorAll('section, footer');
+    const navLinks = document.querySelectorAll('.nav-links a[data-nav]');
+
+    ScrollTrigger.create({
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: () => {
+            let currentId = '';
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 120;
+                if (window.scrollY >= top) {
+                    currentId = sec.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active-nav');
+                }
+            });
+        }
+    });
+}
+
+// ============================================================
+// 6. TELEMETRY KPI COUNTERS
+// ============================================================
+function initTelemetryCounters() {
+    const values = document.querySelectorAll('.telemetry-value');
+    values.forEach(el => {
+        const target = parseInt(el.dataset.count, 10);
+        if (isNaN(target)) return;
+
+        ScrollTrigger.create({
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+            onEnter: () => {
+                gsap.fromTo(el,
+                    { innerText: 0 },
+                    {
+                        innerText: target,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        snap: { innerText: 1 },
+                        onUpdate: function () {
+                            el.textContent = Math.round(parseFloat(el.textContent));
+                        }
+                    }
+                );
+            }
+        });
+    });
+}
