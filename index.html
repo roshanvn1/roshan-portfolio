@@ -31,28 +31,20 @@
 </head>
 
 <body class="silicon-body">
-    <!-- Interactive Spark Cursor Canvas (Metal-on-Stone Physics) -->
-    <canvas id="cursor-canvas" class="cursor-canvas" aria-hidden="true"></canvas>
-
-    <!-- Ambient Circuit Substrate & Grids -->
-    <div class="ambient-substrate" aria-hidden="true">
-        <div class="ambient-glow glow-cerulean"></div>
-        <div class="ambient-glow glow-rose"></div>
-    </div>
-    <div class="circuit-grid-overlay" aria-hidden="true"></div>
+    <!-- Interactive Subtle Grey Mesh Canvas Background (Google Gemini Aesthetic) -->
+    <canvas id="bg-mesh-canvas" class="bg-mesh-canvas" aria-hidden="true"></canvas>
 
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <a href="#hero" class="logo" aria-label="Roshan V N Home">
+            <a href="#projects" class="logo" aria-label="Roshan V N Home">
                 <span class="logo-chip"><i class="fa-solid fa-microchip"></i></span>
-                <span class="logo-text">RVN</span>
-                <span class="logo-status-dot"></span>
+                <span class="logo-text">Roshan V N</span>
             </a>
             <ul class="nav-links" id="nav-links">
+                <li><a href="#projects" data-nav>Projects</a></li>
                 <li><a href="#about" data-nav>About</a></li>
                 <li><a href="#skills" data-nav>Skills</a></li>
-                <li><a href="#projects" data-nav>Projects</a></li>
                 <li><a href="#contact" class="nav-cta" data-nav>Contact</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
@@ -65,195 +57,12 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobile-menu" aria-hidden="true">
         <ul class="mobile-nav-links">
+            <li><a href="#projects" data-mobile-nav>Projects</a></li>
             <li><a href="#about" data-mobile-nav>About</a></li>
             <li><a href="#skills" data-mobile-nav>Skills</a></li>
-            <li><a href="#projects" data-mobile-nav>Projects</a></li>
             <li><a href="#contact" data-mobile-nav>Contact</a></li>
         </ul>
     </div>
-
-    <!-- Hero Section: Name Positioned on Top with Directed Vector Conduits -->
-    <section id="hero" class="hero">
-        <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero-content">
-            <!-- Top Nameplate Anchor with Clear Exclusion Margin -->
-            <div class="hero-header-block">
-                <div class="hero-eyebrow">
-                    <span class="eyebrow-beacon"></span>
-                    <span class="eyebrow-text">Electronics &amp; Communication Engineering</span>
-                </div>
-                <h1 class="hero-name" id="hero-name-target">
-                    <span class="greeting-prefix">Hi, I'm</span>
-                    <span class="hero-name-line">ROSHAN</span>
-                    <span class="hero-name-line">V N<span class="hero-accent">.</span></span>
-                </h1>
-                <p class="hero-title">
-                    <i class="fa-solid fa-microchip"></i> Electronics Engineering Student &amp; Innovator
-                </p>
-            </div>
-
-            <!-- Action Cluster -->
-            <div class="hero-btns">
-                <a href="#projects" class="btn primary-btn">
-                    View My Work
-                    <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-                </a>
-                <a href="https://www.linkedin.com/in/roshan-v-n/" target="_blank" rel="noopener noreferrer" class="btn secondary-btn">
-                    <i class="fa-brands fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="#" onclick="navigator.clipboard.writeText('roshanvn1@gmail.com'); const originalHTML = this.innerHTML; this.innerHTML = '<i class=\'fa-solid fa-check\'></i> Copied!'; setTimeout(() => { this.innerHTML = originalHTML; }, 2000); return false;" title="Copy to clipboard" class="btn secondary-btn btn-copy-email">
-                    <i class="fa-solid fa-envelope"></i> roshanvn1@gmail.com
-                </a>
-            </div>
-
-            <!-- Engineering Telemetry Highlights -->
-            <div class="hero-telemetry">
-                <div class="telemetry-card">
-                    <span class="telemetry-value" data-count="8">8</span>
-                    <span class="telemetry-label">Projects Built</span>
-                </div>
-                <div class="telemetry-card">
-                    <span class="telemetry-value" data-count="4">4</span>
-                    <span class="telemetry-label">Years Tinkering</span>
-                </div>
-                <div class="telemetry-card">
-                    <span class="telemetry-value" data-count="1">1</span>
-                    <span class="telemetry-label">Award Won</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="hero-scroll-hint" aria-hidden="true">
-            <span class="scroll-label">EXPLORE</span>
-            <div class="scroll-track">
-                <div class="scroll-pip"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about section-padding">
-        <div class="container reveal">
-            <h2 class="section-title">
-                About Me <span><i class="fa-solid fa-user-astronaut"></i></span>
-            </h2>
-
-            <div class="about-grid">
-                <!-- Narrative & Achievements -->
-                <div class="about-text glass-card">
-                    <div class="about-body">
-                        <p>I’m an <strong>Electronics and Communication Engineering student</strong> who loves tinkering and experimenting with ideas. Every project I build is unique, from reusing old components to creating new circuits and systems from scratch.</p>
-                        <p>I enjoy learning more about electronics and constantly exploring how things work, driven by curiosity and hands-on creativity.</p>
-                    </div>
-
-                    <div class="achievements-wrap">
-                        <h4 class="achievements-heading">Certifications &amp; Achievements</h4>
-                        <ul class="achievements-list">
-                            <li class="achievement-item">
-                                <div class="achievement-icon-wrap"><i class="fa-solid fa-certificate"></i></div>
-                                <div class="achievement-detail">
-                                    <p><strong>Level 4 Robotics Certificate</strong> from Industrial Robotics Institute</p>
-                                </div>
-                            </li>
-                            <li class="achievement-item">
-                                <div class="achievement-icon-wrap"><i class="fa-solid fa-trophy"></i></div>
-                                <div class="achievement-detail">
-                                    <p><strong>3rd Prize in District Science Exhibition</strong> for Smart Electric Meter (12th Grade)</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Highlight Box (Interview Callout) -->
-                    <div class="highlight-box">
-                        <div class="highlight-icon">
-                            <i class="fa-brands fa-youtube"></i>
-                        </div>
-                        <div class="highlight-body">
-                            <h4>Check out my Interview!</h4>
-                            <p>I was interviewed by IEDC about my projects and journey.</p>
-                            <a href="https://youtu.be/6sV6i2OQ4HU?si=ILEB8pLC-w3nWgbQ" target="_blank" rel="noopener noreferrer" class="highlight-link">
-                                Watch it on YouTube <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Domain Visual Cards -->
-                <div class="about-visual glass-card">
-                    <div class="domain-grid">
-                        <div class="domain-card" data-domain="hardware">
-                            <div class="domain-icon"><i class="fa-solid fa-microchip"></i></div>
-                            <span class="domain-title">Hardware</span>
-                        </div>
-                        <div class="domain-card" data-domain="firmware">
-                            <div class="domain-icon"><i class="fa-solid fa-code"></i></div>
-                            <span class="domain-title">Firmware</span>
-                        </div>
-                        <div class="domain-card" data-domain="robotics">
-                            <div class="domain-icon"><i class="fa-solid fa-robot"></i></div>
-                            <span class="domain-title">Robotics</span>
-                        </div>
-                        <div class="domain-card" data-domain="analog">
-                            <div class="domain-icon"><i class="fa-solid fa-bolt"></i></div>
-                            <span class="domain-title">Analog</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills section-padding bg-darker">
-        <div class="container reveal">
-            <h2 class="section-title">
-                Technical Arsenal <span><i class="fa-solid fa-toolbox"></i></span>
-            </h2>
-
-            <div class="skills-container">
-                <!-- Category 1: Software & Programming -->
-                <div class="skill-category glass-card">
-                    <div class="skill-category-header">
-                        <div class="skill-icon"><i class="fa-solid fa-terminal"></i></div>
-                        <h3>Software &amp; Programming</h3>
-                    </div>
-                    <div class="skill-tag-cloud">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Embedded C (Arduino IDE)</span>
-                        <span class="skill-tag">Java (Basic)</span>
-                        <span class="skill-tag">MATLAB</span>
-                    </div>
-                </div>
-
-                <!-- Category 2: EDA & Simulation Tools -->
-                <div class="skill-category glass-card">
-                    <div class="skill-category-header">
-                        <div class="skill-icon"><i class="fa-solid fa-wave-square"></i></div>
-                        <h3>EDA &amp; Simulation Tools</h3>
-                    </div>
-                    <div class="skill-tag-cloud">
-                        <span class="skill-tag">Cadence Virtuoso</span>
-                        <span class="skill-tag">LT Spice</span>
-                        <span class="skill-tag">Tina TI</span>
-                        <span class="skill-tag">IBM Qiskit (basic)</span>
-                    </div>
-                </div>
-
-                <!-- Category 3: Hardware Description Languages -->
-                <div class="skill-category glass-card">
-                    <div class="skill-category-header">
-                        <div class="skill-icon"><i class="fa-solid fa-network-wired"></i></div>
-                        <h3>Hardware Description Languages</h3>
-                    </div>
-                    <div class="skill-tag-cloud">
-                        <span class="skill-tag">Verilog HDL</span>
-                        <span class="skill-tag">System Verilog</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Projects Section (Google AI Reference: Sideways Scrolling Carousel) -->
     <section id="projects" class="projects section-padding">
@@ -553,6 +362,183 @@
             </div>
         </div>
     </section>
+
+    <!-- Hero Section: Name Positioned on Top with Directed Vector Conduits -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <!-- Top Nameplate Anchor with Clear Exclusion Margin -->
+            <div class="hero-header-block">
+                <h1 class="hero-name" id="hero-name-target">
+                    <span class="hero-name-line">Roshan V N</span>
+                </h1>
+                <p class="hero-title">
+                    <i class="fa-solid fa-microchip"></i> Electronics Engineering Student &amp; Innovator
+                </p>
+            </div>
+
+            <!-- Action Cluster -->
+            <div class="hero-btns">
+                <a href="#projects" class="btn primary-btn">
+                    View My Work
+                    <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                <a href="https://www.linkedin.com/in/roshan-v-n/" target="_blank" rel="noopener noreferrer" class="btn secondary-btn">
+                    <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="#" onclick="navigator.clipboard.writeText('roshanvn1@gmail.com'); const originalHTML = this.innerHTML; this.innerHTML = '<i class=\'fa-solid fa-check\'></i> Copied!'; setTimeout(() => { this.innerHTML = originalHTML; }, 2000); return false;" title="Copy to clipboard" class="btn secondary-btn btn-copy-email">
+                    <i class="fa-solid fa-envelope"></i> roshanvn1@gmail.com
+                </a>
+            </div>
+
+            <!-- Engineering Telemetry Highlights -->
+            <div class="hero-telemetry">
+                <div class="telemetry-card">
+                    <span class="telemetry-value" data-count="8">8</span>
+                    <span class="telemetry-label">Projects Built</span>
+                </div>
+                <div class="telemetry-card">
+                    <span class="telemetry-value" data-count="4">4</span>
+                    <span class="telemetry-label">Years Tinkering</span>
+                </div>
+                <div class="telemetry-card">
+                    <span class="telemetry-value" data-count="1">1</span>
+                    <span class="telemetry-label">Award Won</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-scroll-hint" aria-hidden="true">
+            <span class="scroll-label">EXPLORE</span>
+            <div class="scroll-track">
+                <div class="scroll-pip"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section-padding">
+        <div class="container reveal">
+            <h2 class="section-title">
+                About Me <span><i class="fa-solid fa-user-astronaut"></i></span>
+            </h2>
+
+            <div class="about-grid">
+                <!-- Narrative & Achievements -->
+                <div class="about-text glass-card">
+                    <div class="about-body">
+                        <p>I’m an <strong>Electronics and Communication Engineering student</strong> who loves tinkering and experimenting with ideas. Every project I build is unique, from reusing old components to creating new circuits and systems from scratch.</p>
+                        <p>I enjoy learning more about electronics and constantly exploring how things work, driven by curiosity and hands-on creativity.</p>
+                    </div>
+
+                    <div class="achievements-wrap">
+                        <h4 class="achievements-heading">Certifications &amp; Achievements</h4>
+                        <ul class="achievements-list">
+                            <li class="achievement-item">
+                                <div class="achievement-icon-wrap"><i class="fa-solid fa-certificate"></i></div>
+                                <div class="achievement-detail">
+                                    <p><strong>Level 4 Robotics Certificate</strong> from Industrial Robotics Institute</p>
+                                </div>
+                            </li>
+                            <li class="achievement-item">
+                                <div class="achievement-icon-wrap"><i class="fa-solid fa-trophy"></i></div>
+                                <div class="achievement-detail">
+                                    <p><strong>3rd Prize in District Science Exhibition</strong> for Smart Electric Meter (12th Grade)</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Highlight Box (Interview Callout) -->
+                    <div class="highlight-box">
+                        <div class="highlight-icon">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <div class="highlight-body">
+                            <h4>Check out my Interview!</h4>
+                            <p>I was interviewed by IEDC about my projects and journey.</p>
+                            <a href="https://youtu.be/6sV6i2OQ4HU?si=ILEB8pLC-w3nWgbQ" target="_blank" rel="noopener noreferrer" class="highlight-link">
+                                Watch it on YouTube <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Domain Visual Cards -->
+                <div class="about-visual glass-card">
+                    <div class="domain-grid">
+                        <div class="domain-card" data-domain="hardware">
+                            <div class="domain-icon"><i class="fa-solid fa-microchip"></i></div>
+                            <span class="domain-title">Hardware</span>
+                        </div>
+                        <div class="domain-card" data-domain="firmware">
+                            <div class="domain-icon"><i class="fa-solid fa-code"></i></div>
+                            <span class="domain-title">Firmware</span>
+                        </div>
+                        <div class="domain-card" data-domain="robotics">
+                            <div class="domain-icon"><i class="fa-solid fa-robot"></i></div>
+                            <span class="domain-title">Robotics</span>
+                        </div>
+                        <div class="domain-card" data-domain="analog">
+                            <div class="domain-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <span class="domain-title">Analog</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section-padding bg-darker">
+        <div class="container reveal">
+            <h2 class="section-title">
+                Technical Arsenal <span><i class="fa-solid fa-toolbox"></i></span>
+            </h2>
+
+            <div class="skills-container">
+                <!-- Category 1: Software & Programming -->
+                <div class="skill-category glass-card">
+                    <div class="skill-category-header">
+                        <div class="skill-icon"><i class="fa-solid fa-terminal"></i></div>
+                        <h3>Software &amp; Programming</h3>
+                    </div>
+                    <div class="skill-tag-cloud">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Embedded C (Arduino IDE)</span>
+                        <span class="skill-tag">Java (Basic)</span>
+                        <span class="skill-tag">MATLAB</span>
+                    </div>
+                </div>
+
+                <!-- Category 2: EDA & Simulation Tools -->
+                <div class="skill-category glass-card">
+                    <div class="skill-category-header">
+                        <div class="skill-icon"><i class="fa-solid fa-wave-square"></i></div>
+                        <h3>EDA &amp; Simulation Tools</h3>
+                    </div>
+                    <div class="skill-tag-cloud">
+                        <span class="skill-tag">Cadence Virtuoso</span>
+                        <span class="skill-tag">LT Spice</span>
+                        <span class="skill-tag">Tina TI</span>
+                        <span class="skill-tag">IBM Qiskit (basic)</span>
+                    </div>
+                </div>
+
+                <!-- Category 3: Hardware Description Languages -->
+                <div class="skill-category glass-card">
+                    <div class="skill-category-header">
+                        <div class="skill-icon"><i class="fa-solid fa-network-wired"></i></div>
+                        <h3>Hardware Description Languages</h3>
+                    </div>
+                    <div class="skill-tag-cloud">
+                        <span class="skill-tag">Verilog HDL</span>
+                        <span class="skill-tag">System Verilog</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Contact & Footer Section -->
     <footer id="contact" class="footer">
